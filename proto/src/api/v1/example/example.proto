@@ -14,21 +14,21 @@ import  "enumeration/example.proto";
 // ExampleService 示例服务
 service ExampleService {
     // List 查询示例列表
-    rpc List(ExampleListRequest) returns (ExampleListResponse) {
+    rpc List(ListRequest) returns (ListResponse) {
         option (google.api.http) = {
             get: "/api/v1/example/list"
         };
     }
 
     // Get 查询单个示例
-    rpc Get(ExampleGetRequest) returns (ExampleGetResponse) {
+    rpc Get(GetRequest) returns (GetResponse) {
         option (google.api.http) = {
             get: "/api/v1/example/get"
         };
     }
 
     // Create 创建示例
-    rpc Create(ExampleCreateRequest) returns (ExampleCreateResponse) {
+    rpc Create(CreateRequest) returns (CreateResponse) {
         option (google.api.http) = {
             post: "/api/v1/example/create"
             body: "*"
@@ -36,7 +36,7 @@ service ExampleService {
     }
 
     // Update 更新示例
-    rpc Update(ExampleUpdateRequest) returns (ExampleUpdateResponse) {
+    rpc Update(UpdateRequest) returns (UpdateResponse) {
         option (google.api.http) = {
             put: "/api/v1/example/update"
             body: "*"
@@ -44,107 +44,140 @@ service ExampleService {
     }
 
     // Delete 删除示例
-    rpc Delete (ExampleDeleteRequest) returns (ExampleDeleteResponse) {
+    rpc Delete (DeleteRequest) returns (DeleteResponse) {
         option (google.api.http) = {
             delete: "/api/v1/example/delete"
+        };
+    }
+
+    // TestCustomHttp 测试自定义http
+    rpc TestCustomHttp(TestCustomHttpRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            get: "/api/v1/example/testCustomHttp"
+        };
+    }
+
+    // TestError 测试错误
+    rpc TestError(TestErrorRequest) returns (TestErrorResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/example/testError"
         };
     }
 }
 
 // Example 示例
-message Example {
-    // ID
-    int64 id = 1;
-    // 唯一标识
-    string uuid = 2;
+message Example{
+    // id
+    string id = 1;
     // 名称
-    string name = 3;
+    string name = 2;
     // 类型
-    flamefatex.grpc_gateway_example.enumeration.ExampleType type = 4;
+    flamefatex.grpc_gateway_example.enumeration.ExampleType type = 3;
     // 描述
-    string description = 5;
+    string description = 4;
     // 创建时间
-    google.protobuf.Timestamp create_time = 6;
+    google.protobuf.Timestamp created_at = 5;
     // 更新时间
-    google.protobuf.Timestamp update_time = 7;
+    google.protobuf.Timestamp updated_at = 6;
 }
 
-// ExampleListRequest 查询示例列表请求
-message ExampleListRequest {
+// ListRequest 查询示例列表请求
+message ListRequest {
     // 分页
     flamefatex.grpc_gateway_example.common.paging.Paging paging = 1;
-    // ID
-    int64 id = 2;
+    // id
+    string id = 2;
     // 名称
     string name = 3;
 }
 
-// ExampleListResponse 查询示例列表响应
-message ExampleListResponse {
-    // 请求ID
+// ListResponse 查询示例列表响应
+message ListResponse {
+    // 请求id
     string request_id = 1;
     // 请求状态
-    flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
     // 分页
     flamefatex.grpc_gateway_example.common.paging.Paging paging = 3;
     // 示例列表
     repeated Example examples = 4;
 }
 
-// ExampleGetRequest 查询单个示例请求
-message ExampleGetRequest {
-    // 唯一标识
-    string uuid = 1 [(validate.rules).string.prefix = "example"];
+// GetRequest 查询单个示例请求
+message GetRequest {
+    // id
+    string id = 1 [(validate.rules).string.prefix = "example"];
 }
 
-// ExampleGetResponse 查询单个示例响应
-message ExampleGetResponse {
-    // 请求ID
+// GetResponse 查询单个示例响应
+message GetResponse {
+    // 请求id
     string request_id = 1;
     // 请求状态
-    flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
     // 示例
     Example example = 3;
 }
 
-// ExampleCreateRequest 创建示例请求
-message ExampleCreateRequest {
+// CreateRequest 创建示例请求
+message CreateRequest {
     // 示例
     Example example = 1 [(validate.rules).message.required = true];
 }
 
-// ExampleCreateResponse 创建示例响应
-message ExampleCreateResponse {
-    // 请求ID
+// CreateResponse 创建示例响应
+message CreateResponse {
+    // 请求id
     string request_id = 1;
     // 请求状态
-    flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
 }
 
-// ExampleUpdateRequest 更新示例请求
-message ExampleUpdateRequest {
+// UpdateRequest 更新示例请求
+message UpdateRequest {
     // 示例
     Example example = 1 [(validate.rules).message.required = true];;
 }
 
-// ExampleUpdateResponse 更新示例响应
-message ExampleUpdateResponse {
-    // 请求ID
+// UpdateResponse 更新示例响应
+message UpdateResponse {
+    // 请求id
     string request_id = 1;
     // 请求状态
-    flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
 }
 
-// ExampleDeleteRequest 删除示例请求
-message ExampleDeleteRequest {
-    // 唯一标识
-    string uuid = 1 [(validate.rules).string.prefix = "example"];
+// DeleteRequest 删除示例请求
+message DeleteRequest {
+    // id
+    string id = 1 [(validate.rules).string.prefix = "example"];
 }
 
-// ExampleDeleteResponse 删除示例响应
-message ExampleDeleteResponse {
-    // 请求ID
+// DeleteResponse 删除示例响应
+message DeleteResponse {
+    // 请求id
     string request_id = 1;
     // 请求状态
-    flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
+}
+
+// TestCustomHttpRequest 测试自定义http
+message TestCustomHttpRequest{
+    // http status code
+    string code = 1;
+}
+
+// TestErrorRequest 测试错误单个示例请求
+message TestErrorRequest {
+
+}
+
+// TestErrorResponse 测试错误单个示例响应
+message TestErrorResponse {
+    // 请求id
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
+    // 示例
+    Example example = 3;
 }

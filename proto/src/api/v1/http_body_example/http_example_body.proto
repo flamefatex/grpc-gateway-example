@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package flamefatex.grpc_gateway_example.api.v1.http_body_example;
+
+import "google/api/httpbody.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service HttpBodyExampleService {
+  rpc HelloWorld(google.protobuf.Empty) returns (google.api.HttpBody) {
+    option (google.api.http) = {
+      get: "/api/v1/httpBodyExample/helloWord"
+    };
+  }
+  rpc Download(google.protobuf.Empty) returns (stream google.api.HttpBody) {
+    option (google.api.http) = {
+      get: "/api/v1/httpBodyExample/download"
+    };
+  }
+}

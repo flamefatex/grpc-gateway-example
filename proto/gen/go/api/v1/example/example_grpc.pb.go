@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -23,15 +24,19 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ExampleServiceClient interface {
 	// List 查询示例列表
-	List(ctx context.Context, in *ExampleListRequest, opts ...grpc.CallOption) (*ExampleListResponse, error)
+	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
 	// Get 查询单个示例
-	Get(ctx context.Context, in *ExampleGetRequest, opts ...grpc.CallOption) (*ExampleGetResponse, error)
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
 	// Create 创建示例
-	Create(ctx context.Context, in *ExampleCreateRequest, opts ...grpc.CallOption) (*ExampleCreateResponse, error)
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
 	// Update 更新示例
-	Update(ctx context.Context, in *ExampleUpdateRequest, opts ...grpc.CallOption) (*ExampleUpdateResponse, error)
+	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 	// Delete 删除示例
-	Delete(ctx context.Context, in *ExampleDeleteRequest, opts ...grpc.CallOption) (*ExampleDeleteResponse, error)
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
+	// TestCustomHttp 测试自定义http
+	TestCustomHttp(ctx context.Context, in *TestCustomHttpRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// TestError 测试错误
+	TestError(ctx context.Context, in *TestErrorRequest, opts ...grpc.CallOption) (*TestErrorResponse, error)
 }
 
 type exampleServiceClient struct {
@@ -42,8 +47,8 @@ func NewExampleServiceClient(cc grpc.ClientConnInterface) ExampleServiceClient {
 	return &exampleServiceClient{cc}
 }
 
-func (c *exampleServiceClient) List(ctx context.Context, in *ExampleListRequest, opts ...grpc.CallOption) (*ExampleListResponse, error) {
-	out := new(ExampleListResponse)
+func (c *exampleServiceClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
+	out := new(ListResponse)
 	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/List", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -51,8 +56,8 @@ func (c *exampleServiceClient) List(ctx context.Context, in *ExampleListRequest,
 	return out, nil
 }
 
-func (c *exampleServiceClient) Get(ctx context.Context, in *ExampleGetRequest, opts ...grpc.CallOption) (*ExampleGetResponse, error) {
-	out := new(ExampleGetResponse)
+func (c *exampleServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	out := new(GetResponse)
 	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Get", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -60,8 +65,8 @@ func (c *exampleServiceClient) Get(ctx context.Context, in *ExampleGetRequest, o
 	return out, nil
 }
 
-func (c *exampleServiceClient) Create(ctx context.Context, in *ExampleCreateRequest, opts ...grpc.CallOption) (*ExampleCreateResponse, error) {
-	out := new(ExampleCreateResponse)
+func (c *exampleServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+	out := new(CreateResponse)
 	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Create", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -69,8 +74,8 @@ func (c *exampleServiceClient) Create(ctx context.Context, in *ExampleCreateRequ
 	return out, nil
 }
 
-func (c *exampleServiceClient) Update(ctx context.Context, in *ExampleUpdateRequest, opts ...grpc.CallOption) (*ExampleUpdateResponse, error) {
-	out := new(ExampleUpdateResponse)
+func (c *exampleServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+	out := new(UpdateResponse)
 	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -78,9 +83,27 @@ func (c *exampleServiceClient) Update(ctx context.Context, in *ExampleUpdateRequ
 	return out, nil
 }
 
-func (c *exampleServiceClient) Delete(ctx context.Context, in *ExampleDeleteRequest, opts ...grpc.CallOption) (*ExampleDeleteResponse, error) {
-	out := new(ExampleDeleteResponse)
+func (c *exampleServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
+	out := new(DeleteResponse)
 	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exampleServiceClient) TestCustomHttp(ctx context.Context, in *TestCustomHttpRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/TestCustomHttp", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exampleServiceClient) TestError(ctx context.Context, in *TestErrorRequest, opts ...grpc.CallOption) (*TestErrorResponse, error) {
+	out := new(TestErrorResponse)
+	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/TestError", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -92,15 +115,19 @@ func (c *exampleServiceClient) Delete(ctx context.Context, in *ExampleDeleteRequ
 // for forward compatibility
 type ExampleServiceServer interface {
 	// List 查询示例列表
-	List(context.Context, *ExampleListRequest) (*ExampleListResponse, error)
+	List(context.Context, *ListRequest) (*ListResponse, error)
 	// Get 查询单个示例
-	Get(context.Context, *ExampleGetRequest) (*ExampleGetResponse, error)
+	Get(context.Context, *GetRequest) (*GetResponse, error)
 	// Create 创建示例
-	Create(context.Context, *ExampleCreateRequest) (*ExampleCreateResponse, error)
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
 	// Update 更新示例
-	Update(context.Context, *ExampleUpdateRequest) (*ExampleUpdateResponse, error)
+	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
 	// Delete 删除示例
-	Delete(context.Context, *ExampleDeleteRequest) (*ExampleDeleteResponse, error)
+	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
+	// TestCustomHttp 测试自定义http
+	TestCustomHttp(context.Context, *TestCustomHttpRequest) (*emptypb.Empty, error)
+	// TestError 测试错误
+	TestError(context.Context, *TestErrorRequest) (*TestErrorResponse, error)
 	mustEmbedUnimplementedExampleServiceServer()
 }
 
@@ -108,20 +135,26 @@ type ExampleServiceServer interface {
 type UnimplementedExampleServiceServer struct {
 }
 
-func (UnimplementedExampleServiceServer) List(context.Context, *ExampleListRequest) (*ExampleListResponse, error) {
+func (UnimplementedExampleServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedExampleServiceServer) Get(context.Context, *ExampleGetRequest) (*ExampleGetResponse, error) {
+func (UnimplementedExampleServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
-func (UnimplementedExampleServiceServer) Create(context.Context, *ExampleCreateRequest) (*ExampleCreateResponse, error) {
+func (UnimplementedExampleServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedExampleServiceServer) Update(context.Context, *ExampleUpdateRequest) (*ExampleUpdateResponse, error) {
+func (UnimplementedExampleServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedExampleServiceServer) Delete(context.Context, *ExampleDeleteRequest) (*ExampleDeleteResponse, error) {
+func (UnimplementedExampleServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedExampleServiceServer) TestCustomHttp(context.Context, *TestCustomHttpRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TestCustomHttp not implemented")
+}
+func (UnimplementedExampleServiceServer) TestError(context.Context, *TestErrorRequest) (*TestErrorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TestError not implemented")
 }
 func (UnimplementedExampleServiceServer) mustEmbedUnimplementedExampleServiceServer() {}
 
@@ -137,7 +170,7 @@ func RegisterExampleServiceServer(s grpc.ServiceRegistrar, srv ExampleServiceSer
 }
 
 func _ExampleService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExampleListRequest)
+	in := new(ListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -149,13 +182,13 @@ func _ExampleService_List_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/List",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServiceServer).List(ctx, req.(*ExampleListRequest))
+		return srv.(ExampleServiceServer).List(ctx, req.(*ListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ExampleService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExampleGetRequest)
+	in := new(GetRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -167,13 +200,13 @@ func _ExampleService_Get_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Get",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServiceServer).Get(ctx, req.(*ExampleGetRequest))
+		return srv.(ExampleServiceServer).Get(ctx, req.(*GetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ExampleService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExampleCreateRequest)
+	in := new(CreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -185,13 +218,13 @@ func _ExampleService_Create_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Create",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServiceServer).Create(ctx, req.(*ExampleCreateRequest))
+		return srv.(ExampleServiceServer).Create(ctx, req.(*CreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ExampleService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExampleUpdateRequest)
+	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -203,13 +236,13 @@ func _ExampleService_Update_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Update",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServiceServer).Update(ctx, req.(*ExampleUpdateRequest))
+		return srv.(ExampleServiceServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ExampleService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExampleDeleteRequest)
+	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -221,7 +254,43 @@ func _ExampleService_Delete_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServiceServer).Delete(ctx, req.(*ExampleDeleteRequest))
+		return srv.(ExampleServiceServer).Delete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExampleService_TestCustomHttp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TestCustomHttpRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExampleServiceServer).TestCustomHttp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/TestCustomHttp",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExampleServiceServer).TestCustomHttp(ctx, req.(*TestCustomHttpRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExampleService_TestError_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TestErrorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExampleServiceServer).TestError(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/TestError",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExampleServiceServer).TestError(ctx, req.(*TestErrorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -252,6 +321,14 @@ var ExampleService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _ExampleService_Delete_Handler,
+		},
+		{
+			MethodName: "TestCustomHttp",
+			Handler:    _ExampleService_TestCustomHttp_Handler,
+		},
+		{
+			MethodName: "TestError",
+			Handler:    _ExampleService_TestError_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

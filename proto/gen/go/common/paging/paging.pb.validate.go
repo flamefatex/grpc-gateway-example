@@ -56,13 +56,13 @@ func (m *Paging) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for TotalPage
-
 	// no validation rules for Page
 
-	// no validation rules for PerPage
+	// no validation rules for PageSize
 
-	// no validation rules for TotalRecord
+	// no validation rules for TotalCount
+
+	// no validation rules for TotalPage
 
 	if len(errors) > 0 {
 		return PagingMultiError(errors)

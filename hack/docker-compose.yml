@@ -1,0 +1,58 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql:8.0.32
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: example
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/my.cnf:/etc/my.cnf.d/my.cnf
+
+  redis:
+    image: redis:6.2.11
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/conf:/usr/local/etc/redis
+    command: /usr/local/etc/redis/redis.conf
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.43.0
+    restart: always
+#    environment:
+#      COLLECTOR_OTLP_ENABLED: true
+#      COLLECTOR_ZIPKIN_HOST_PORT: 9411
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14250:14250"
+      - "14268:14268"
+      - "14269:14269"
+      - "4317:4317"
+      - "4318:4318"
+      - "9411:9411"
+
+#  example:
+#    image: flamefatex/grpc-gateway-example:latest
+#    restart: always
+#    depends_on:
+#      - mysql
+#    ports:
+#      - "8081:8081"
+#      - "8082:8082"
+#    volumes:
+#      - ../config.yml:/etc/grpc-gateway-example/config.yml

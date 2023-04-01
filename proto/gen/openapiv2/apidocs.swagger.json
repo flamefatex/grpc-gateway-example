@@ -7,6 +7,9 @@
   "tags": [
     {
       "name": "ExampleService"
+    },
+    {
+      "name": "HttpBodyExampleService"
     }
   ],
   "consumes": [
@@ -24,7 +27,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateResponse"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.CreateResponse"
             }
           }
         },
@@ -34,7 +37,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateRequest"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.CreateRequest"
             }
           }
         ],
@@ -51,14 +54,14 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleDeleteResponse"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.DeleteResponse"
             }
           }
         },
         "parameters": [
           {
-            "name": "uuid",
-            "description": "唯一标识",
+            "name": "id",
+            "description": "id",
             "in": "query",
             "required": false,
             "type": "string"
@@ -77,14 +80,14 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleGetResponse"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.GetResponse"
             }
           }
         },
         "parameters": [
           {
-            "name": "uuid",
-            "description": "唯一标识",
+            "name": "id",
+            "description": "id",
             "in": "query",
             "required": false,
             "type": "string"
@@ -103,19 +106,11 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleListResponse"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ListResponse"
             }
           }
         },
         "parameters": [
-          {
-            "name": "paging.totalPage",
-            "description": "总页数",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
           {
             "name": "paging.page",
             "description": "当前页数",
@@ -125,7 +120,7 @@
             "format": "int32"
           },
           {
-            "name": "paging.perPage",
+            "name": "paging.pageSize",
             "description": "每页显示的记录条数",
             "in": "query",
             "required": false,
@@ -133,8 +128,16 @@
             "format": "int32"
           },
           {
-            "name": "paging.totalRecord",
-            "description": "总记录数",
+            "name": "paging.totalCount",
+            "description": "总数",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "paging.totalPage",
+            "description": "总页数",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -142,11 +145,10 @@
           },
           {
             "name": "id",
-            "description": "ID",
+            "description": "id",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "name",
@@ -161,6 +163,50 @@
         ]
       }
     },
+    "/api/v1/example/testCustomHttp": {
+      "get": {
+        "summary": "TestCustomHttp 测试自定义http",
+        "operationId": "ExampleService_TestCustomHttp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "description": "http status code",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ExampleService"
+        ]
+      }
+    },
+    "/api/v1/example/testError": {
+      "get": {
+        "summary": "TestError 测试错误",
+        "operationId": "ExampleService_TestError",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.TestErrorResponse"
+            }
+          }
+        },
+        "tags": [
+          "ExampleService"
+        ]
+      }
+    },
     "/api/v1/example/update": {
       "put": {
         "summary": "Update 更新示例",
@@ -169,7 +215,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateResponse"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.UpdateResponse"
             }
           }
         },
@@ -179,7 +225,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateRequest"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.UpdateRequest"
             }
           }
         ],
@@ -187,20 +233,94 @@
           "ExampleService"
         ]
       }
+    },
+    "/api/v1/httpBodyExample/download": {
+      "get": {
+        "operationId": "HttpBodyExampleService_Download",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/google.api.HttpBody"
+                },
+                "error": {
+                  "$ref": "#/definitions/google.rpc.Status"
+                }
+              },
+              "title": "Stream result of google.api.HttpBody"
+            }
+          }
+        },
+        "tags": [
+          "HttpBodyExampleService"
+        ]
+      }
+    },
+    "/api/v1/httpBodyExample/helloWord": {
+      "get": {
+        "operationId": "HttpBodyExampleService_HelloWorld",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/google.api.HttpBody"
+            }
+          }
+        },
+        "tags": [
+          "HttpBodyExampleService"
+        ]
+      }
     }
   },
   "definitions": {
+    "flamefatex.grpc_gateway_example.api.v1.example.CreateRequest": {
+      "type": "object",
+      "properties": {
+        "example": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.Example",
+          "title": "示例"
+        }
+      },
+      "title": "CreateRequest 创建示例请求"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.CreateResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "title": "请求id"
+        },
+        "status": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
+          "title": "请求状态"
+        }
+      },
+      "title": "CreateResponse 创建示例响应"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.DeleteResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "title": "请求id"
+        },
+        "status": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
+          "title": "请求状态"
+        }
+      },
+      "title": "DeleteResponse 删除示例响应"
+    },
     "flamefatex.grpc_gateway_example.api.v1.example.Example": {
       "type": "object",
       "properties": {
         "id": {
           "type": "string",
-          "format": "int64",
-          "title": "ID"
-        },
-        "uuid": {
-          "type": "string",
-          "title": "唯一标识"
+          "title": "id"
         },
         "name": {
           "type": "string",
@@ -214,12 +334,12 @@
           "type": "string",
           "title": "描述"
         },
-        "createTime": {
+        "createdAt": {
           "type": "string",
           "format": "date-time",
           "title": "创建时间"
         },
-        "updateTime": {
+        "updatedAt": {
           "type": "string",
           "format": "date-time",
           "title": "更新时间"
@@ -227,53 +347,15 @@
       },
       "title": "Example 示例"
     },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateRequest": {
-      "type": "object",
-      "properties": {
-        "example": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.Example",
-          "title": "示例"
-        }
-      },
-      "title": "ExampleCreateRequest 创建示例请求"
-    },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateResponse": {
+    "flamefatex.grpc_gateway_example.api.v1.example.GetResponse": {
       "type": "object",
       "properties": {
         "requestId": {
           "type": "string",
-          "title": "请求ID"
+          "title": "请求id"
         },
         "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
-          "title": "请求状态"
-        }
-      },
-      "title": "ExampleCreateResponse 创建示例响应"
-    },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleDeleteResponse": {
-      "type": "object",
-      "properties": {
-        "requestId": {
-          "type": "string",
-          "title": "请求ID"
-        },
-        "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
-          "title": "请求状态"
-        }
-      },
-      "title": "ExampleDeleteResponse 删除示例响应"
-    },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleGetResponse": {
-      "type": "object",
-      "properties": {
-        "requestId": {
-          "type": "string",
-          "title": "请求ID"
-        },
-        "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
           "title": "请求状态"
         },
         "example": {
@@ -281,17 +363,17 @@
           "title": "示例"
         }
       },
-      "title": "ExampleGetResponse 查询单个示例响应"
+      "title": "GetResponse 查询单个示例响应"
     },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleListResponse": {
+    "flamefatex.grpc_gateway_example.api.v1.example.ListResponse": {
       "type": "object",
       "properties": {
         "requestId": {
           "type": "string",
-          "title": "请求ID"
+          "title": "请求id"
         },
         "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
           "title": "请求状态"
         },
         "paging": {
@@ -306,9 +388,27 @@
           "title": "示例列表"
         }
       },
-      "title": "ExampleListResponse 查询示例列表响应"
+      "title": "ListResponse 查询示例列表响应"
     },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateRequest": {
+    "flamefatex.grpc_gateway_example.api.v1.example.TestErrorResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "title": "请求id"
+        },
+        "status": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
+          "title": "请求状态"
+        },
+        "example": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.Example",
+          "title": "示例"
+        }
+      },
+      "title": "TestErrorResponse 测试错误单个示例响应"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.UpdateRequest": {
       "type": "object",
       "properties": {
         "example": {
@@ -316,61 +416,73 @@
           "title": "示例"
         }
       },
-      "title": "ExampleUpdateRequest 更新示例请求"
+      "title": "UpdateRequest 更新示例请求"
     },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateResponse": {
+    "flamefatex.grpc_gateway_example.api.v1.example.UpdateResponse": {
       "type": "object",
       "properties": {
         "requestId": {
           "type": "string",
-          "title": "请求ID"
+          "title": "请求id"
         },
         "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
           "title": "请求状态"
         }
       },
-      "title": "ExampleUpdateResponse 更新示例响应"
+      "title": "UpdateResponse 更新示例响应"
     },
     "flamefatex.grpc_gateway_example.common.paging.Paging": {
       "type": "object",
       "properties": {
-        "totalPage": {
-          "type": "integer",
-          "format": "int32",
-          "title": "总页数"
-        },
         "page": {
           "type": "integer",
           "format": "int32",
           "title": "当前页数"
         },
-        "perPage": {
+        "pageSize": {
           "type": "integer",
           "format": "int32",
           "title": "每页显示的记录条数"
         },
-        "totalRecord": {
+        "totalCount": {
           "type": "integer",
           "format": "int32",
-          "title": "总记录数"
+          "title": "总数"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int32",
+          "title": "总页数"
         }
       },
       "title": "Paging 分页"
     },
-    "flamefatex.grpc_gateway_example.common.status.ResponseStatus": {
+    "flamefatex.grpc_gateway_example.common.status.Status": {
       "type": "object",
       "properties": {
         "code": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态码,"
+        },
+        "reason": {
           "type": "string",
-          "title": "状态码,\n1. ok\n2. InternalError"
+          "title": "业务错误码"
         },
         "message": {
           "type": "string",
-          "description": "信息,\n1. OK\n2. An unknown error occurred while processing your request."
+          "title": "具体信息"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "元数据"
         }
       },
-      "title": "ResponseStatus 请求返回状态,\nok对应http状态码200\nInternalError对应http状态码500"
+      "title": "Status 请求返回状态,\nok对应http状态码200\nInternalError对应http状态码500"
     },
     "flamefatex.grpc_gateway_example.enumeration.ExampleType": {
       "type": "string",
@@ -382,6 +494,39 @@
       "default": "EXAMPLE_TYPE_UNSPECIFIED",
       "description": "- EXAMPLE_TYPE_UNSPECIFIED: 未指定\n - EXAMPLE_TYPE_ONE: 类型1\n - EXAMPLE_TYPE_TOW: 类型2",
       "title": "ExampleType 示例类型"
+    },
+    "google.api.HttpBody": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "description": "The HTTP Content-Type header value specifying the content type of the body."
+        },
+        "data": {
+          "type": "string",
+          "format": "byte",
+          "description": "The HTTP request/response body as raw binary."
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/google.protobuf.Any"
+          },
+          "description": "Application specific response metadata. Must be set in the first response\nfor streaming APIs."
+        }
+      },
+      "description": "Message that represents an arbitrary HTTP body. It should only be used for\npayload formats that can't be represented as JSON, such as raw binary or\nan HTML page.\n\n\nThis message can be used both in streaming and non-streaming API methods in\nthe request as well as the response.\n\nIt can be used as a top-level request field, which is convenient if one\nwants to extract parameters from either the URL or HTTP template into the\nrequest fields and also want access to the raw HTTP body.\n\nExample:\n\n    message GetResourceRequest {\n      // A unique request id.\n      string request_id = 1;\n\n      // The raw HTTP body is bound to this field.\n      google.api.HttpBody http_body = 2;\n\n    }\n\n    service ResourceService {\n      rpc GetResource(GetResourceRequest)\n        returns (google.api.HttpBody);\n      rpc UpdateResource(google.api.HttpBody)\n        returns (google.protobuf.Empty);\n\n    }\n\nExample with streaming methods:\n\n    service CaldavService {\n      rpc GetCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n      rpc UpdateCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n\n    }\n\nUse of this type only changes how the request and response bodies are\nhandled, all other features will continue to work unchanged."
+    },
+    "google.protobuf.Any": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "description": "A URL/resource name that uniquely identifies the type of the serialized\nprotocol buffer message. This string must contain at least\none \"/\" character. The last segment of the URL's path must represent\nthe fully qualified name of the type (as in\n`path/google.protobuf.Duration`). The name should be in a canonical form\n(e.g., leading \".\" is not accepted).\n\nIn practice, teams usually precompile into the binary all types that they\nexpect it to use in the context of Any. However, for URLs which use the\nscheme `http`, `https`, or no scheme, one can optionally set up a type\nserver that maps type URLs to message definitions as follows:\n\n* If no scheme is provided, `https` is assumed.\n* An HTTP GET on the URL must yield a [google.protobuf.Type][]\n  value in binary format, or produce an error.\n* Applications are allowed to cache lookup results based on the\n  URL, or have them precompiled into a binary to avoid any\n  lookup. Therefore, binary compatibility needs to be preserved\n  on changes to types. (Use versioned type names to manage\n  breaking changes.)\n\nNote: this functionality is not currently available in the official\nprotobuf release, and it is not used for type URLs beginning with\ntype.googleapis.com.\n\nSchemes other than `http`, `https` (or the empty scheme) might be\nused with implementation specific semantics."
+        }
+      },
+      "additionalProperties": {},
+      "description": "`Any` contains an arbitrary serialized protocol buffer message along with a\nURL that describes the type of the serialized message.\n\nProtobuf library provides support to pack/unpack Any values in the form\nof utility functions or additional generated methods of the Any type.\n\nExample 1: Pack and unpack a message in C++.\n\n    Foo foo = ...;\n    Any any;\n    any.PackFrom(foo);\n    ...\n    if (any.UnpackTo(\u0026foo)) {\n      ...\n    }\n\nExample 2: Pack and unpack a message in Java.\n\n    Foo foo = ...;\n    Any any = Any.pack(foo);\n    ...\n    if (any.is(Foo.class)) {\n      foo = any.unpack(Foo.class);\n    }\n    // or ...\n    if (any.isSameTypeAs(Foo.getDefaultInstance())) {\n      foo = any.unpack(Foo.getDefaultInstance());\n    }\n\nExample 3: Pack and unpack a message in Python.\n\n    foo = Foo(...)\n    any = Any()\n    any.Pack(foo)\n    ...\n    if any.Is(Foo.DESCRIPTOR):\n      any.Unpack(foo)\n      ...\n\nExample 4: Pack and unpack a message in Go\n\n     foo := \u0026pb.Foo{...}\n     any, err := anypb.New(foo)\n     if err != nil {\n       ...\n     }\n     ...\n     foo := \u0026pb.Foo{}\n     if err := any.UnmarshalTo(foo); err != nil {\n       ...\n     }\n\nThe pack methods provided by protobuf library will by default use\n'type.googleapis.com/full.type.name' as the type URL and the unpack\nmethods only use the fully qualified type name after the last '/'\nin the type URL, for example \"foo.bar.com/x/y.z\" will yield type\nname \"y.z\".\n\nJSON\n\nThe JSON representation of an `Any` value uses the regular\nrepresentation of the deserialized, embedded message, with an\nadditional field `@type` which contains the type URL. Example:\n\n    package google.profile;\n    message Person {\n      string first_name = 1;\n      string last_name = 2;\n    }\n\n    {\n      \"@type\": \"type.googleapis.com/google.profile.Person\",\n      \"firstName\": \u003cstring\u003e,\n      \"lastName\": \u003cstring\u003e\n    }\n\nIf the embedded message type is well-known and has a custom JSON\nrepresentation, that representation will be embedded adding a field\n`value` which holds the custom JSON in addition to the `@type`\nfield. Example (for message [google.protobuf.Duration][]):\n\n    {\n      \"@type\": \"type.googleapis.com/google.protobuf.Duration\",\n      \"value\": \"1.212s\"\n    }"
     }
   }
 }
