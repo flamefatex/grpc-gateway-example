@@ -216,10 +216,20 @@
         },
         "createTime": {
           "type": "string",
-          "format": "date-time",
+          "format": "int64",
           "title": "创建时间"
         },
         "updateTime": {
+          "type": "string",
+          "format": "int64",
+          "title": "更新时间"
+        },
+        "createTimestamp": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updateTimestamp": {
           "type": "string",
           "format": "date-time",
           "title": "更新时间"

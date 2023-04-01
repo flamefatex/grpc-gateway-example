@@ -2,46 +2,36 @@ package main
 
 import (
 	"context"
-	"flag"
-	"net/http"
 
-	"github.com/golang/glog"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-
-	example "github.com/flamefatex/grpc-gateway-example/proto/gen/go/api/v1/example"
+	"github.com/flamefatex/grpc-gateway-example/definition"
+	bs_grpc "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/grpc"
+	bs_http "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/http"
+	bs_log "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/log"
+	bs_opentracing "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/opentracing"
+	"github.com/flamefatex/grpc-gateway-example/pkg/lib/config"
+	"github.com/flamefatex/grpc-gateway-example/pkg/lib/log"
 )
-
-var (
-	// command-line options:
-	// gRPC server endpoint
-	grpcServerEndpoint = flag.String("grpc-server-endpoint", "localhost:9090", "gRPC server endpoint")
-)
-
-func run() error {
-	ctx := context.Background()
-	ctx, cancel := context.WithCancel(ctx)
-	defer cancel()
-
-	// Register gRPC server endpoint
-	// Note: Make sure the gRPC server is running properly and accessible
-	mux := runtime.NewServeMux()
-	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	err := example.RegisterExampleServiceHandlerFromEndpoint(ctx, mux, *grpcServerEndpoint, opts)
-	if err != nil {
-		return err
-	}
-
-	// Start HTTP server (and proxy calls to gRPC server endpoint)
-	return http.ListenAndServe(":8081", mux)
-}
 
 func main() {
-	flag.Parse()
-	defer glog.Flush()
+	ctx := context.Background()
+	// 注入service name
+	log.SetLogger(log.WithField("service", definition.ServiceName))
+	// 初始化config
+	config.Init(definition.ServiceName)
 
-	if err := run(); err != nil {
-		glog.Fatal(err)
-	}
+	// 引导加载自定义log
+	bs_log.BootstrapLog(ctx)
+	// 引导加载opentracing
+	closer := bs_opentracing.BootstrapOpentracing(ctx)
+	defer func() {
+		if closer != nil {
+			_ = closer.Close()
+		}
+	}()
+
+	// 启动http
+	bs_http.BootstrapHttpServer(ctx)
+	// 启动grpc
+	bs_grpc.BootstrapGrpcServer(ctx)
+
 }
