@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package flamefatex.grpc_gateway_example.common.status;
+
+// ResponseStatus 请求返回状态,
+// ok对应http状态码200
+// InternalError对应http状态码500
+message ResponseStatus {
+    // 状态码,
+    // 1. ok
+    // 2. InternalError
+    string code = 1;
+    // 信息,
+    // 1. OK
+    // 2. An unknown error occurred while processing your request.
+    string message = 2;
+}
+
+// Response 通用的响应内容,
+// 可以作为删除、更新和错误的响应内容
+message Response {
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    status.ResponseStatus status = 2;
+}

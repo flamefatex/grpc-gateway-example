@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package flamefatex.grpc_gateway_example.enumeration;
+
+// ExampleType 示例类型
+enum ExampleType {
+    // 未指定
+    EXAMPLE_TYPE_UNSPECIFIED = 0;
+    // 类型1
+    EXAMPLE_TYPE_ONE = 1;
+    // 类型2
+    EXAMPLE_TYPE_TOW = 2;
+}
+

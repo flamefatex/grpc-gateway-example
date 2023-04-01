@@ -1,0 +1,150 @@
+syntax = "proto3";
+
+package flamefatex.grpc_gateway_example.api.v1.example;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+
+import  "common/paging/paging.proto";
+import  "common/status/status.proto";
+import  "enumeration/example.proto";
+
+// ExampleService 示例服务
+service ExampleService {
+    // List 查询示例列表
+    rpc List(ExampleListRequest) returns (ExampleListResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/example/list"
+        };
+    }
+
+    // Get 查询单个示例
+    rpc Get(ExampleGetRequest) returns (ExampleGetResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/example/get"
+        };
+    }
+
+    // Create 创建示例
+    rpc Create(ExampleCreateRequest) returns (ExampleCreateResponse) {
+        option (google.api.http) = {
+            post: "/api/v1/example/create"
+            body: "*"
+        };
+    }
+
+    // Update 更新示例
+    rpc Update(ExampleUpdateRequest) returns (ExampleUpdateResponse) {
+        option (google.api.http) = {
+            put: "/api/v1/example/update"
+            body: "*"
+        };
+    }
+
+    // Delete 删除示例
+    rpc Delete (ExampleDeleteRequest) returns (ExampleDeleteResponse) {
+        option (google.api.http) = {
+            delete: "/api/v1/example/delete"
+        };
+    }
+}
+
+// Example 示例
+message Example {
+    // ID
+    int64 id = 1;
+    // 唯一标识
+    string uuid = 2;
+    // 名称
+    string name = 3;
+    // 类型
+    flamefatex.grpc_gateway_example.enumeration.ExampleType type = 4;
+    // 描述
+    string description = 5;
+    // 创建时间
+    google.protobuf.Timestamp create_time = 6;
+    // 更新时间
+    google.protobuf.Timestamp update_time = 7;
+}
+
+// ExampleListRequest 查询示例列表请求
+message ExampleListRequest {
+    // 分页
+    flamefatex.grpc_gateway_example.common.paging.Paging paging = 1;
+    // ID
+    int64 id = 2;
+    // 名称
+    string name = 3;
+}
+
+// ExampleListResponse 查询示例列表响应
+message ExampleListResponse {
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+    // 分页
+    flamefatex.grpc_gateway_example.common.paging.Paging paging = 3;
+    // 示例列表
+    repeated Example examples = 4;
+}
+
+// ExampleGetRequest 查询单个示例请求
+message ExampleGetRequest {
+    // 唯一标识
+    string uuid = 1 [(validate.rules).string.prefix = "example"];
+}
+
+// ExampleGetResponse 查询单个示例响应
+message ExampleGetResponse {
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+    // 示例
+    Example example = 3;
+}
+
+// ExampleCreateRequest 创建示例请求
+message ExampleCreateRequest {
+    // 示例
+    Example example = 1 [(validate.rules).message.required = true];
+}
+
+// ExampleCreateResponse 创建示例响应
+message ExampleCreateResponse {
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+}
+
+// ExampleUpdateRequest 更新示例请求
+message ExampleUpdateRequest {
+    // 示例
+    Example example = 1 [(validate.rules).message.required = true];;
+}
+
+// ExampleUpdateResponse 更新示例响应
+message ExampleUpdateResponse {
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+}
+
+// ExampleDeleteRequest 删除示例请求
+message ExampleDeleteRequest {
+    // 唯一标识
+    string uuid = 1 [(validate.rules).string.prefix = "example"];
+}
+
+// ExampleDeleteResponse 删除示例响应
+message ExampleDeleteResponse {
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+}

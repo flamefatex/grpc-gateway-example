@@ -1,0 +1,387 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "common/paging/paging.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ExampleService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/example/create": {
+      "post": {
+        "summary": "Create 创建示例",
+        "operationId": "ExampleService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ExampleService"
+        ]
+      }
+    },
+    "/api/v1/example/delete": {
+      "delete": {
+        "summary": "Delete 删除示例",
+        "operationId": "ExampleService_Delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleDeleteResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "唯一标识",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ExampleService"
+        ]
+      }
+    },
+    "/api/v1/example/get": {
+      "get": {
+        "summary": "Get 查询单个示例",
+        "operationId": "ExampleService_Get",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleGetResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "唯一标识",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ExampleService"
+        ]
+      }
+    },
+    "/api/v1/example/list": {
+      "get": {
+        "summary": "List 查询示例列表",
+        "operationId": "ExampleService_List",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleListResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "paging.totalPage",
+            "description": "总页数",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "paging.page",
+            "description": "当前页数",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "paging.perPage",
+            "description": "每页显示的记录条数",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "paging.totalRecord",
+            "description": "总记录数",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "id",
+            "description": "ID",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "name",
+            "description": "名称",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ExampleService"
+        ]
+      }
+    },
+    "/api/v1/example/update": {
+      "put": {
+        "summary": "Update 更新示例",
+        "operationId": "ExampleService_Update",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ExampleService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "flamefatex.grpc_gateway_example.api.v1.example.Example": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "ID"
+        },
+        "uuid": {
+          "type": "string",
+          "title": "唯一标识"
+        },
+        "name": {
+          "type": "string",
+          "title": "名称"
+        },
+        "type": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.enumeration.ExampleType",
+          "title": "类型"
+        },
+        "description": {
+          "type": "string",
+          "title": "描述"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        }
+      },
+      "title": "Example 示例"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateRequest": {
+      "type": "object",
+      "properties": {
+        "example": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.Example",
+          "title": "示例"
+        }
+      },
+      "title": "ExampleCreateRequest 创建示例请求"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "status": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "title": "请求状态"
+        }
+      },
+      "title": "ExampleCreateResponse 创建示例响应"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.ExampleDeleteResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "status": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "title": "请求状态"
+        }
+      },
+      "title": "ExampleDeleteResponse 删除示例响应"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.ExampleGetResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "status": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "title": "请求状态"
+        },
+        "example": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.Example",
+          "title": "示例"
+        }
+      },
+      "title": "ExampleGetResponse 查询单个示例响应"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.ExampleListResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "status": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "title": "请求状态"
+        },
+        "paging": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.paging.Paging",
+          "title": "分页"
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.Example"
+          },
+          "title": "示例列表"
+        }
+      },
+      "title": "ExampleListResponse 查询示例列表响应"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "example": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.Example",
+          "title": "示例"
+        }
+      },
+      "title": "ExampleUpdateRequest 更新示例请求"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "status": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "title": "请求状态"
+        }
+      },
+      "title": "ExampleUpdateResponse 更新示例响应"
+    },
+    "flamefatex.grpc_gateway_example.common.paging.Paging": {
+      "type": "object",
+      "properties": {
+        "totalPage": {
+          "type": "integer",
+          "format": "int32",
+          "title": "总页数"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32",
+          "title": "当前页数"
+        },
+        "perPage": {
+          "type": "integer",
+          "format": "int32",
+          "title": "每页显示的记录条数"
+        },
+        "totalRecord": {
+          "type": "integer",
+          "format": "int32",
+          "title": "总记录数"
+        }
+      },
+      "title": "Paging 分页"
+    },
+    "flamefatex.grpc_gateway_example.common.status.ResponseStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "title": "状态码,\n1. ok\n2. InternalError"
+        },
+        "message": {
+          "type": "string",
+          "description": "信息,\n1. OK\n2. An unknown error occurred while processing your request."
+        }
+      },
+      "title": "ResponseStatus 请求返回状态,\nok对应http状态码200\nInternalError对应http状态码500"
+    },
+    "flamefatex.grpc_gateway_example.enumeration.ExampleType": {
+      "type": "string",
+      "enum": [
+        "EXAMPLE_TYPE_UNSPECIFIED",
+        "EXAMPLE_TYPE_ONE",
+        "EXAMPLE_TYPE_TOW"
+      ],
+      "default": "EXAMPLE_TYPE_UNSPECIFIED",
+      "description": "- EXAMPLE_TYPE_UNSPECIFIED: 未指定\n - EXAMPLE_TYPE_ONE: 类型1\n - EXAMPLE_TYPE_TOW: 类型2",
+      "title": "ExampleType 示例类型"
+    }
+  }
+}

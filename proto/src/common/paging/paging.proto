@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package flamefatex.grpc_gateway_example.common.paging;
+
+// Paging 分页
+message Paging {
+    // 总页数
+    int32 total_page = 1;
+    // 当前页数
+    int32 page = 2;
+    // 每页显示的记录条数
+    int32 per_page = 3;
+    // 总记录数
+    int32 total_record = 4;
+}
