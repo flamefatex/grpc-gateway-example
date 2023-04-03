@@ -13,6 +13,7 @@ import (
 	lib_http_ctxtags "github.com/flamefatex/grpc-gateway-example/pkg/lib/http/middleware/ctxtags"
 	lib_http_inject_ctx "github.com/flamefatex/grpc-gateway-example/pkg/lib/http/middleware/inject_ctx"
 	lib_http_zap "github.com/flamefatex/grpc-gateway-example/pkg/lib/http/middleware/logging/zap"
+	lib_http_ot "github.com/flamefatex/grpc-gateway-example/pkg/lib/http/middleware/opentracing"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/log"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/logx"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -44,6 +45,7 @@ func BootstrapHttpServer(ctx context.Context) {
 		lib_http_inject_ctx.WithInjectCtxFunc(lib_http_inject_ctx.DefaultInjectFunc),
 	) // 注入request_id
 	handler = lib_http_zap.LoggingHandler(handler, definition.OrigZap)
+	handler = lib_http_ot.OpenTracingHandler(handler)  // 链路跟踪
 	handler = lib_http_ctxtags.CtxTagsHandler(handler) // ctx tags
 
 	httpServer := &http.Server{

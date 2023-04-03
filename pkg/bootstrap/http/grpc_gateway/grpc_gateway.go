@@ -6,7 +6,6 @@ import (
 
 	"github.com/flamefatex/grpc-gateway-example/definition"
 	"github.com/flamefatex/grpc-gateway-example/handler"
-	lib_grpc_client "github.com/flamefatex/grpc-gateway-example/pkg/lib/grpc/client"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -24,7 +23,7 @@ func GetGrpcGatewayMux(ctx context.Context) (ggMux *runtime.ServeMux, err error)
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	}
 	// client中间件
-	opts = append(opts, lib_grpc_client.GetGlobalMiddlewareDialOptions()...)
+	opts = append(opts, GetGlobalMiddlewareDialOptions()...)
 
 	// Register gRPC server endpoint
 	regs := handler.ExecRegisterGrpcGatewayEndpoint(ctx)
