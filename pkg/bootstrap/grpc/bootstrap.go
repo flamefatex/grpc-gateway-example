@@ -6,6 +6,7 @@ import (
 
 	"github.com/flamefatex/grpc-gateway-example/definition"
 	"github.com/flamefatex/grpc-gateway-example/handler"
+	lib_grpc_fill_response "github.com/flamefatex/grpc-gateway-example/pkg/lib/grpc/middleware/fill_response"
 	lib_grpc_inject_ctx "github.com/flamefatex/grpc-gateway-example/pkg/lib/grpc/middleware/inject_ctx"
 	lib_grpc_recovery "github.com/flamefatex/grpc-gateway-example/pkg/lib/grpc/middleware/recovery"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/log"
@@ -49,6 +50,7 @@ func BootstrapGrpcServer(ctx context.Context) {
 			grpc_zap.UnaryServerInterceptor(definition.OrigZap, grpc_zap.WithLevels(grpc_zap.DefaultCodeToLevel)),
 			lib_grpc_inject_ctx.UnaryServerInterceptor(lib_grpc_inject_ctx.WithInjectCtxFunc(lib_grpc_inject_ctx.DefaultInjectFunc)), // 注入request_id
 			grpc_validator.UnaryServerInterceptor(),
+			lib_grpc_fill_response.UnaryServerInterceptor(lib_grpc_fill_response.WithFillResponseFunc(lib_grpc_fill_response.DefaultFillFunc)),
 			grpc_recovery.UnaryServerInterceptor(grpc_recovery.WithRecoveryHandlerContext(lib_grpc_recovery.PrintStackHandlerFuncContext)),
 		)),
 	)
