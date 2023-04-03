@@ -31,7 +31,7 @@ func GetGlobalServeMuxOptions() []runtime.ServeMuxOption {
 			return metadata.New(md)
 		}),
 		// 自定义错误处理
-		//runtime.WithErrorHandler(DefaultHTTPErrorHandler),
+		runtime.WithErrorHandler(CustomHTTPErrorHandler),
 		// 序列化选项
 		runtime.WithMarshalerOption(
 			runtime.MIMEWildcard,
