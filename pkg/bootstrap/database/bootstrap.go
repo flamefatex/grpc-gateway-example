@@ -44,5 +44,7 @@ func BootstrapDatabase(ctx context.Context) {
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	// opentracing
-	db.Use(gormopentracing.New())
+	if config.Config().GetBool("mysql.enableOpentracing") {
+		db.Use(gormopentracing.New())
+	}
 }
