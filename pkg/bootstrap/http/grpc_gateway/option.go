@@ -40,7 +40,6 @@ func GetGlobalServeMuxOptions() []runtime.ServeMuxOption {
 			&runtime.JSONPb{
 				MarshalOptions: protojson.MarshalOptions{
 					UseProtoNames:   false,
-					UseEnumNumbers:  true,
 					EmitUnpopulated: true,
 				},
 				UnmarshalOptions: protojson.UnmarshalOptions{
