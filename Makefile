@@ -19,6 +19,12 @@ local-buf-update:
 .PHONY: local-buf-gen
 local-buf-gen:
 	@cd proto && buf generate
+.PHONY: gorm-gen
+gorm-gen:
+	rm -rf model/query
+	mkdir -p model/query
+	go run cmd/gorm-gen/gorm-gen.go --path model/query
+
 
 .PHONY: build
 build:
