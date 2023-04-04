@@ -5,7 +5,7 @@ BIN_NAME:=$(notdir $(shell pwd))
 VERSION := $(shell git branch | grep \* | cut -d ' ' -f2)
 GIT_COMMIT=$(shell git rev-parse HEAD)
 GIT_DIRTY=$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)
-
+IMAGE_NAME := "flamefatex/${BIN_NAME}"
 
 .PHONY: buf-update
 buf-update:
@@ -13,7 +13,6 @@ buf-update:
 .PHONY: buf-gen
 buf-gen:
 	@docker run --volume "`pwd`/proto:/workspace" --workdir /workspace bufbuild/buf:1.16.0 generate
-
 .PHONY: local-buf-update
 local-buf-update:
 	@cd proto/src && buf mod update
@@ -25,3 +24,7 @@ local-buf-gen:
 build:
 	@echo "building ${BIN_NAME} ${VERSION} ${GIT_COMMIT} ${GIT_DIRTY}"
 	go build -ldflags "-X main.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X main.VersionPrerelease=DEV" -o bin/${BIN_NAME}
+.PHONY: image
+image:
+	@echo "building image ${BIN_NAME} ${VERSION} ${GIT_COMMIT} ${GIT_DIRTY}"
+	docker build --build-arg APP_NAME=${BIN_NAME} --build-arg VERSION=${VERSION} --build-arg GIT_COMMIT=${GIT_COMMIT}${GIT_DIRTY} -t ${IMAGE_NAME}:latest .
