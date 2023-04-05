@@ -25,7 +25,6 @@ gorm-gen:
 	@mkdir -p model/query
 	@go run cmd/gorm-gen/gorm-gen.go --path model/query
 
-
 .PHONY: build
 build:
 	@echo "building ${BIN_NAME} ${VERSION} ${GIT_COMMIT} ${GIT_DIRTY}"
@@ -34,3 +33,6 @@ build:
 image:
 	@echo "building image ${BIN_NAME} ${VERSION} ${GIT_COMMIT} ${GIT_DIRTY}"
 	@docker build --build-arg APP_NAME=${BIN_NAME} --build-arg VERSION=${VERSION} --build-arg GIT_COMMIT=${GIT_COMMIT}${GIT_DIRTY} -t ${IMAGE_NAME}:latest .
+.PHONY: local-running
+local-running:
+	@sh hack/local-running.sh
