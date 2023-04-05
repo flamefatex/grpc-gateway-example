@@ -77,8 +77,8 @@ message Example {
 message ExampleListRequest {
     // 分页
     flamefatex.grpc_gateway_example.common.paging.Paging paging = 1;
-    // ID
-    int64 id = 2;
+    // uuid
+    string uuid = 2;
     // 名称
     string name = 3;
 }

@@ -13,8 +13,8 @@ type Example struct {
 	Name        string
 	Type        proto_enum.ExampleType
 	Description string
-	CreatedTime time.Time
-	UpdatedTime time.Time
+	CreateTime  time.Time
+	UpdateTime  time.Time
 }
 
 // ExampleQueryInterface example自定义查询接口
