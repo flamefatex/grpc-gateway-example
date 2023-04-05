@@ -260,7 +260,7 @@ func (m *ExampleListRequest) validate(all bool) error {
 		}
 	}
 
-	// no validation rules for Id
+	// no validation rules for Uuid
 
 	// no validation rules for Name
 

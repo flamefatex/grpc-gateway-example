@@ -109,14 +109,6 @@
         },
         "parameters": [
           {
-            "name": "paging.totalPage",
-            "description": "总页数",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
             "name": "paging.page",
             "description": "当前页数",
             "in": "query",
@@ -125,7 +117,7 @@
             "format": "int32"
           },
           {
-            "name": "paging.perPage",
+            "name": "paging.pageSize",
             "description": "每页显示的记录条数",
             "in": "query",
             "required": false,
@@ -133,20 +125,27 @@
             "format": "int32"
           },
           {
-            "name": "paging.totalRecord",
-            "description": "总记录数",
+            "name": "paging.totalCount",
+            "description": "总数",
             "in": "query",
             "required": false,
             "type": "integer",
             "format": "int32"
           },
           {
-            "name": "id",
-            "description": "ID",
+            "name": "paging.totalPage",
+            "description": "总页数",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "uuid",
+            "description": "uuid",
+            "in": "query",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "name",
@@ -345,25 +344,25 @@
     "flamefatex.grpc_gateway_example.common.paging.Paging": {
       "type": "object",
       "properties": {
-        "totalPage": {
-          "type": "integer",
-          "format": "int32",
-          "title": "总页数"
-        },
         "page": {
           "type": "integer",
           "format": "int32",
           "title": "当前页数"
         },
-        "perPage": {
+        "pageSize": {
           "type": "integer",
           "format": "int32",
           "title": "每页显示的记录条数"
         },
-        "totalRecord": {
+        "totalCount": {
           "type": "integer",
           "format": "int32",
-          "title": "总记录数"
+          "title": "总数"
+        },
+        "totalPage": {
+          "type": "integer",
+          "format": "int32",
+          "title": "总页数"
         }
       },
       "title": "Paging 分页"

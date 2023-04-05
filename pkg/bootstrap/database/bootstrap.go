@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/flamefatex/grpc-gateway-example/model/query"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -47,4 +48,7 @@ func BootstrapDatabase(ctx context.Context) {
 	if config.Config().GetBool("mysql.enableOpentracing") {
 		db.Use(gormopentracing.New())
 	}
+
+	// bind default db instance
+	query.SetDefault(db)
 }

@@ -18,13 +18,13 @@ services:
       - ./db/initdb.d:/docker-entrypoint-initdb.d
       - ./db/my.cnf:/etc/my.cnf.d/my.cnf
 
-  example:
-    image: flamefatex/grpc-gateway-example:latest
-    restart: always
-    depends_on:
-      - db
-    ports:
-      - "8081:8081"
-      - "8082:8082"
-    volumes:
-      - ../config.yml:/etc/grpc-gateway-example/config.yml
+#  example:
+#    image: flamefatex/grpc-gateway-example:latest
+#    restart: always
+#    depends_on:
+#      - db
+#    ports:
+#      - "8081:8081"
+#      - "8082:8082"
+#    volumes:
+#      - ../config.yml:/etc/grpc-gateway-example/config.yml

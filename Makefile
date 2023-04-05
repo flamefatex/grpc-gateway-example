@@ -21,16 +21,16 @@ local-buf-gen:
 	@cd proto && buf generate
 .PHONY: gorm-gen
 gorm-gen:
-	rm -rf model/query
-	mkdir -p model/query
-	go run cmd/gorm-gen/gorm-gen.go --path model/query
+	@rm -rf model/query
+	@mkdir -p model/query
+	@go run cmd/gorm-gen/gorm-gen.go --path model/query
 
 
 .PHONY: build
 build:
 	@echo "building ${BIN_NAME} ${VERSION} ${GIT_COMMIT} ${GIT_DIRTY}"
-	go build -ldflags "-X main.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X main.VersionPrerelease=DEV" -o bin/${BIN_NAME}
+	@go build -ldflags "-X main.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X main.VersionPrerelease=DEV" -o bin/${BIN_NAME}
 .PHONY: image
 image:
 	@echo "building image ${BIN_NAME} ${VERSION} ${GIT_COMMIT} ${GIT_DIRTY}"
-	docker build --build-arg APP_NAME=${BIN_NAME} --build-arg VERSION=${VERSION} --build-arg GIT_COMMIT=${GIT_COMMIT}${GIT_DIRTY} -t ${IMAGE_NAME}:latest .
+	@docker build --build-arg APP_NAME=${BIN_NAME} --build-arg VERSION=${VERSION} --build-arg GIT_COMMIT=${GIT_COMMIT}${GIT_DIRTY} -t ${IMAGE_NAME}:latest .
