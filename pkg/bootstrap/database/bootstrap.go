@@ -24,7 +24,7 @@ func BootstrapDatabase(ctx context.Context) {
 		logMode = logger.Info
 	}
 	gormConfig := &gorm.Config{
-		Logger: logger.Recorder.LogMode(logMode),
+		Logger: logger.Default.LogMode(logMode),
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true, // use singular table name, table for `User` would be `user` with this option enabled
 		},
@@ -48,6 +48,15 @@ func BootstrapDatabase(ctx context.Context) {
 	if config.Config().GetBool("mysql.enableOpentracing") {
 		db.Use(gormopentracing.New())
 	}
+
+	// gorm prometheus
+	//db.Use(prometheus.New(prometheus.Config{
+	//	DBName:          "example", // `DBName` as metrics label
+	//	RefreshInterval: 15,        // refresh metrics interval (default 15 seconds)
+	//	MetricsCollector: []prometheus.MetricsCollector{
+	//		&prometheus.MySQL{VariableNames: []string{"Threads_running"}},
+	//	},
+	//}))
 
 	// bind default db instance
 	query.SetDefault(db)
