@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  db:
+  mysql:
     image: mysql:8.0.32
     # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
     # (this is just an example, not intended to be a production configuration)
@@ -15,8 +15,17 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./db/initdb.d:/docker-entrypoint-initdb.d
-      - ./db/my.cnf:/etc/my.cnf.d/my.cnf
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/my.cnf:/etc/my.cnf.d/my.cnf
+
+  redis:
+    image: redis:6.2.11
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/conf:/usr/local/etc/redis
+    command: /usr/local/etc/redis/redis.conf
 
   jaeger:
     image: jaegertracing/all-in-one:1.43.0
