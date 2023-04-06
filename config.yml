@@ -33,7 +33,7 @@ redis:
   writeTimeout: 3s
   sentinel:
     addrs: [127.0.0.1:16379,127.0.0.1:16380,127.0.0.1:16381]
-    master_name: mymaster
+    masterName: mymaster
     password: foobared
     connectTimeout: 3s
     readTimeout: 3s
