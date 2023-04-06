@@ -35,10 +35,10 @@ redis:
     addrs: [127.0.0.1:16379,127.0.0.1:16380,127.0.0.1:16381]
     master_name: mymaster
     password: foobared
-    connect_timeout: 3s
-    read_timeout: 3s
-    write_timeout: 3s
-  mutex_expiry: 5s # 互斥锁过期时间
+    connectTimeout: 3s
+    readTimeout: 3s
+    writeTimeout: 3s
+  mutexExpiry: 5s # 互斥锁过期时间
 
 # pprof 性能分析
 pprof:
