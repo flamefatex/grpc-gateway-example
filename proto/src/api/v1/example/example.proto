@@ -49,6 +49,13 @@ service ExampleService {
             delete: "/api/v1/example/delete"
         };
     }
+
+    // Test test单个示例
+    rpc Test(ExampleTestRequest) returns (ExampleTestResponse) {
+        option (google.api.http) = {
+            get: "/api/v1/example/test"
+        };
+    }
 }
 
 // Example 示例
@@ -151,4 +158,20 @@ message ExampleDeleteResponse {
     string request_id = 1;
     // 请求状态
     flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+}
+
+// ExampleTestRequest test单个示例请求
+message ExampleTestRequest {
+    // 唯一标识
+    string uuid = 1 [(validate.rules).string.prefix = "example"];
+}
+
+// ExampleTestResponse test单个示例响应
+message ExampleTestResponse {
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+    // 示例
+    Example example = 3;
 }

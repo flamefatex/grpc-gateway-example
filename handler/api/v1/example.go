@@ -2,13 +2,17 @@ package v1
 
 import (
 	"context"
+	"fmt"
+	"strings"
 	"time"
 
+	"github.com/flamefatex/grpc-gateway-example/model"
 	"github.com/flamefatex/grpc-gateway-example/model/query"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/statusx"
 	util_paging "github.com/flamefatex/grpc-gateway-example/pkg/util/paging"
 	proto_v1_example "github.com/flamefatex/grpc-gateway-example/proto/gen/go/api/v1/example"
 	proto_enum "github.com/flamefatex/grpc-gateway-example/proto/gen/go/enumeration"
+	"github.com/rs/xid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"gorm.io/gen"
@@ -68,8 +72,84 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 
 func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleGetRequest) (resp *proto_v1_example.ExampleGetResponse, err error) {
 
+	resp = &proto_v1_example.ExampleGetResponse{}
+
+	q := query.Example
+
+	example, err := q.GetByUuid(req.Uuid)
+	if err != nil {
+		err = statusx.Errorf(codes.Internal, "get example failed, err: %w", err)
+		return
+	}
+
+	resp.Example = &proto_v1_example.Example{
+		Id:              example.Id,
+		Uuid:            example.Uuid,
+		Name:            example.Name,
+		Type:            example.Type,
+		Description:     example.Description,
+		CreateTime:      example.CreateTime.Unix(),
+		UpdateTime:      example.UpdateTime.Unix(),
+		CreateTimestamp: timestamppb.New(example.CreateTime),
+		UpdateTimestamp: timestamppb.New(example.UpdateTime),
+	}
+
+	return
+}
+
+func (h *exampleHandler) Create(ctx context.Context, req *proto_v1_example.ExampleCreateRequest) (resp *proto_v1_example.ExampleCreateResponse, err error) {
+	resp = &proto_v1_example.ExampleCreateResponse{}
+
+	example := &model.Example{
+		Uuid:        fmt.Sprintf("example-%s", xid.New().String()),
+		Name:        strings.TrimSpace(req.Example.Name),
+		Type:        req.Example.Type,
+		Description: strings.TrimSpace(req.Example.Description),
+	}
+
+	err = query.Example.Create(example)
+	if err != nil {
+		err = statusx.Errorf(codes.Internal, "create example failed, err: %w", err)
+		return
+	}
+
+	return
+}
+
+func (h *exampleHandler) Update(ctx context.Context, req *proto_v1_example.ExampleUpdateRequest) (resp *proto_v1_example.ExampleUpdateResponse, err error) {
+	resp = &proto_v1_example.ExampleUpdateResponse{}
+
+	q := query.Example
+	updateParam := map[string]interface{}{
+		"name":        strings.TrimSpace(req.Example.Name),
+		"description": strings.TrimSpace(req.Example.Description),
+	}
+	_, err = q.Where(q.Uuid.Eq(req.Example.Uuid)).Updates(updateParam)
+	if err != nil {
+		err = statusx.Errorf(codes.Internal, "update example failed, err: %w", err)
+		return
+	}
+
+	return
+}
+
+func (h *exampleHandler) Delete(ctx context.Context, req *proto_v1_example.ExampleDeleteRequest) (resp *proto_v1_example.ExampleDeleteResponse, err error) {
+	resp = &proto_v1_example.ExampleDeleteResponse{}
+
+	q := query.Example
+
+	_, err = q.DeleteByUuid(req.Uuid)
+	if err != nil {
+		err = statusx.Errorf(codes.Internal, "delete example failed, err: %w", err)
+		return
+	}
+
+	return
+}
+
+func (h *exampleHandler) Test(ctx context.Context, req *proto_v1_example.ExampleTestRequest) (resp *proto_v1_example.ExampleTestResponse, err error) {
 	now := time.Now()
-	resp = &proto_v1_example.ExampleGetResponse{
+	resp = &proto_v1_example.ExampleTestResponse{
 		Example: &proto_v1_example.Example{
 			Id:              1,
 			Uuid:            "example-xxx",
@@ -83,17 +163,5 @@ func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleG
 		},
 	}
 
-	return resp, nil
-}
-
-func (h *exampleHandler) Create(ctx context.Context, req *proto_v1_example.ExampleCreateRequest) (resp *proto_v1_example.ExampleCreateResponse, err error) {
-	return nil, nil
-}
-
-func (h *exampleHandler) Update(ctx context.Context, req *proto_v1_example.ExampleUpdateRequest) (resp *proto_v1_example.ExampleUpdateResponse, err error) {
-	return nil, nil
-}
-
-func (h *exampleHandler) Delete(ctx context.Context, req *proto_v1_example.ExampleDeleteRequest) (resp *proto_v1_example.ExampleDeleteResponse, err error) {
-	return nil, nil
+	return
 }
