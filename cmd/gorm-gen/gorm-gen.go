@@ -16,7 +16,7 @@ func main() {
 
 	g := gen.NewGenerator(gen.Config{
 		OutPath: *path,
-		Mode:    gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface,
+		Mode:    gen.WithDefaultQuery | gen.WithQueryInterface,
 	})
 
 	// Generate basic type-safe DAO API
