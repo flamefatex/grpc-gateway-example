@@ -42,7 +42,7 @@ func newExample(db *gorm.DB, opts ...gen.DOOption) example {
 }
 
 type example struct {
-	exampleDo
+	exampleDo exampleDo
 
 	ALL         field.Asterisk
 	Id          field.Int64
@@ -80,6 +80,12 @@ func (e *example) updateTableName(table string) *example {
 
 	return e
 }
+
+func (e *example) WithContext(ctx context.Context) IExampleDo { return e.exampleDo.WithContext(ctx) }
+
+func (e example) TableName() string { return e.exampleDo.TableName() }
+
+func (e example) Alias() string { return e.exampleDo.Alias() }
 
 func (e *example) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 	_f, ok := e.fieldMap[fieldName]
@@ -186,7 +192,7 @@ func (e exampleDo) GetById(id int64) (result *model.Example, err error) {
 
 	var generateSQL strings.Builder
 	params = append(params, id)
-	generateSQL.WriteString("SELECT * FROM examples WHERE id = ? ")
+	generateSQL.WriteString("SELECT * FROM example WHERE id = ? ")
 
 	var executeSQL *gorm.DB
 	executeSQL = e.UnderlyingDB().Raw(generateSQL.String(), params...).Take(&result) // ignore_security_alert
@@ -201,7 +207,7 @@ func (e exampleDo) DeleteById(id int64) (rowsAffected int64, err error) {
 
 	var generateSQL strings.Builder
 	params = append(params, id)
-	generateSQL.WriteString("DELETE FROM examples WHERE id = ? ")
+	generateSQL.WriteString("DELETE FROM example WHERE id = ? ")
 
 	var executeSQL *gorm.DB
 	executeSQL = e.UnderlyingDB().Exec(generateSQL.String(), params...) // ignore_security_alert
@@ -217,7 +223,7 @@ func (e exampleDo) GetByUuid(uuid string) (result *model.Example, err error) {
 
 	var generateSQL strings.Builder
 	params = append(params, uuid)
-	generateSQL.WriteString("SELECT * FROM examples WHERE uuid = ? ")
+	generateSQL.WriteString("SELECT * FROM example WHERE uuid = ? ")
 
 	var executeSQL *gorm.DB
 	executeSQL = e.UnderlyingDB().Raw(generateSQL.String(), params...).Take(&result) // ignore_security_alert
@@ -232,7 +238,7 @@ func (e exampleDo) DeleteByUuid(uuid string) (rowsAffected int64, err error) {
 
 	var generateSQL strings.Builder
 	params = append(params, uuid)
-	generateSQL.WriteString("DELETE FROM examples WHERE uuid = ? ")
+	generateSQL.WriteString("DELETE FROM example WHERE uuid = ? ")
 
 	var executeSQL *gorm.DB
 	executeSQL = e.UnderlyingDB().Exec(generateSQL.String(), params...) // ignore_security_alert
@@ -251,7 +257,7 @@ func (e exampleDo) Query(uuid string, name string) (result []*model.Example, err
 	var params []interface{}
 
 	var generateSQL strings.Builder
-	generateSQL.WriteString("SELECT * FROM examples WHERE ")
+	generateSQL.WriteString("SELECT * FROM example WHERE ")
 	if uuid != "" {
 		params = append(params, uuid)
 		generateSQL.WriteString("uuid = ? AND ")

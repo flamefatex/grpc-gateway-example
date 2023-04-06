@@ -76,7 +76,7 @@ func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleG
 
 	q := query.Example
 
-	example, err := q.GetByUuid(req.Uuid)
+	example, err := q.WithContext(ctx).GetByUuid(req.Uuid)
 	if err != nil {
 		err = statusx.Errorf(codes.Internal, "get example failed, err: %w", err)
 		return
@@ -100,6 +100,7 @@ func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleG
 func (h *exampleHandler) Create(ctx context.Context, req *proto_v1_example.ExampleCreateRequest) (resp *proto_v1_example.ExampleCreateResponse, err error) {
 	resp = &proto_v1_example.ExampleCreateResponse{}
 
+	q := query.Example
 	example := &model.Example{
 		Uuid:        fmt.Sprintf("example-%s", xid.New().String()),
 		Name:        strings.TrimSpace(req.Example.Name),
@@ -107,7 +108,7 @@ func (h *exampleHandler) Create(ctx context.Context, req *proto_v1_example.Examp
 		Description: strings.TrimSpace(req.Example.Description),
 	}
 
-	err = query.Example.Create(example)
+	err = q.WithContext(ctx).Create(example)
 	if err != nil {
 		err = statusx.Errorf(codes.Internal, "create example failed, err: %w", err)
 		return
@@ -124,7 +125,7 @@ func (h *exampleHandler) Update(ctx context.Context, req *proto_v1_example.Examp
 		"name":        strings.TrimSpace(req.Example.Name),
 		"description": strings.TrimSpace(req.Example.Description),
 	}
-	_, err = q.Where(q.Uuid.Eq(req.Example.Uuid)).Updates(updateParam)
+	_, err = q.WithContext(ctx).Where(q.Uuid.Eq(req.Example.Uuid)).Updates(updateParam)
 	if err != nil {
 		err = statusx.Errorf(codes.Internal, "update example failed, err: %w", err)
 		return
@@ -138,7 +139,7 @@ func (h *exampleHandler) Delete(ctx context.Context, req *proto_v1_example.Examp
 
 	q := query.Example
 
-	_, err = q.DeleteByUuid(req.Uuid)
+	_, err = q.WithContext(ctx).DeleteByUuid(req.Uuid)
 	if err != nil {
 		err = statusx.Errorf(codes.Internal, "delete example failed, err: %w", err)
 		return

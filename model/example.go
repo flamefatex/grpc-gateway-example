@@ -26,3 +26,7 @@ type ExampleQueryInterface interface {
 	// 1=1
 	Query(uuid string, name string) ([]*gen.T, error)
 }
+
+func (e *Example) TableName() string {
+	return "example"
+}
