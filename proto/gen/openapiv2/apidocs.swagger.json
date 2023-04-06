@@ -160,6 +160,32 @@
         ]
       }
     },
+    "/api/v1/example/test": {
+      "get": {
+        "summary": "Test test单个示例",
+        "operationId": "ExampleService_Test",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleTestResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "description": "唯一标识",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ExampleService"
+        ]
+      }
+    },
     "/api/v1/example/update": {
       "put": {
         "summary": "Update 更新示例",
@@ -316,6 +342,24 @@
         }
       },
       "title": "ExampleListResponse 查询示例列表响应"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.ExampleTestResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "status": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "title": "请求状态"
+        },
+        "example": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.Example",
+          "title": "示例"
+        }
+      },
+      "title": "ExampleTestResponse test单个示例响应"
     },
     "flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateRequest": {
       "type": "object",

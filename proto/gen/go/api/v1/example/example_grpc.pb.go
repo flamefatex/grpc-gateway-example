@@ -32,6 +32,8 @@ type ExampleServiceClient interface {
 	Update(ctx context.Context, in *ExampleUpdateRequest, opts ...grpc.CallOption) (*ExampleUpdateResponse, error)
 	// Delete 删除示例
 	Delete(ctx context.Context, in *ExampleDeleteRequest, opts ...grpc.CallOption) (*ExampleDeleteResponse, error)
+	// Test test单个示例
+	Test(ctx context.Context, in *ExampleTestRequest, opts ...grpc.CallOption) (*ExampleTestResponse, error)
 }
 
 type exampleServiceClient struct {
@@ -87,6 +89,15 @@ func (c *exampleServiceClient) Delete(ctx context.Context, in *ExampleDeleteRequ
 	return out, nil
 }
 
+func (c *exampleServiceClient) Test(ctx context.Context, in *ExampleTestRequest, opts ...grpc.CallOption) (*ExampleTestResponse, error) {
+	out := new(ExampleTestResponse)
+	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Test", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ExampleServiceServer is the server API for ExampleService service.
 // All implementations must embed UnimplementedExampleServiceServer
 // for forward compatibility
@@ -101,6 +112,8 @@ type ExampleServiceServer interface {
 	Update(context.Context, *ExampleUpdateRequest) (*ExampleUpdateResponse, error)
 	// Delete 删除示例
 	Delete(context.Context, *ExampleDeleteRequest) (*ExampleDeleteResponse, error)
+	// Test test单个示例
+	Test(context.Context, *ExampleTestRequest) (*ExampleTestResponse, error)
 	mustEmbedUnimplementedExampleServiceServer()
 }
 
@@ -122,6 +135,9 @@ func (UnimplementedExampleServiceServer) Update(context.Context, *ExampleUpdateR
 }
 func (UnimplementedExampleServiceServer) Delete(context.Context, *ExampleDeleteRequest) (*ExampleDeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedExampleServiceServer) Test(context.Context, *ExampleTestRequest) (*ExampleTestResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Test not implemented")
 }
 func (UnimplementedExampleServiceServer) mustEmbedUnimplementedExampleServiceServer() {}
 
@@ -226,6 +242,24 @@ func _ExampleService_Delete_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExampleService_Test_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExampleTestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExampleServiceServer).Test(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Test",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExampleServiceServer).Test(ctx, req.(*ExampleTestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ExampleService_ServiceDesc is the grpc.ServiceDesc for ExampleService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -252,6 +286,10 @@ var ExampleService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _ExampleService_Delete_Handler,
+		},
+		{
+			MethodName: "Test",
+			Handler:    _ExampleService_Test_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
