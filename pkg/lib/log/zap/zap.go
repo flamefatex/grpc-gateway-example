@@ -6,6 +6,7 @@ import (
 	logtypes "github.com/flamefatex/grpc-gateway-example/pkg/lib/log/types"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/ctxzap"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 type ZapLogger struct {
@@ -92,5 +93,9 @@ func (z *ZapLogger) WithFields(fields logtypes.Fields) logtypes.Logger {
 // Extract 提取ctx的tags并返回logger
 func (z *ZapLogger) Extract(ctx context.Context) logtypes.Logger {
 	nz := ctxzap.Extract(ctx)
+	// 如果ctx中没有log,用当前logger
+	if nz.Core() == zapcore.NewNopCore() {
+		return z
+	}
 	return NewZapLogger(nz)
 }
