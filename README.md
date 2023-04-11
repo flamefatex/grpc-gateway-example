@@ -281,7 +281,7 @@ func ExecRegisterGrpcGatewayEndpoint(ctx context.Context) []GrpcGwRegister {
 
 ```
 
-## 4. 编译与访问
+## 5. 编译与访问
 
 ```shell
 go run main.go
