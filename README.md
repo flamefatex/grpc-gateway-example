@@ -33,7 +33,7 @@ grpc-gateway的使用示例，其中集成了各类库。
 
 # 使用
 
-## 1.用protocol buffer 定义grpc服务
+## 1.用protocol buffer 定义grpc服务并生成go文件
 
 参考`proto/src/api/v1/example/example.proto`
 ```protobuf
@@ -280,3 +280,11 @@ func ExecRegisterGrpcGatewayEndpoint(ctx context.Context) []GrpcGwRegister {
 }
 
 ```
+
+## 5. 编译与访问
+
+```shell
+go run main.go
+```
+
+然后访问 `localhost:8082/api/v1/example/list`
