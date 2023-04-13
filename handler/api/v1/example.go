@@ -52,15 +52,15 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 	rsExamples := make([]*proto_v1_example.Example, 0)
 	for _, example := range examples {
 		e := &proto_v1_example.Example{
-			Id:              example.Id,
-			Uuid:            example.Uuid,
-			Name:            example.Name,
-			Type:            example.Type,
-			Description:     example.Description,
-			CreateTime:      example.CreateTime.Unix(),
-			UpdateTime:      example.UpdateTime.Unix(),
-			CreateTimestamp: timestamppb.New(example.CreateTime),
-			UpdateTimestamp: timestamppb.New(example.UpdateTime),
+			Id:               example.Id,
+			Uuid:             example.Uuid,
+			Name:             example.Name,
+			Type:             example.Type,
+			Description:      example.Description,
+			CreatedTime:      example.CreatedTime.Unix(),
+			UpdatedTime:      example.UpdatedTime.Unix(),
+			CreatedTimestamp: timestamppb.New(example.CreatedTime),
+			UpdatedTimestamp: timestamppb.New(example.UpdatedTime),
 		}
 		rsExamples = append(rsExamples, e)
 	}
@@ -83,15 +83,15 @@ func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleG
 	}
 
 	resp.Example = &proto_v1_example.Example{
-		Id:              example.Id,
-		Uuid:            example.Uuid,
-		Name:            example.Name,
-		Type:            example.Type,
-		Description:     example.Description,
-		CreateTime:      example.CreateTime.Unix(),
-		UpdateTime:      example.UpdateTime.Unix(),
-		CreateTimestamp: timestamppb.New(example.CreateTime),
-		UpdateTimestamp: timestamppb.New(example.UpdateTime),
+		Id:               example.Id,
+		Uuid:             example.Uuid,
+		Name:             example.Name,
+		Type:             example.Type,
+		Description:      example.Description,
+		CreatedTime:      example.CreatedTime.Unix(),
+		UpdatedTime:      example.UpdatedTime.Unix(),
+		CreatedTimestamp: timestamppb.New(example.CreatedTime),
+		UpdatedTimestamp: timestamppb.New(example.UpdatedTime),
 	}
 
 	return
@@ -152,15 +152,15 @@ func (h *exampleHandler) Test(ctx context.Context, req *proto_v1_example.Example
 	now := time.Now()
 	resp = &proto_v1_example.ExampleTestResponse{
 		Example: &proto_v1_example.Example{
-			Id:              1,
-			Uuid:            "example-xxx",
-			Name:            "示例1",
-			Type:            proto_enum.ExampleType_EXAMPLE_TYPE_ONE,
-			Description:     "示例1描述",
-			CreateTime:      now.Unix(),
-			UpdateTime:      now.Unix(),
-			CreateTimestamp: timestamppb.New(now),
-			UpdateTimestamp: timestamppb.New(now),
+			Id:               1,
+			Uuid:             "example-xxx",
+			Name:             "示例1",
+			Type:             proto_enum.ExampleType_EXAMPLE_TYPE_ONE,
+			Description:      "示例1描述",
+			CreatedTime:      now.Unix(),
+			UpdatedTime:      now.Unix(),
+			CreatedTimestamp: timestamppb.New(now),
+			UpdatedTimestamp: timestamppb.New(now),
 		},
 	}
 
