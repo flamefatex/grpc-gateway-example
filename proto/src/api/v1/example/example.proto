@@ -71,13 +71,13 @@ message Example {
     // 描述
     string description = 5;
     // 创建时间
-    int64 create_time = 6;
+    int64 created_time = 6;
     // 更新时间
-    int64 update_time = 7;
+    int64 updated_time = 7;
     // 创建时间
-    google.protobuf.Timestamp create_timestamp = 8;
+    google.protobuf.Timestamp created_timestamp = 8;
     // 更新时间
-    google.protobuf.Timestamp update_timestamp = 9;
+    google.protobuf.Timestamp updated_timestamp = 9;
 }
 
 // ExampleListRequest 查询示例列表请求
