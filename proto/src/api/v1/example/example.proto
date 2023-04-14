@@ -61,31 +61,29 @@ service ExampleService {
 // Example 示例
 message Example {
     // ID
-    int64 id = 1;
-    // 唯一标识
-    string uuid = 2;
+    string id = 1;
     // 名称
-    string name = 3;
+    string name = 2;
     // 类型
-    flamefatex.grpc_gateway_example.enumeration.ExampleType type = 4;
+    flamefatex.grpc_gateway_example.enumeration.ExampleType type = 3;
     // 描述
-    string description = 5;
+    string description = 4;
     // 创建时间
-    int64 created_time = 6;
+    int64 created_time = 5;
     // 更新时间
-    int64 updated_time = 7;
+    int64 updated_time = 6;
     // 创建时间
-    google.protobuf.Timestamp created_timestamp = 8;
+    google.protobuf.Timestamp created_timestamp = 7;
     // 更新时间
-    google.protobuf.Timestamp updated_timestamp = 9;
+    google.protobuf.Timestamp updated_timestamp = 8;
 }
 
 // ExampleListRequest 查询示例列表请求
 message ExampleListRequest {
     // 分页
     flamefatex.grpc_gateway_example.common.paging.Paging paging = 1;
-    // uuid
-    string uuid = 2;
+    // ID
+    string id = 2;
     // 名称
     string name = 3;
 }
@@ -104,8 +102,8 @@ message ExampleListResponse {
 
 // ExampleGetRequest 查询单个示例请求
 message ExampleGetRequest {
-    // 唯一标识
-    string uuid = 1 [(validate.rules).string.prefix = "example"];
+    // ID
+    string id = 1 [(validate.rules).string.prefix = "example"];
 }
 
 // ExampleGetResponse 查询单个示例响应
@@ -148,8 +146,8 @@ message ExampleUpdateResponse {
 
 // ExampleDeleteRequest 删除示例请求
 message ExampleDeleteRequest {
-    // 唯一标识
-    string uuid = 1 [(validate.rules).string.prefix = "example"];
+    // ID
+    string id = 1 [(validate.rules).string.prefix = "example"];
 }
 
 // ExampleDeleteResponse 删除示例响应
@@ -162,8 +160,8 @@ message ExampleDeleteResponse {
 
 // ExampleTestRequest test单个示例请求
 message ExampleTestRequest {
-    // 唯一标识
-    string uuid = 1 [(validate.rules).string.prefix = "example"];
+    // ID
+    string id = 1 [(validate.rules).string.prefix = "example"];
 }
 
 // ExampleTestResponse test单个示例响应

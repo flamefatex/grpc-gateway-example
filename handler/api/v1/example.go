@@ -33,8 +33,8 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 	q := query.Example
 	// 组装条件
 	conditions := make([]gen.Condition, 0)
-	if req.Uuid != "" {
-		conditions = append(conditions, q.Uuid.Eq(req.Uuid))
+	if req.Id != "" {
+		conditions = append(conditions, q.Id.Eq(req.Id))
 	}
 	if req.Name != "" {
 		conditions = append(conditions, q.Name.Like("%"+req.Name+"%"))
@@ -53,7 +53,6 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 	for _, example := range examples {
 		e := &proto_v1_example.Example{
 			Id:               example.Id,
-			Uuid:             example.Uuid,
 			Name:             example.Name,
 			Type:             example.Type,
 			Description:      example.Description,
@@ -76,7 +75,7 @@ func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleG
 
 	q := query.Example
 
-	example, err := q.WithContext(ctx).GetByUuid(req.Uuid)
+	example, err := q.WithContext(ctx).GetById(req.Id)
 	if err != nil {
 		err = statusx.Errorf(codes.Internal, "get example failed, err: %w", err)
 		return
@@ -84,7 +83,6 @@ func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleG
 
 	resp.Example = &proto_v1_example.Example{
 		Id:               example.Id,
-		Uuid:             example.Uuid,
 		Name:             example.Name,
 		Type:             example.Type,
 		Description:      example.Description,
@@ -102,7 +100,7 @@ func (h *exampleHandler) Create(ctx context.Context, req *proto_v1_example.Examp
 
 	q := query.Example
 	example := &model.Example{
-		Uuid:        fmt.Sprintf("example-%s", xid.New().String()),
+		Id:          fmt.Sprintf("example-%s", xid.New().String()),
 		Name:        strings.TrimSpace(req.Example.Name),
 		Type:        req.Example.Type,
 		Description: strings.TrimSpace(req.Example.Description),
@@ -125,7 +123,7 @@ func (h *exampleHandler) Update(ctx context.Context, req *proto_v1_example.Examp
 		"name":        strings.TrimSpace(req.Example.Name),
 		"description": strings.TrimSpace(req.Example.Description),
 	}
-	_, err = q.WithContext(ctx).Where(q.Uuid.Eq(req.Example.Uuid)).Updates(updateParam)
+	_, err = q.WithContext(ctx).Where(q.Id.Eq(req.Example.Id)).Updates(updateParam)
 	if err != nil {
 		err = statusx.Errorf(codes.Internal, "update example failed, err: %w", err)
 		return
@@ -139,7 +137,7 @@ func (h *exampleHandler) Delete(ctx context.Context, req *proto_v1_example.Examp
 
 	q := query.Example
 
-	_, err = q.WithContext(ctx).DeleteByUuid(req.Uuid)
+	_, err = q.WithContext(ctx).DeleteById(req.Id)
 	if err != nil {
 		err = statusx.Errorf(codes.Internal, "delete example failed, err: %w", err)
 		return
@@ -152,8 +150,7 @@ func (h *exampleHandler) Test(ctx context.Context, req *proto_v1_example.Example
 	now := time.Now()
 	resp = &proto_v1_example.ExampleTestResponse{
 		Example: &proto_v1_example.Example{
-			Id:               1,
-			Uuid:             "example-xxx",
+			Id:               "example-xxx",
 			Name:             "示例1",
 			Type:             proto_enum.ExampleType_EXAMPLE_TYPE_ONE,
 			Description:      "示例1描述",

@@ -62,8 +62,6 @@ func (m *Example) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for Uuid
-
 	// no validation rules for Name
 
 	// no validation rules for Type
@@ -260,7 +258,7 @@ func (m *ExampleListRequest) validate(all bool) error {
 		}
 	}
 
-	// no validation rules for Uuid
+	// no validation rules for Id
 
 	// no validation rules for Name
 
@@ -562,9 +560,9 @@ func (m *ExampleGetRequest) validate(all bool) error {
 
 	var errors []error
 
-	if !strings.HasPrefix(m.GetUuid(), "example") {
+	if !strings.HasPrefix(m.GetId(), "example") {
 		err := ExampleGetRequestValidationError{
-			field:  "Uuid",
+			field:  "Id",
 			reason: "value does not have prefix \"example\"",
 		}
 		if !all {
@@ -1387,9 +1385,9 @@ func (m *ExampleDeleteRequest) validate(all bool) error {
 
 	var errors []error
 
-	if !strings.HasPrefix(m.GetUuid(), "example") {
+	if !strings.HasPrefix(m.GetId(), "example") {
 		err := ExampleDeleteRequestValidationError{
-			field:  "Uuid",
+			field:  "Id",
 			reason: "value does not have prefix \"example\"",
 		}
 		if !all {
@@ -1633,9 +1631,9 @@ func (m *ExampleTestRequest) validate(all bool) error {
 
 	var errors []error
 
-	if !strings.HasPrefix(m.GetUuid(), "example") {
+	if !strings.HasPrefix(m.GetId(), "example") {
 		err := ExampleTestRequestValidationError{
-			field:  "Uuid",
+			field:  "Id",
 			reason: "value does not have prefix \"example\"",
 		}
 		if !all {

@@ -15,10 +15,6 @@ func Apply(g *gen.Generator) {
 	g.ApplyInterface(func(IdQueryInterface) {},
 		model.Example{},
 	)
-	// Uuid
-	g.ApplyInterface(func(UuidQueryInterface) {},
-		model.Example{},
-	)
 
 	// Example
 	g.ApplyInterface(func(queryInterface model.ExampleQueryInterface) {}, model.Example{})
