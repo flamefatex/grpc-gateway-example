@@ -60,8 +60,8 @@
         },
         "parameters": [
           {
-            "name": "uuid",
-            "description": "唯一标识",
+            "name": "id",
+            "description": "ID",
             "in": "query",
             "required": false,
             "type": "string"
@@ -86,8 +86,8 @@
         },
         "parameters": [
           {
-            "name": "uuid",
-            "description": "唯一标识",
+            "name": "id",
+            "description": "ID",
             "in": "query",
             "required": false,
             "type": "string"
@@ -144,8 +144,8 @@
             "format": "int32"
           },
           {
-            "name": "uuid",
-            "description": "uuid",
+            "name": "id",
+            "description": "ID",
             "in": "query",
             "required": false,
             "type": "string"
@@ -177,8 +177,8 @@
         },
         "parameters": [
           {
-            "name": "uuid",
-            "description": "唯一标识",
+            "name": "id",
+            "description": "ID",
             "in": "query",
             "required": false,
             "type": "string"
@@ -264,12 +264,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "format": "int64",
           "title": "ID"
-        },
-        "uuid": {
-          "type": "string",
-          "title": "唯一标识"
         },
         "name": {
           "type": "string",

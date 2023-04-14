@@ -28,8 +28,7 @@ func newExample(db *gorm.DB, opts ...gen.DOOption) example {
 
 	tableName := _example.exampleDo.TableName()
 	_example.ALL = field.NewAsterisk(tableName)
-	_example.Id = field.NewInt64(tableName, "id")
-	_example.Uuid = field.NewString(tableName, "uuid")
+	_example.Id = field.NewString(tableName, "id")
 	_example.Name = field.NewString(tableName, "name")
 	_example.Type = field.NewInt32(tableName, "type")
 	_example.Description = field.NewString(tableName, "description")
@@ -45,8 +44,7 @@ type example struct {
 	exampleDo exampleDo
 
 	ALL         field.Asterisk
-	Id          field.Int64
-	Uuid        field.String
+	Id          field.String
 	Name        field.String
 	Type        field.Int32
 	Description field.String
@@ -68,8 +66,7 @@ func (e example) As(alias string) *example {
 
 func (e *example) updateTableName(table string) *example {
 	e.ALL = field.NewAsterisk(table)
-	e.Id = field.NewInt64(table, "id")
-	e.Uuid = field.NewString(table, "uuid")
+	e.Id = field.NewString(table, "id")
 	e.Name = field.NewString(table, "name")
 	e.Type = field.NewInt32(table, "type")
 	e.Description = field.NewString(table, "description")
@@ -97,9 +94,8 @@ func (e *example) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (e *example) fillFieldMap() {
-	e.fieldMap = make(map[string]field.Expr, 7)
+	e.fieldMap = make(map[string]field.Expr, 6)
 	e.fieldMap["id"] = e.Id
-	e.fieldMap["uuid"] = e.Uuid
 	e.fieldMap["name"] = e.Name
 	e.fieldMap["type"] = e.Type
 	e.fieldMap["description"] = e.Description
@@ -179,15 +175,13 @@ type IExampleDo interface {
 	UnderlyingDB() *gorm.DB
 	schema.Tabler
 
-	GetById(id int64) (result *model.Example, err error)
-	DeleteById(id int64) (rowsAffected int64, err error)
-	GetByUuid(uuid string) (result *model.Example, err error)
-	DeleteByUuid(uuid string) (rowsAffected int64, err error)
-	Query(uuid string, name string) (result []*model.Example, err error)
+	GetById(id string) (result *model.Example, err error)
+	DeleteById(id string) (rowsAffected int64, err error)
+	Query(id string, name string) (result []*model.Example, err error)
 }
 
 // SELECT * FROM @@table WHERE id = @id
-func (e exampleDo) GetById(id int64) (result *model.Example, err error) {
+func (e exampleDo) GetById(id string) (result *model.Example, err error) {
 	var params []interface{}
 
 	var generateSQL strings.Builder
@@ -202,7 +196,7 @@ func (e exampleDo) GetById(id int64) (result *model.Example, err error) {
 }
 
 // DELETE FROM @@table WHERE id = @id
-func (e exampleDo) DeleteById(id int64) (rowsAffected int64, err error) {
+func (e exampleDo) DeleteById(id string) (rowsAffected int64, err error) {
 	var params []interface{}
 
 	var generateSQL strings.Builder
@@ -217,50 +211,19 @@ func (e exampleDo) DeleteById(id int64) (rowsAffected int64, err error) {
 	return
 }
 
-// SELECT * FROM @@table WHERE uuid = @uuid
-func (e exampleDo) GetByUuid(uuid string) (result *model.Example, err error) {
-	var params []interface{}
-
-	var generateSQL strings.Builder
-	params = append(params, uuid)
-	generateSQL.WriteString("SELECT * FROM example WHERE uuid = ? ")
-
-	var executeSQL *gorm.DB
-	executeSQL = e.UnderlyingDB().Raw(generateSQL.String(), params...).Take(&result) // ignore_security_alert
-	err = executeSQL.Error
-
-	return
-}
-
-// DELETE FROM @@table WHERE uuid = @uuid
-func (e exampleDo) DeleteByUuid(uuid string) (rowsAffected int64, err error) {
-	var params []interface{}
-
-	var generateSQL strings.Builder
-	params = append(params, uuid)
-	generateSQL.WriteString("DELETE FROM example WHERE uuid = ? ")
-
-	var executeSQL *gorm.DB
-	executeSQL = e.UnderlyingDB().Exec(generateSQL.String(), params...) // ignore_security_alert
-	rowsAffected = executeSQL.RowsAffected
-	err = executeSQL.Error
-
-	return
-}
-
 // SELECT * FROM @@table
 // WHERE
-// {{ if uuid != "" }} uuid = @uuid AND {{ end }}
+// {{ if id != "" }} id = @id AND {{ end }}
 // {{ if name != "" }} name LIKE %@name% AND {{ end }}
 // 1=1
-func (e exampleDo) Query(uuid string, name string) (result []*model.Example, err error) {
+func (e exampleDo) Query(id string, name string) (result []*model.Example, err error) {
 	var params []interface{}
 
 	var generateSQL strings.Builder
 	generateSQL.WriteString("SELECT * FROM example WHERE ")
-	if uuid != "" {
-		params = append(params, uuid)
-		generateSQL.WriteString("uuid = ? AND ")
+	if id != "" {
+		params = append(params, id)
+		generateSQL.WriteString("id = ? AND ")
 	}
 	if name != "" {
 		params = append(params, name)

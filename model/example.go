@@ -8,8 +8,7 @@ import (
 )
 
 type Example struct {
-	Id          int64
-	Uuid        string
+	Id          string
 	Name        string
 	Type        proto_enum.ExampleType
 	Description string
@@ -21,10 +20,10 @@ type Example struct {
 type ExampleQueryInterface interface {
 	// SELECT * FROM @@table
 	// WHERE
-	// {{ if uuid != "" }} uuid = @uuid AND {{ end }}
+	// {{ if id != "" }} id = @id AND {{ end }}
 	// {{ if name != "" }} name LIKE %@name% AND {{ end }}
 	// 1=1
-	Query(uuid string, name string) ([]*gen.T, error)
+	Query(id string, name string) ([]*gen.T, error)
 }
 
 func (e *Example) TableName() string {
