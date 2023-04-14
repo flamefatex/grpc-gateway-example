@@ -18,7 +18,10 @@ func main() {
 	// 注入service name
 	log.SetLogger(log.WithField("service", definition.ServiceName))
 	// 初始化config
-	config.Init(definition.ServiceName)
+	err := config.Init(definition.ServiceName)
+	if err != nil {
+		log.Fatal("init config failed")
+	}
 
 	// 引导加载自定义log
 	bs_log.BootstrapLog(ctx)
