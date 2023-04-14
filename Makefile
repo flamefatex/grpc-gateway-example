@@ -9,10 +9,10 @@ IMAGE_NAME := "flamefatex/${BIN_NAME}"
 
 .PHONY: buf-update
 buf-update:
-	@docker run --volume "`pwd`/proto/src:/workspace" --workdir /workspace bufbuild/buf:1.16.0 mod update
+	@docker run --volume "`pwd`/proto/src:/workspace" --workdir /workspace bufbuild/buf:1.17.0 mod update
 .PHONY: buf-gen
 buf-gen:
-	@docker run --volume "`pwd`/proto:/workspace" --workdir /workspace bufbuild/buf:1.16.0 generate
+	@docker run --volume "`pwd`/proto:/workspace" --workdir /workspace bufbuild/buf:1.17.0 generate
 .PHONY: local-buf-update
 local-buf-update:
 	@cd proto/src && buf mod update
