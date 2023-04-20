@@ -50,6 +50,13 @@ service ExampleService {
         };
     }
 
+    // CustomHttpCodeAndHeader 定制http返回码和头
+    rpc CustomHttpCodeAndHeader(ExampleCustomHttpCodeAndHeaderRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            get: "/api/v1/example/customHttpCodeAndHeader"
+        };
+    }
+
     // Test test单个示例
     rpc Test(ExampleTestRequest) returns (ExampleTestResponse) {
         option (google.api.http) = {
@@ -156,6 +163,12 @@ message ExampleDeleteResponse {
     string request_id = 1;
     // 请求状态
     flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+}
+
+// ExampleCustomHttpCodeAndHeaderRequest 自定义httpCode和header请求
+message ExampleCustomHttpCodeAndHeaderRequest{
+    // http status code
+    string code = 1;
 }
 
 // ExampleTestRequest test单个示例请求

@@ -12,24 +12,3 @@ enum ExampleType {
     EXAMPLE_TYPE_TOW = 2;
 }
 
-
-// ExampleType 示例类型
-enum ExampleType1 {
-    // 未指定
-    UNSPECIFIED = 0;
-    // 类型1
-    ONE = 1;
-    // 类型2
-    TOW = 2;
-}
-
-// ExampleType 示例类型
-enum ExampleType2 {
-    // 未指定
-    UNSPECIFIED = 0;
-    // 类型1
-    ONE = 1;
-    // 类型2
-    TOW = 2;
-}
-
