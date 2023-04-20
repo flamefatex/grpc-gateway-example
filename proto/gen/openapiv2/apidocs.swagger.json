@@ -46,6 +46,33 @@
         ]
       }
     },
+    "/api/v1/example/customHttpCodeAndHeader": {
+      "get": {
+        "summary": "CustomHttpCodeAndHeader 定制http返回码和头",
+        "operationId": "ExampleService_CustomHttpCodeAndHeader",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "description": "http status code",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ExampleService"
+        ]
+      }
+    },
     "/api/v1/example/delete": {
       "delete": {
         "summary": "Delete 删除示例",

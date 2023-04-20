@@ -12,8 +12,11 @@ import (
 	util_paging "github.com/flamefatex/grpc-gateway-example/pkg/util/paging"
 	proto_v1_example "github.com/flamefatex/grpc-gateway-example/proto/gen/go/api/v1/example"
 	proto_enum "github.com/flamefatex/grpc-gateway-example/proto/gen/go/enumeration"
+	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/rs/xid"
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"gorm.io/gen"
 )
@@ -144,6 +147,20 @@ func (h *exampleHandler) Delete(ctx context.Context, req *proto_v1_example.Examp
 	}
 
 	return
+}
+
+func (h *exampleHandler) CustomHttpCodeAndHeader(ctx context.Context, req *proto_v1_example.ExampleCustomHttpCodeAndHeaderRequest) (resp *empty.Empty, err error) {
+
+	code := "401"
+	if req.Code != "" {
+		code = req.Code
+	}
+
+	// 设置
+	_ = grpc.SetHeader(ctx, metadata.Pairs("x-http-code", code))
+	_ = grpc.SetHeader(ctx, metadata.Pairs("x-ffx-token", "xxxyyyzzz"))
+
+	return nil, nil
 }
 
 func (h *exampleHandler) Test(ctx context.Context, req *proto_v1_example.ExampleTestRequest) (resp *proto_v1_example.ExampleTestResponse, err error) {

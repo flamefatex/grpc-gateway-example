@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -32,6 +33,8 @@ type ExampleServiceClient interface {
 	Update(ctx context.Context, in *ExampleUpdateRequest, opts ...grpc.CallOption) (*ExampleUpdateResponse, error)
 	// Delete 删除示例
 	Delete(ctx context.Context, in *ExampleDeleteRequest, opts ...grpc.CallOption) (*ExampleDeleteResponse, error)
+	// CustomHttpCodeAndHeader 定制http返回码和头
+	CustomHttpCodeAndHeader(ctx context.Context, in *ExampleCustomHttpCodeAndHeaderRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Test test单个示例
 	Test(ctx context.Context, in *ExampleTestRequest, opts ...grpc.CallOption) (*ExampleTestResponse, error)
 }
@@ -89,6 +92,15 @@ func (c *exampleServiceClient) Delete(ctx context.Context, in *ExampleDeleteRequ
 	return out, nil
 }
 
+func (c *exampleServiceClient) CustomHttpCodeAndHeader(ctx context.Context, in *ExampleCustomHttpCodeAndHeaderRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/CustomHttpCodeAndHeader", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *exampleServiceClient) Test(ctx context.Context, in *ExampleTestRequest, opts ...grpc.CallOption) (*ExampleTestResponse, error) {
 	out := new(ExampleTestResponse)
 	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Test", in, out, opts...)
@@ -112,6 +124,8 @@ type ExampleServiceServer interface {
 	Update(context.Context, *ExampleUpdateRequest) (*ExampleUpdateResponse, error)
 	// Delete 删除示例
 	Delete(context.Context, *ExampleDeleteRequest) (*ExampleDeleteResponse, error)
+	// CustomHttpCodeAndHeader 定制http返回码和头
+	CustomHttpCodeAndHeader(context.Context, *ExampleCustomHttpCodeAndHeaderRequest) (*emptypb.Empty, error)
 	// Test test单个示例
 	Test(context.Context, *ExampleTestRequest) (*ExampleTestResponse, error)
 	mustEmbedUnimplementedExampleServiceServer()
@@ -135,6 +149,9 @@ func (UnimplementedExampleServiceServer) Update(context.Context, *ExampleUpdateR
 }
 func (UnimplementedExampleServiceServer) Delete(context.Context, *ExampleDeleteRequest) (*ExampleDeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedExampleServiceServer) CustomHttpCodeAndHeader(context.Context, *ExampleCustomHttpCodeAndHeaderRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CustomHttpCodeAndHeader not implemented")
 }
 func (UnimplementedExampleServiceServer) Test(context.Context, *ExampleTestRequest) (*ExampleTestResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Test not implemented")
@@ -242,6 +259,24 @@ func _ExampleService_Delete_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExampleService_CustomHttpCodeAndHeader_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExampleCustomHttpCodeAndHeaderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExampleServiceServer).CustomHttpCodeAndHeader(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/CustomHttpCodeAndHeader",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExampleServiceServer).CustomHttpCodeAndHeader(ctx, req.(*ExampleCustomHttpCodeAndHeaderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ExampleService_Test_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ExampleTestRequest)
 	if err := dec(in); err != nil {
@@ -286,6 +321,10 @@ var ExampleService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _ExampleService_Delete_Handler,
+		},
+		{
+			MethodName: "CustomHttpCodeAndHeader",
+			Handler:    _ExampleService_CustomHttpCodeAndHeader_Handler,
 		},
 		{
 			MethodName: "Test",

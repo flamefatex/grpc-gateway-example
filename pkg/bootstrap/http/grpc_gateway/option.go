@@ -34,6 +34,10 @@ func GetGlobalServeMuxOptions() []runtime.ServeMuxOption {
 		}),
 		// 自定义错误处理
 		runtime.WithErrorHandler(CustomHTTPErrorHandler),
+		// Mutate response messages or set response headers
+		// 参考https://grpc-ecosystem.github.io/grpc-gateway/docs/mapping/customizing_your_gateway/#mutate-response-messages-or-set-response-headers
+		runtime.WithForwardResponseOption(HttpResponseModifier),
+
 		// 序列化选项
 		runtime.WithMarshalerOption(
 			runtime.MIMEWildcard,
