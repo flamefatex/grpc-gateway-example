@@ -7,6 +7,7 @@ import (
 	proto_status "github.com/flamefatex/grpc-gateway-example/proto/gen/go/common/status"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/proto"
 )
 
 const (
@@ -25,7 +26,7 @@ type Status struct {
 
 // Error is a status error.
 type Error struct {
-	proto_status.Status
+	*proto_status.Status
 	cause error
 }
 
@@ -68,10 +69,19 @@ func (e *Error) GRPCStatus() *status.Status {
 	return s
 }
 
+// Proto returns s's status as an spb.Status proto message.
+func (e *Error) Proto() *proto_status.Status {
+	if e == nil {
+		return nil
+	}
+
+	return proto.Clone(e.Status).(*proto_status.Status)
+}
+
 // New returns an error object for the code, message.
 func New(code int, reason, message string) *Error {
 	return &Error{
-		Status: proto_status.Status{
+		Status: &proto_status.Status{
 			Code:    int32(code),
 			Reason:  reason,
 			Message: message,
@@ -118,7 +128,7 @@ func Clone(err *Error) *Error {
 	}
 	return &Error{
 		cause: err.cause,
-		Status: proto_status.Status{
+		Status: &proto_status.Status{
 			Code:     err.Code,
 			Reason:   err.Reason,
 			Message:  err.Message,
