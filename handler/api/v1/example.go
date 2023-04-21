@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/http"
 	"strings"
 	"time"
 
@@ -49,7 +48,7 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 		Order(q.Id.Desc()).
 		FindByPage(util_paging.OffsetLimit(req.Paging))
 	if err != nil {
-		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_LIST_ERROR", "get example list failed, err: %s", err)
+		err = errorx.ErrorfInternalServer("EXAMPLE_LIST_ERROR", "get example list failed, err: %s", err)
 		return
 	}
 
@@ -81,7 +80,7 @@ func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleG
 
 	example, err := q.WithContext(ctx).GetById(req.Id)
 	if err != nil {
-		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_GET_ERROR", "get example failed, err: %s", err)
+		err = errorx.ErrorfInternalServer("EXAMPLE_GET_ERROR", "get example failed, err: %s", err)
 		return
 	}
 
@@ -112,7 +111,7 @@ func (h *exampleHandler) Create(ctx context.Context, req *proto_v1_example.Examp
 
 	err = q.WithContext(ctx).Create(example)
 	if err != nil {
-		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_CREATE_ERROR", "create example failed, err: %s", err)
+		err = errorx.ErrorfInternalServer("EXAMPLE_CREATE_ERROR", "create example failed, err: %s", err)
 		return
 	}
 
@@ -129,7 +128,7 @@ func (h *exampleHandler) Update(ctx context.Context, req *proto_v1_example.Examp
 	}
 	_, err = q.WithContext(ctx).Where(q.Id.Eq(req.Example.Id)).Updates(updateParam)
 	if err != nil {
-		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_UPDATE_ERROR", "update example failed, err: %s", err)
+		err = errorx.ErrorfInternalServer("EXAMPLE_UPDATE_ERROR", "update example failed, err: %s", err)
 		return
 	}
 
@@ -143,7 +142,7 @@ func (h *exampleHandler) Delete(ctx context.Context, req *proto_v1_example.Examp
 
 	_, err = q.WithContext(ctx).DeleteById(req.Id)
 	if err != nil {
-		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_DELETE_ERROR", "delete example failed, err: %s", err)
+		err = errorx.ErrorfInternalServer("EXAMPLE_DELETE_ERROR", "delete example failed, err: %s", err)
 		return
 	}
 
@@ -180,6 +179,10 @@ func (h *exampleHandler) TestError(ctx context.Context, req *proto_v1_example.Ex
 	}
 
 	err = errors.New("test error")
-	err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_DELETE_ERROR", "delete example failed, err: %s", err)
+	err = errorx.ErrorfInternalServer("EXAMPLE_DELETE_ERROR", "delete example failed, err: %s", err).
+		WithCause(err).
+		WithMetadata(map[string]string{
+			"aa": "aad",
+		})
 	return
 }
