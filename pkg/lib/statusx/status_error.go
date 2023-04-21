@@ -65,13 +65,13 @@ func (s *StatusError) FrdMsg() string {
 }
 
 // FrdProto 获取友好信息响应的proto,用于前端友好显示
-func (s *StatusError) FrdProto() (rs *proto_status.ResponseStatus) {
+func (s *StatusError) FrdProto() (rs *proto_status.Status) {
 	msg := s.FrdMsg()
 	if s.innermostFrdInfo.frdMsg != "" {
 		msg = s.innermostFrdInfo.frdMsg
 	}
-	rs = &proto_status.ResponseStatus{
-		Code:    uint32(s.grpcCode),
+	rs = &proto_status.Status{
+		Code:    int32(s.grpcCode),
 		Reason:  s.frdInfo.frdCode,
 		Message: msg,
 	}
@@ -93,9 +93,9 @@ func (s *StatusError) WithFrdMsgf(formatFrdMsg string, a ...interface{}) *Status
 	return s.WithFrdMsg(fmt.Sprintf(formatFrdMsg, a...))
 }
 
-func OK(ctx context.Context) *proto_status.ResponseStatus {
-	return &proto_status.ResponseStatus{
-		Code:    uint32(codes.OK),
+func OK(ctx context.Context) *proto_status.Status {
+	return &proto_status.Status{
+		Code:    int32(codes.OK),
 		Reason:  code.OK,
 		Message: "OK",
 	}

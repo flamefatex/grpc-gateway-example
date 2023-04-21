@@ -97,7 +97,7 @@ message ExampleListResponse {
   // 请求ID
   string request_id = 1;
   // 请求状态
-  flamefatex.grpc_gateway_example.common.status.ResponseStatus status = 2;
+  flamefatex.grpc_gateway_example.common.status.Status status = 2;
   // 分页
   flamefatex.grpc_gateway_example.common.paging.Paging paging = 3;
   // 示例列表
