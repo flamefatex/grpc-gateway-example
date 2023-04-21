@@ -35,22 +35,21 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on ResponseStatus with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
+// Validate checks the field values on Status with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *ResponseStatus) Validate() error {
+func (m *Status) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ResponseStatus with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in ResponseStatusMultiError,
-// or nil if none found.
-func (m *ResponseStatus) ValidateAll() error {
+// ValidateAll checks the field values on Status with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in StatusMultiError, or nil if none found.
+func (m *Status) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ResponseStatus) validate(all bool) error {
+func (m *Status) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -63,20 +62,21 @@ func (m *ResponseStatus) validate(all bool) error {
 
 	// no validation rules for Message
 
+	// no validation rules for Metadata
+
 	if len(errors) > 0 {
-		return ResponseStatusMultiError(errors)
+		return StatusMultiError(errors)
 	}
 
 	return nil
 }
 
-// ResponseStatusMultiError is an error wrapping multiple validation errors
-// returned by ResponseStatus.ValidateAll() if the designated constraints
-// aren't met.
-type ResponseStatusMultiError []error
+// StatusMultiError is an error wrapping multiple validation errors returned by
+// Status.ValidateAll() if the designated constraints aren't met.
+type StatusMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ResponseStatusMultiError) Error() string {
+func (m StatusMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -85,11 +85,11 @@ func (m ResponseStatusMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ResponseStatusMultiError) AllErrors() []error { return m }
+func (m StatusMultiError) AllErrors() []error { return m }
 
-// ResponseStatusValidationError is the validation error returned by
-// ResponseStatus.Validate if the designated constraints aren't met.
-type ResponseStatusValidationError struct {
+// StatusValidationError is the validation error returned by Status.Validate if
+// the designated constraints aren't met.
+type StatusValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -97,22 +97,22 @@ type ResponseStatusValidationError struct {
 }
 
 // Field function returns field value.
-func (e ResponseStatusValidationError) Field() string { return e.field }
+func (e StatusValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ResponseStatusValidationError) Reason() string { return e.reason }
+func (e StatusValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ResponseStatusValidationError) Cause() error { return e.cause }
+func (e StatusValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ResponseStatusValidationError) Key() bool { return e.key }
+func (e StatusValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ResponseStatusValidationError) ErrorName() string { return "ResponseStatusValidationError" }
+func (e StatusValidationError) ErrorName() string { return "StatusValidationError" }
 
 // Error satisfies the builtin error interface
-func (e ResponseStatusValidationError) Error() string {
+func (e StatusValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -124,14 +124,14 @@ func (e ResponseStatusValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sResponseStatus.%s: %s%s",
+		"invalid %sStatus.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ResponseStatusValidationError{}
+var _ error = StatusValidationError{}
 
 var _ interface {
 	Field() string
@@ -139,7 +139,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ResponseStatusValidationError{}
+} = StatusValidationError{}
 
 // Validate checks the field values on Response with the rules defined in the
 // proto definition for this message. If any rules are violated, the first

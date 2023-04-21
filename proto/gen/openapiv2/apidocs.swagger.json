@@ -337,7 +337,7 @@
           "title": "请求ID"
         },
         "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
           "title": "请求状态"
         }
       },
@@ -351,7 +351,7 @@
           "title": "请求ID"
         },
         "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
           "title": "请求状态"
         }
       },
@@ -365,7 +365,7 @@
           "title": "请求ID"
         },
         "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
           "title": "请求状态"
         },
         "example": {
@@ -383,7 +383,7 @@
           "title": "请求ID"
         },
         "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
           "title": "请求状态"
         },
         "paging": {
@@ -408,7 +408,7 @@
           "title": "请求ID"
         },
         "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
           "title": "请求状态"
         },
         "example": {
@@ -436,7 +436,7 @@
           "title": "请求ID"
         },
         "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.ResponseStatus",
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
           "title": "请求状态"
         }
       },
@@ -468,12 +468,12 @@
       },
       "title": "Paging 分页"
     },
-    "flamefatex.grpc_gateway_example.common.status.ResponseStatus": {
+    "flamefatex.grpc_gateway_example.common.status.Status": {
       "type": "object",
       "properties": {
         "code": {
           "type": "integer",
-          "format": "int64",
+          "format": "int32",
           "title": "状态码,"
         },
         "reason": {
@@ -483,9 +483,16 @@
         "message": {
           "type": "string",
           "title": "具体信息"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "元数据"
         }
       },
-      "title": "ResponseStatus 请求返回状态,\nok对应http状态码200\nInternalError对应http状态码500"
+      "title": "Status 请求返回状态,\nok对应http状态码200\nInternalError对应http状态码500"
     },
     "flamefatex.grpc_gateway_example.enumeration.ExampleType": {
       "type": "string",

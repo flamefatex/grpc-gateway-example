@@ -2,7 +2,6 @@ package v1
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -179,7 +178,7 @@ func (h *exampleHandler) TestError(ctx context.Context, req *proto_v1_example.Ex
 		},
 	}
 
-	err = errors.New("test error")
+	// err = errors.New("test error")
 
 	return
 }

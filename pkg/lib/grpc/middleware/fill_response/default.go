@@ -4,7 +4,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/flamefatex/grpc-gateway-example/pkg/lib/statusx"
+	"github.com/flamefatex/grpc-gateway-example/pkg/lib/errorx"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/tracing/opentracing"
 	proto_status "github.com/flamefatex/grpc-gateway-example/proto/gen/go/common/status"
 )
@@ -25,7 +25,7 @@ func DefaultFillFunc(ctx context.Context, resp interface{}, err error) (newResp 
 		}
 		if valueOfResp.IsNil() { // 接口动态值为空，需要重新初始化一个，否则会panic报错
 			t := reflect.TypeOf(resp)
-			if t.Kind() == reflect.Ptr { //指针类型获取真正type需要调用Elem
+			if t.Kind() == reflect.Ptr { // 指针类型获取真正type需要调用Elem
 				t = t.Elem()
 			}
 			newResp = reflect.New(t).Interface() // 调用反射创建对象
@@ -43,9 +43,9 @@ func DefaultFillFunc(ctx context.Context, resp interface{}, err error) (newResp 
 		vStatus := valueOfResp.FieldByName("Status")
 		if vStatus.IsValid() {
 			// 验证类型是否符合预期
-			_, ok := vStatus.Interface().(*proto_status.ResponseStatus)
+			_, ok := vStatus.Interface().(*proto_status.Status)
 			if ok {
-				vStatus.Set(reflect.ValueOf(statusx.OK(ctx)))
+				vStatus.Set(reflect.ValueOf(errorx.OK()))
 			}
 		}
 	}

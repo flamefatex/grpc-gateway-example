@@ -33,15 +33,15 @@ func CustomHTTPErrorHandler(ctx context.Context, mux *runtime.ServeMux, marshale
 	// 构造错误信息结构
 	pb := &proto_status.Response{
 		RequestId: opentracing.GetTraceIdFromCtx(ctx),
-		Status: &proto_status.ResponseStatus{
-			Code:    uint32(s.Code()),
+		Status: &proto_status.Status{
+			Code:    int32(s.Code()),
 			Reason:  s.Code().String(),
 			Message: s.Message(),
 		},
 	}
 	details := s.Details()
 	if len(details) > 0 {
-		if v, ok := details[0].(*proto_status.ResponseStatus); ok {
+		if v, ok := details[0].(*proto_status.Status); ok {
 			pb.Status = v
 		}
 	}
