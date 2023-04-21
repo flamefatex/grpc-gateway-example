@@ -7,13 +7,11 @@ package flamefatex.grpc_gateway_example.common.status;
 // InternalError对应http状态码500
 message ResponseStatus {
     // 状态码,
-    // 1. ok
-    // 2. InternalError
-    string code = 1;
-    // 信息,
-    // 1. OK
-    // 2. An unknown error occurred while processing your request.
-    string message = 2;
+    uint32 code = 1;
+    // 业务错误码
+    string reason = 2;
+    // 具体信息
+    string message = 3;
 }
 
 // Response 通用的响应内容,

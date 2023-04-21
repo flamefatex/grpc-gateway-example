@@ -1609,23 +1609,22 @@ var _ interface {
 	ErrorName() string
 } = ExampleDeleteResponseValidationError{}
 
-// Validate checks the field values on ExampleCustomHttpCodeAndHeaderRequest
-// with the rules defined in the proto definition for this message. If any
-// rules are violated, the first error encountered is returned, or nil if
-// there are no violations.
-func (m *ExampleCustomHttpCodeAndHeaderRequest) Validate() error {
+// Validate checks the field values on ExampleTestCustomHttpRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ExampleTestCustomHttpRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ExampleCustomHttpCodeAndHeaderRequest
-// with the rules defined in the proto definition for this message. If any
-// rules are violated, the result is a list of violation errors wrapped in
-// ExampleCustomHttpCodeAndHeaderRequestMultiError, or nil if none found.
-func (m *ExampleCustomHttpCodeAndHeaderRequest) ValidateAll() error {
+// ValidateAll checks the field values on ExampleTestCustomHttpRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ExampleTestCustomHttpRequestMultiError, or nil if none found.
+func (m *ExampleTestCustomHttpRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ExampleCustomHttpCodeAndHeaderRequest) validate(all bool) error {
+func (m *ExampleTestCustomHttpRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1635,20 +1634,19 @@ func (m *ExampleCustomHttpCodeAndHeaderRequest) validate(all bool) error {
 	// no validation rules for Code
 
 	if len(errors) > 0 {
-		return ExampleCustomHttpCodeAndHeaderRequestMultiError(errors)
+		return ExampleTestCustomHttpRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// ExampleCustomHttpCodeAndHeaderRequestMultiError is an error wrapping
-// multiple validation errors returned by
-// ExampleCustomHttpCodeAndHeaderRequest.ValidateAll() if the designated
-// constraints aren't met.
-type ExampleCustomHttpCodeAndHeaderRequestMultiError []error
+// ExampleTestCustomHttpRequestMultiError is an error wrapping multiple
+// validation errors returned by ExampleTestCustomHttpRequest.ValidateAll() if
+// the designated constraints aren't met.
+type ExampleTestCustomHttpRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ExampleCustomHttpCodeAndHeaderRequestMultiError) Error() string {
+func (m ExampleTestCustomHttpRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1657,12 +1655,12 @@ func (m ExampleCustomHttpCodeAndHeaderRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ExampleCustomHttpCodeAndHeaderRequestMultiError) AllErrors() []error { return m }
+func (m ExampleTestCustomHttpRequestMultiError) AllErrors() []error { return m }
 
-// ExampleCustomHttpCodeAndHeaderRequestValidationError is the validation error
-// returned by ExampleCustomHttpCodeAndHeaderRequest.Validate if the
-// designated constraints aren't met.
-type ExampleCustomHttpCodeAndHeaderRequestValidationError struct {
+// ExampleTestCustomHttpRequestValidationError is the validation error returned
+// by ExampleTestCustomHttpRequest.Validate if the designated constraints
+// aren't met.
+type ExampleTestCustomHttpRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1670,24 +1668,24 @@ type ExampleCustomHttpCodeAndHeaderRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e ExampleCustomHttpCodeAndHeaderRequestValidationError) Field() string { return e.field }
+func (e ExampleTestCustomHttpRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ExampleCustomHttpCodeAndHeaderRequestValidationError) Reason() string { return e.reason }
+func (e ExampleTestCustomHttpRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ExampleCustomHttpCodeAndHeaderRequestValidationError) Cause() error { return e.cause }
+func (e ExampleTestCustomHttpRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ExampleCustomHttpCodeAndHeaderRequestValidationError) Key() bool { return e.key }
+func (e ExampleTestCustomHttpRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ExampleCustomHttpCodeAndHeaderRequestValidationError) ErrorName() string {
-	return "ExampleCustomHttpCodeAndHeaderRequestValidationError"
+func (e ExampleTestCustomHttpRequestValidationError) ErrorName() string {
+	return "ExampleTestCustomHttpRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ExampleCustomHttpCodeAndHeaderRequestValidationError) Error() string {
+func (e ExampleTestCustomHttpRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1699,14 +1697,14 @@ func (e ExampleCustomHttpCodeAndHeaderRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sExampleCustomHttpCodeAndHeaderRequest.%s: %s%s",
+		"invalid %sExampleTestCustomHttpRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ExampleCustomHttpCodeAndHeaderRequestValidationError{}
+var _ error = ExampleTestCustomHttpRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1714,55 +1712,44 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ExampleCustomHttpCodeAndHeaderRequestValidationError{}
+} = ExampleTestCustomHttpRequestValidationError{}
 
-// Validate checks the field values on ExampleTestRequest with the rules
+// Validate checks the field values on ExampleTestErrorRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *ExampleTestRequest) Validate() error {
+func (m *ExampleTestErrorRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ExampleTestRequest with the rules
-// defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on ExampleTestErrorRequest with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// ExampleTestRequestMultiError, or nil if none found.
-func (m *ExampleTestRequest) ValidateAll() error {
+// ExampleTestErrorRequestMultiError, or nil if none found.
+func (m *ExampleTestErrorRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ExampleTestRequest) validate(all bool) error {
+func (m *ExampleTestErrorRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	if !strings.HasPrefix(m.GetId(), "example") {
-		err := ExampleTestRequestValidationError{
-			field:  "Id",
-			reason: "value does not have prefix \"example\"",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if len(errors) > 0 {
-		return ExampleTestRequestMultiError(errors)
+		return ExampleTestErrorRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// ExampleTestRequestMultiError is an error wrapping multiple validation errors
-// returned by ExampleTestRequest.ValidateAll() if the designated constraints
-// aren't met.
-type ExampleTestRequestMultiError []error
+// ExampleTestErrorRequestMultiError is an error wrapping multiple validation
+// errors returned by ExampleTestErrorRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ExampleTestErrorRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ExampleTestRequestMultiError) Error() string {
+func (m ExampleTestErrorRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1771,11 +1758,11 @@ func (m ExampleTestRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ExampleTestRequestMultiError) AllErrors() []error { return m }
+func (m ExampleTestErrorRequestMultiError) AllErrors() []error { return m }
 
-// ExampleTestRequestValidationError is the validation error returned by
-// ExampleTestRequest.Validate if the designated constraints aren't met.
-type ExampleTestRequestValidationError struct {
+// ExampleTestErrorRequestValidationError is the validation error returned by
+// ExampleTestErrorRequest.Validate if the designated constraints aren't met.
+type ExampleTestErrorRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1783,24 +1770,24 @@ type ExampleTestRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e ExampleTestRequestValidationError) Field() string { return e.field }
+func (e ExampleTestErrorRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ExampleTestRequestValidationError) Reason() string { return e.reason }
+func (e ExampleTestErrorRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ExampleTestRequestValidationError) Cause() error { return e.cause }
+func (e ExampleTestErrorRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ExampleTestRequestValidationError) Key() bool { return e.key }
+func (e ExampleTestErrorRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ExampleTestRequestValidationError) ErrorName() string {
-	return "ExampleTestRequestValidationError"
+func (e ExampleTestErrorRequestValidationError) ErrorName() string {
+	return "ExampleTestErrorRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ExampleTestRequestValidationError) Error() string {
+func (e ExampleTestErrorRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1812,14 +1799,14 @@ func (e ExampleTestRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sExampleTestRequest.%s: %s%s",
+		"invalid %sExampleTestErrorRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ExampleTestRequestValidationError{}
+var _ error = ExampleTestErrorRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1827,24 +1814,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ExampleTestRequestValidationError{}
+} = ExampleTestErrorRequestValidationError{}
 
-// Validate checks the field values on ExampleTestResponse with the rules
+// Validate checks the field values on ExampleTestErrorResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *ExampleTestResponse) Validate() error {
+func (m *ExampleTestErrorResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ExampleTestResponse with the rules
-// defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on ExampleTestErrorResponse with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// ExampleTestResponseMultiError, or nil if none found.
-func (m *ExampleTestResponse) ValidateAll() error {
+// ExampleTestErrorResponseMultiError, or nil if none found.
+func (m *ExampleTestErrorResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ExampleTestResponse) validate(all bool) error {
+func (m *ExampleTestErrorResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1857,7 +1844,7 @@ func (m *ExampleTestResponse) validate(all bool) error {
 		switch v := interface{}(m.GetStatus()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ExampleTestResponseValidationError{
+				errors = append(errors, ExampleTestErrorResponseValidationError{
 					field:  "Status",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1865,7 +1852,7 @@ func (m *ExampleTestResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, ExampleTestResponseValidationError{
+				errors = append(errors, ExampleTestErrorResponseValidationError{
 					field:  "Status",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1874,7 +1861,7 @@ func (m *ExampleTestResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetStatus()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ExampleTestResponseValidationError{
+			return ExampleTestErrorResponseValidationError{
 				field:  "Status",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1886,7 +1873,7 @@ func (m *ExampleTestResponse) validate(all bool) error {
 		switch v := interface{}(m.GetExample()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ExampleTestResponseValidationError{
+				errors = append(errors, ExampleTestErrorResponseValidationError{
 					field:  "Example",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1894,7 +1881,7 @@ func (m *ExampleTestResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, ExampleTestResponseValidationError{
+				errors = append(errors, ExampleTestErrorResponseValidationError{
 					field:  "Example",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1903,7 +1890,7 @@ func (m *ExampleTestResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetExample()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ExampleTestResponseValidationError{
+			return ExampleTestErrorResponseValidationError{
 				field:  "Example",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1912,19 +1899,19 @@ func (m *ExampleTestResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return ExampleTestResponseMultiError(errors)
+		return ExampleTestErrorResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// ExampleTestResponseMultiError is an error wrapping multiple validation
-// errors returned by ExampleTestResponse.ValidateAll() if the designated
+// ExampleTestErrorResponseMultiError is an error wrapping multiple validation
+// errors returned by ExampleTestErrorResponse.ValidateAll() if the designated
 // constraints aren't met.
-type ExampleTestResponseMultiError []error
+type ExampleTestErrorResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ExampleTestResponseMultiError) Error() string {
+func (m ExampleTestErrorResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1933,11 +1920,11 @@ func (m ExampleTestResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ExampleTestResponseMultiError) AllErrors() []error { return m }
+func (m ExampleTestErrorResponseMultiError) AllErrors() []error { return m }
 
-// ExampleTestResponseValidationError is the validation error returned by
-// ExampleTestResponse.Validate if the designated constraints aren't met.
-type ExampleTestResponseValidationError struct {
+// ExampleTestErrorResponseValidationError is the validation error returned by
+// ExampleTestErrorResponse.Validate if the designated constraints aren't met.
+type ExampleTestErrorResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1945,24 +1932,24 @@ type ExampleTestResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e ExampleTestResponseValidationError) Field() string { return e.field }
+func (e ExampleTestErrorResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ExampleTestResponseValidationError) Reason() string { return e.reason }
+func (e ExampleTestErrorResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ExampleTestResponseValidationError) Cause() error { return e.cause }
+func (e ExampleTestErrorResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ExampleTestResponseValidationError) Key() bool { return e.key }
+func (e ExampleTestErrorResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ExampleTestResponseValidationError) ErrorName() string {
-	return "ExampleTestResponseValidationError"
+func (e ExampleTestErrorResponseValidationError) ErrorName() string {
+	return "ExampleTestErrorResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ExampleTestResponseValidationError) Error() string {
+func (e ExampleTestErrorResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1974,14 +1961,14 @@ func (e ExampleTestResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sExampleTestResponse.%s: %s%s",
+		"invalid %sExampleTestErrorResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ExampleTestResponseValidationError{}
+var _ error = ExampleTestErrorResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -1989,4 +1976,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ExampleTestResponseValidationError{}
+} = ExampleTestErrorResponseValidationError{}

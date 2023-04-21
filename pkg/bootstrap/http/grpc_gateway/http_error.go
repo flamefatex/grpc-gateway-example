@@ -21,7 +21,7 @@ import (
 // 参考 https://github.com/grpc-ecosystem/grpc-gateway/blob/main/runtime/errors.go CustomHTTPErrorHandler
 func CustomHTTPErrorHandler(ctx context.Context, mux *runtime.ServeMux, marshaler runtime.Marshaler, w http.ResponseWriter, r *http.Request, err error) {
 	// return Internal when Marshal failed
-	const fallback = `{"requestId": "", "status": {"code": "13", "message": "failed to marshal error message"}}`
+	const fallback = `{"requestId": "", "status": {"code": "13", "reason": "INTERNAL", "message": "failed to marshal error message"}}`
 
 	var customStatus *runtime.HTTPStatusError
 	if errors.As(err, &customStatus) {
@@ -29,12 +29,13 @@ func CustomHTTPErrorHandler(ctx context.Context, mux *runtime.ServeMux, marshale
 	}
 
 	s := grpc_status.Convert(err)
-	//pb := s.Proto()
+	// pb := s.Proto()
 	// 构造错误信息结构
 	pb := &proto_status.Response{
 		RequestId: opentracing.GetTraceIdFromCtx(ctx),
 		Status: &proto_status.ResponseStatus{
-			Code:    s.Code().String(),
+			Code:    uint32(s.Code()),
+			Reason:  s.Code().String(),
 			Message: s.Message(),
 		},
 	}

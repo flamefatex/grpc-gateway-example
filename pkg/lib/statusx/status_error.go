@@ -33,11 +33,11 @@ func (s *StatusError) Unwrap() error {
 	u, ok := s.curErr.(interface {
 		Unwrap() error
 	})
-	//如果不是，返回nil
+	// 如果不是，返回nil
 	if !ok {
 		return nil
 	}
-	//否则则调用该error的Unwrap方法返回被嵌套的error
+	// 否则则调用该error的Unwrap方法返回被嵌套的error
 	return u.Unwrap()
 }
 
@@ -71,7 +71,8 @@ func (s *StatusError) FrdProto() (rs *proto_status.ResponseStatus) {
 		msg = s.innermostFrdInfo.frdMsg
 	}
 	rs = &proto_status.ResponseStatus{
-		Code:    s.frdInfo.frdCode,
+		Code:    uint32(s.grpcCode),
+		Reason:  s.frdInfo.frdCode,
 		Message: msg,
 	}
 	return
@@ -94,7 +95,8 @@ func (s *StatusError) WithFrdMsgf(formatFrdMsg string, a ...interface{}) *Status
 
 func OK(ctx context.Context) *proto_status.ResponseStatus {
 	return &proto_status.ResponseStatus{
-		Code:    code.OK,
+		Code:    uint32(codes.OK),
+		Reason:  code.OK,
 		Message: "OK",
 	}
 }
