@@ -206,7 +206,7 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 		Order(q.Id.Desc()).
 		FindByPage(util_paging.OffsetLimit(req.Paging))
 	if err != nil {
-		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_LIST_ERROR", "get example list failed, err: %s", err)
+		err = errorx.ErrorfInternalServer("EXAMPLE_LIST_ERROR", "get example list failed, err: %s", err)
 		return
 	}
 
