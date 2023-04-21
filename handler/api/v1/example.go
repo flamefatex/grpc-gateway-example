@@ -14,6 +14,7 @@ import (
 	proto_v1_example "github.com/flamefatex/grpc-gateway-example/proto/gen/go/api/v1/example"
 	proto_enum "github.com/flamefatex/grpc-gateway-example/proto/gen/go/enumeration"
 	"github.com/golang/protobuf/ptypes/empty"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rs/xid"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
@@ -156,9 +157,15 @@ func (h *exampleHandler) TestCustomHttp(ctx context.Context, req *proto_v1_examp
 		code = req.Code
 	}
 
-	// 设置
+	// http code
 	_ = grpc.SetHeader(ctx, metadata.Pairs("x-http-code", code))
-	_ = grpc.SetHeader(ctx, metadata.Pairs("x-ffx-token", "xxxyyyzzz"))
+
+	// http header
+	// Set-Cookie: <cookie-name>=<cookie-value>; Max-Age=<non-zero-digit>
+	_ = grpc.SetHeader(ctx, metadata.Pairs(runtime.MetadataPrefix+"Set-Cookie", "mySessionId:xxxx;Max-Age=180"))
+
+	//
+	_ = grpc.SetHeader(ctx, metadata.Pairs("x-ffx-token", "xxx.yyy.zzz"))
 
 	return nil, nil
 }
