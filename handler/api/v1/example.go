@@ -10,7 +10,7 @@ import (
 	"github.com/flamefatex/grpc-gateway-example/model"
 	"github.com/flamefatex/grpc-gateway-example/model/query"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/errorx"
-	util_paging "github.com/flamefatex/grpc-gateway-example/pkg/util/paging"
+	"github.com/flamefatex/grpc-gateway-example/pkg/lib/pagingx"
 	proto_v1_example "github.com/flamefatex/grpc-gateway-example/proto/gen/go/api/v1/example"
 	proto_enum "github.com/flamefatex/grpc-gateway-example/proto/gen/go/enumeration"
 	"github.com/golang/protobuf/ptypes/empty"
@@ -32,7 +32,7 @@ func NewExampleHandler() *exampleHandler {
 
 func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.ExampleListRequest) (resp *proto_v1_example.ExampleListResponse, err error) {
 	resp = &proto_v1_example.ExampleListResponse{}
-	req.Paging = util_paging.Normalize(req.Paging)
+	req.Paging = pagingx.Normalize(req.Paging)
 
 	q := query.Example
 	// 组装条件
@@ -47,7 +47,7 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 	examples, total, err := q.WithContext(ctx).
 		Where(conditions...).
 		Order(q.Id.Desc()).
-		FindByPage(util_paging.OffsetLimit(req.Paging))
+		FindByPage(pagingx.OffsetLimit(req.Paging))
 	if err != nil {
 		err = errorx.ErrorfInternalServer("EXAMPLE_LIST_ERROR", "get example list failed, err: %s", err)
 		return
@@ -69,7 +69,7 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 	}
 
 	resp.Examples = rsExamples
-	resp.Paging = util_paging.WithTotal(req.Paging, total)
+	resp.Paging = pagingx.WithTotal(req.Paging, total)
 	return
 }
 

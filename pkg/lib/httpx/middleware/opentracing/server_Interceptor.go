@@ -11,12 +11,12 @@ import (
 
 var grpcGatewayTag = opentracing.Tag{Key: string(ext.Component), Value: "grpc-gateway"}
 
-// OpenTracingHandler 链路跟踪http中间件
+// NewHandler 链路跟踪http中间件
 // 参考
 // https://grpc-ecosystem.github.io/grpc-gateway/docs/operations/tracing/#opentracing-support
 // https://github.com/grpc-ecosystem/go-grpc-middleware/blob/master/tracing/opentracing/server_interceptors.go
 // https://github.com/grpc-ecosystem/go-grpc-middleware/blob/master/tracing/opentracing/id_extract.go
-func OpenTracingHandler(h http.Handler, opts ...Option) http.Handler {
+func NewHandler(h http.Handler, opts ...Option) http.Handler {
 	o := evaluateOptions(opts)
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

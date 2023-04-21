@@ -6,9 +6,9 @@ import (
 
 	"github.com/flamefatex/grpc-gateway-example/definition"
 	"github.com/flamefatex/grpc-gateway-example/handler"
-	lib_grpc_fill_response "github.com/flamefatex/grpc-gateway-example/pkg/lib/grpc/middleware/fill_response"
-	lib_grpc_inject_ctx "github.com/flamefatex/grpc-gateway-example/pkg/lib/grpc/middleware/inject_ctx"
-	lib_grpc_recovery "github.com/flamefatex/grpc-gateway-example/pkg/lib/grpc/middleware/recovery"
+	grpcx_fill_response "github.com/flamefatex/grpc-gateway-example/pkg/lib/grpcx/middleware/fill_response"
+	grpcx_inject_ctx "github.com/flamefatex/grpc-gateway-example/pkg/lib/grpcx/middleware/inject_ctx"
+	grpcx_recovery "github.com/flamefatex/grpc-gateway-example/pkg/lib/grpcx/middleware/recovery"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/log"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/logx"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
@@ -39,19 +39,19 @@ func BootstrapGrpcServer(ctx context.Context) {
 			grpc_opentracing.StreamServerInterceptor(),
 			grpc_prometheus.StreamServerInterceptor,
 			grpc_zap.StreamServerInterceptor(definition.OrigZap, grpc_zap.WithLevels(grpc_zap.DefaultCodeToLevel)),
-			lib_grpc_inject_ctx.StreamServerInterceptor(lib_grpc_inject_ctx.WithInjectCtxFunc(lib_grpc_inject_ctx.DefaultInjectFunc)), // 注入request_id
+			grpcx_inject_ctx.StreamServerInterceptor(grpcx_inject_ctx.WithInjectCtxFunc(grpcx_inject_ctx.DefaultInjectFunc)), // 注入request_id
 			grpc_validator.StreamServerInterceptor(),
-			grpc_recovery.StreamServerInterceptor(grpc_recovery.WithRecoveryHandlerContext(lib_grpc_recovery.PrintStackHandlerFuncContext)),
+			grpc_recovery.StreamServerInterceptor(grpc_recovery.WithRecoveryHandlerContext(grpcx_recovery.PrintStackHandlerFuncContext)),
 		)),
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpc_ctxtags.UnaryServerInterceptor(grpc_ctxtags.WithFieldExtractor(grpc_ctxtags.CodeGenRequestFieldExtractor)),
 			grpc_opentracing.UnaryServerInterceptor(),
 			grpc_prometheus.UnaryServerInterceptor,
 			grpc_zap.UnaryServerInterceptor(definition.OrigZap, grpc_zap.WithLevels(grpc_zap.DefaultCodeToLevel)),
-			lib_grpc_inject_ctx.UnaryServerInterceptor(lib_grpc_inject_ctx.WithInjectCtxFunc(lib_grpc_inject_ctx.DefaultInjectFunc)), // 注入request_id
+			grpcx_inject_ctx.UnaryServerInterceptor(grpcx_inject_ctx.WithInjectCtxFunc(grpcx_inject_ctx.DefaultInjectFunc)), // 注入request_id
 			grpc_validator.UnaryServerInterceptor(),
-			lib_grpc_fill_response.UnaryServerInterceptor(lib_grpc_fill_response.WithFillResponseFunc(lib_grpc_fill_response.DefaultFillFunc)),
-			grpc_recovery.UnaryServerInterceptor(grpc_recovery.WithRecoveryHandlerContext(lib_grpc_recovery.PrintStackHandlerFuncContext)),
+			grpcx_fill_response.UnaryServerInterceptor(grpcx_fill_response.WithFillResponseFunc(grpcx_fill_response.DefaultFillFunc)),
+			grpc_recovery.UnaryServerInterceptor(grpc_recovery.WithRecoveryHandlerContext(grpcx_recovery.PrintStackHandlerFuncContext)),
 		)),
 	)
 

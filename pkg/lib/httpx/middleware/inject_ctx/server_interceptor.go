@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-func InjectCtxHandler(h http.Handler, opts ...Option) http.Handler {
+func NewHandler(h http.Handler, opts ...Option) http.Handler {
 	o := evaluateOptions(opts)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		newCtx := r.Context()

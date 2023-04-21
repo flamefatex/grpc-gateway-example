@@ -7,7 +7,7 @@ import (
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
 )
 
-func CtxTagsHandler(h http.Handler, opts ...Option) http.Handler {
+func NewHandler(h http.Handler, opts ...Option) http.Handler {
 	o := evaluateOptions(opts)
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

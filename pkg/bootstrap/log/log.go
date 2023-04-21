@@ -6,7 +6,7 @@ import (
 
 	"github.com/flamefatex/grpc-gateway-example/definition"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/config"
-	lib_log "github.com/flamefatex/grpc-gateway-example/pkg/lib/log"
+	"github.com/flamefatex/grpc-gateway-example/pkg/lib/log"
 	lib_zap "github.com/flamefatex/grpc-gateway-example/pkg/lib/log/zap"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	"go.uber.org/zap"
@@ -35,10 +35,10 @@ func BootstrapLog(ctx context.Context) {
 
 	// 设置global logger
 	zapLogger := lib_zap.NewZapLogger(origZap)
-	lib_log.SetLogger(zapLogger)
+	log.SetLogger(zapLogger)
 
 	// grpc日志
-	if config.Config().GetBool("log.enableGrpcLog") {
+	if config.Config().GetBool("log.grpcLogEnabled") {
 		grpc_zap.ReplaceGrpcLoggerV2(origZap.WithOptions(zap.AddCallerSkip(2)))
 	}
 

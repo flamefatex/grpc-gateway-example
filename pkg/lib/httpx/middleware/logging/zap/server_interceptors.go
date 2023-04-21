@@ -18,7 +18,7 @@ var (
 	ServerField = zap.String("span.kind", "server")
 )
 
-func LoggingHandler(h http.Handler, logger *zap.Logger, opts ...Option) http.Handler {
+func NewHandler(h http.Handler, logger *zap.Logger, opts ...Option) http.Handler {
 	o := evaluateServerOpt(opts)
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		startTime := time.Now()
