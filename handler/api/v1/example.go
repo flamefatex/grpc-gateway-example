@@ -2,20 +2,21 @@ package v1
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
 
 	"github.com/flamefatex/grpc-gateway-example/model"
 	"github.com/flamefatex/grpc-gateway-example/model/query"
-	"github.com/flamefatex/grpc-gateway-example/pkg/lib/statusx"
+	"github.com/flamefatex/grpc-gateway-example/pkg/lib/errorx"
 	util_paging "github.com/flamefatex/grpc-gateway-example/pkg/util/paging"
 	proto_v1_example "github.com/flamefatex/grpc-gateway-example/proto/gen/go/api/v1/example"
 	proto_enum "github.com/flamefatex/grpc-gateway-example/proto/gen/go/enumeration"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/rs/xid"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"gorm.io/gen"
@@ -48,7 +49,7 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 		Order(q.Id.Desc()).
 		FindByPage(util_paging.OffsetLimit(req.Paging))
 	if err != nil {
-		err = statusx.Errorf(codes.Internal, "get example list failed, err: %w", err)
+		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_LIST_ERROR", "get example list failed, err: %s", err)
 		return
 	}
 
@@ -80,7 +81,7 @@ func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleG
 
 	example, err := q.WithContext(ctx).GetById(req.Id)
 	if err != nil {
-		err = statusx.Errorf(codes.Internal, "get example failed, err: %w", err)
+		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_GET_ERROR", "get example failed, err: %s", err)
 		return
 	}
 
@@ -111,7 +112,7 @@ func (h *exampleHandler) Create(ctx context.Context, req *proto_v1_example.Examp
 
 	err = q.WithContext(ctx).Create(example)
 	if err != nil {
-		err = statusx.Errorf(codes.Internal, "create example failed, err: %w", err)
+		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_CREATE_ERROR", "create example failed, err: %s", err)
 		return
 	}
 
@@ -128,7 +129,7 @@ func (h *exampleHandler) Update(ctx context.Context, req *proto_v1_example.Examp
 	}
 	_, err = q.WithContext(ctx).Where(q.Id.Eq(req.Example.Id)).Updates(updateParam)
 	if err != nil {
-		err = statusx.Errorf(codes.Internal, "update example failed, err: %w", err)
+		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_UPDATE_ERROR", "update example failed, err: %s", err)
 		return
 	}
 
@@ -142,7 +143,7 @@ func (h *exampleHandler) Delete(ctx context.Context, req *proto_v1_example.Examp
 
 	_, err = q.WithContext(ctx).DeleteById(req.Id)
 	if err != nil {
-		err = statusx.Errorf(codes.Internal, "delete example failed, err: %w", err)
+		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_DELETE_ERROR", "delete example failed, err: %s", err)
 		return
 	}
 
@@ -178,7 +179,7 @@ func (h *exampleHandler) TestError(ctx context.Context, req *proto_v1_example.Ex
 		},
 	}
 
-	// err = errors.New("test error")
-
+	err = errors.New("test error")
+	err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_DELETE_ERROR", "delete example failed, err: %s", err)
 	return
 }

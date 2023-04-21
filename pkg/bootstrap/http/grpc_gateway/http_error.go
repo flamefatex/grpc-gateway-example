@@ -9,6 +9,7 @@ import (
 	"net/textproto"
 	"strings"
 
+	"github.com/flamefatex/grpc-gateway-example/pkg/lib/errorx"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/tracing/opentracing"
 	proto_status "github.com/flamefatex/grpc-gateway-example/proto/gen/go/common/status"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -31,19 +32,10 @@ func CustomHTTPErrorHandler(ctx context.Context, mux *runtime.ServeMux, marshale
 	s := grpc_status.Convert(err)
 	// pb := s.Proto()
 	// 构造错误信息结构
+	e := errorx.FromError(err)
 	pb := &proto_status.Response{
 		RequestId: opentracing.GetTraceIdFromCtx(ctx),
-		Status: &proto_status.Status{
-			Code:    int32(s.Code()),
-			Reason:  s.Code().String(),
-			Message: s.Message(),
-		},
-	}
-	details := s.Details()
-	if len(details) > 0 {
-		if v, ok := details[0].(*proto_status.Status); ok {
-			pb.Status = v
-		}
+		Status:    e.Proto(),
 	}
 
 	w.Header().Del("Trailer")
