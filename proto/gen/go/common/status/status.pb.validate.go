@@ -59,6 +59,8 @@ func (m *ResponseStatus) validate(all bool) error {
 
 	// no validation rules for Code
 
+	// no validation rules for Reason
+
 	// no validation rules for Message
 
 	if len(errors) > 0 {

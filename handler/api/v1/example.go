@@ -2,6 +2,7 @@ package v1
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -149,7 +150,7 @@ func (h *exampleHandler) Delete(ctx context.Context, req *proto_v1_example.Examp
 	return
 }
 
-func (h *exampleHandler) CustomHttpCodeAndHeader(ctx context.Context, req *proto_v1_example.ExampleCustomHttpCodeAndHeaderRequest) (resp *empty.Empty, err error) {
+func (h *exampleHandler) TestCustomHttp(ctx context.Context, req *proto_v1_example.ExampleTestCustomHttpRequest) (resp *empty.Empty, err error) {
 
 	code := "401"
 	if req.Code != "" {
@@ -163,9 +164,9 @@ func (h *exampleHandler) CustomHttpCodeAndHeader(ctx context.Context, req *proto
 	return nil, nil
 }
 
-func (h *exampleHandler) Test(ctx context.Context, req *proto_v1_example.ExampleTestRequest) (resp *proto_v1_example.ExampleTestResponse, err error) {
+func (h *exampleHandler) TestError(ctx context.Context, req *proto_v1_example.ExampleTestErrorRequest) (resp *proto_v1_example.ExampleTestErrorResponse, err error) {
 	now := time.Now()
-	resp = &proto_v1_example.ExampleTestResponse{
+	resp = &proto_v1_example.ExampleTestErrorResponse{
 		Example: &proto_v1_example.Example{
 			Id:               "example-xxx",
 			Name:             "示例1",
@@ -177,6 +178,8 @@ func (h *exampleHandler) Test(ctx context.Context, req *proto_v1_example.Example
 			UpdatedTimestamp: timestamppb.New(now),
 		},
 	}
+
+	err = errors.New("test error")
 
 	return
 }

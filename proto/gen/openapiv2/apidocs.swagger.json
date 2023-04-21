@@ -46,33 +46,6 @@
         ]
       }
     },
-    "/api/v1/example/customHttpCodeAndHeader": {
-      "get": {
-        "summary": "CustomHttpCodeAndHeader 定制http返回码和头",
-        "operationId": "ExampleService_CustomHttpCodeAndHeader",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "code",
-            "description": "http status code",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "ExampleService"
-        ]
-      }
-    },
     "/api/v1/example/delete": {
       "delete": {
         "summary": "Delete 删除示例",
@@ -190,27 +163,45 @@
         ]
       }
     },
-    "/api/v1/example/test": {
+    "/api/v1/example/testCustomHttp": {
       "get": {
-        "summary": "Test test单个示例",
-        "operationId": "ExampleService_Test",
+        "summary": "TestCustomHttp 测试自定义http",
+        "operationId": "ExampleService_TestCustomHttp",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleTestResponse"
+              "type": "object",
+              "properties": {}
             }
           }
         },
         "parameters": [
           {
-            "name": "id",
-            "description": "ID",
+            "name": "code",
+            "description": "http status code",
             "in": "query",
             "required": false,
             "type": "string"
           }
         ],
+        "tags": [
+          "ExampleService"
+        ]
+      }
+    },
+    "/api/v1/example/testError": {
+      "get": {
+        "summary": "TestError 测试错误",
+        "operationId": "ExampleService_TestError",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleTestErrorResponse"
+            }
+          }
+        },
         "tags": [
           "ExampleService"
         ]
@@ -409,7 +400,7 @@
       },
       "title": "ExampleListResponse 查询示例列表响应"
     },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleTestResponse": {
+    "flamefatex.grpc_gateway_example.api.v1.example.ExampleTestErrorResponse": {
       "type": "object",
       "properties": {
         "requestId": {
@@ -425,7 +416,7 @@
           "title": "示例"
         }
       },
-      "title": "ExampleTestResponse test单个示例响应"
+      "title": "ExampleTestErrorResponse 测试错误单个示例响应"
     },
     "flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateRequest": {
       "type": "object",
@@ -481,12 +472,17 @@
       "type": "object",
       "properties": {
         "code": {
+          "type": "integer",
+          "format": "int64",
+          "title": "状态码,"
+        },
+        "reason": {
           "type": "string",
-          "title": "状态码,\n1. ok\n2. InternalError"
+          "title": "业务错误码"
         },
         "message": {
           "type": "string",
-          "description": "信息,\n1. OK\n2. An unknown error occurred while processing your request."
+          "title": "具体信息"
         }
       },
       "title": "ResponseStatus 请求返回状态,\nok对应http状态码200\nInternalError对应http状态码500"

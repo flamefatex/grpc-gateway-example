@@ -33,10 +33,10 @@ type ExampleServiceClient interface {
 	Update(ctx context.Context, in *ExampleUpdateRequest, opts ...grpc.CallOption) (*ExampleUpdateResponse, error)
 	// Delete 删除示例
 	Delete(ctx context.Context, in *ExampleDeleteRequest, opts ...grpc.CallOption) (*ExampleDeleteResponse, error)
-	// CustomHttpCodeAndHeader 定制http返回码和头
-	CustomHttpCodeAndHeader(ctx context.Context, in *ExampleCustomHttpCodeAndHeaderRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// Test test单个示例
-	Test(ctx context.Context, in *ExampleTestRequest, opts ...grpc.CallOption) (*ExampleTestResponse, error)
+	// TestCustomHttp 测试自定义http
+	TestCustomHttp(ctx context.Context, in *ExampleTestCustomHttpRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// TestError 测试错误
+	TestError(ctx context.Context, in *ExampleTestErrorRequest, opts ...grpc.CallOption) (*ExampleTestErrorResponse, error)
 }
 
 type exampleServiceClient struct {
@@ -92,18 +92,18 @@ func (c *exampleServiceClient) Delete(ctx context.Context, in *ExampleDeleteRequ
 	return out, nil
 }
 
-func (c *exampleServiceClient) CustomHttpCodeAndHeader(ctx context.Context, in *ExampleCustomHttpCodeAndHeaderRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *exampleServiceClient) TestCustomHttp(ctx context.Context, in *ExampleTestCustomHttpRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/CustomHttpCodeAndHeader", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/TestCustomHttp", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *exampleServiceClient) Test(ctx context.Context, in *ExampleTestRequest, opts ...grpc.CallOption) (*ExampleTestResponse, error) {
-	out := new(ExampleTestResponse)
-	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Test", in, out, opts...)
+func (c *exampleServiceClient) TestError(ctx context.Context, in *ExampleTestErrorRequest, opts ...grpc.CallOption) (*ExampleTestErrorResponse, error) {
+	out := new(ExampleTestErrorResponse)
+	err := c.cc.Invoke(ctx, "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/TestError", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -124,10 +124,10 @@ type ExampleServiceServer interface {
 	Update(context.Context, *ExampleUpdateRequest) (*ExampleUpdateResponse, error)
 	// Delete 删除示例
 	Delete(context.Context, *ExampleDeleteRequest) (*ExampleDeleteResponse, error)
-	// CustomHttpCodeAndHeader 定制http返回码和头
-	CustomHttpCodeAndHeader(context.Context, *ExampleCustomHttpCodeAndHeaderRequest) (*emptypb.Empty, error)
-	// Test test单个示例
-	Test(context.Context, *ExampleTestRequest) (*ExampleTestResponse, error)
+	// TestCustomHttp 测试自定义http
+	TestCustomHttp(context.Context, *ExampleTestCustomHttpRequest) (*emptypb.Empty, error)
+	// TestError 测试错误
+	TestError(context.Context, *ExampleTestErrorRequest) (*ExampleTestErrorResponse, error)
 	mustEmbedUnimplementedExampleServiceServer()
 }
 
@@ -150,11 +150,11 @@ func (UnimplementedExampleServiceServer) Update(context.Context, *ExampleUpdateR
 func (UnimplementedExampleServiceServer) Delete(context.Context, *ExampleDeleteRequest) (*ExampleDeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedExampleServiceServer) CustomHttpCodeAndHeader(context.Context, *ExampleCustomHttpCodeAndHeaderRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CustomHttpCodeAndHeader not implemented")
+func (UnimplementedExampleServiceServer) TestCustomHttp(context.Context, *ExampleTestCustomHttpRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TestCustomHttp not implemented")
 }
-func (UnimplementedExampleServiceServer) Test(context.Context, *ExampleTestRequest) (*ExampleTestResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Test not implemented")
+func (UnimplementedExampleServiceServer) TestError(context.Context, *ExampleTestErrorRequest) (*ExampleTestErrorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TestError not implemented")
 }
 func (UnimplementedExampleServiceServer) mustEmbedUnimplementedExampleServiceServer() {}
 
@@ -259,38 +259,38 @@ func _ExampleService_Delete_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExampleService_CustomHttpCodeAndHeader_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExampleCustomHttpCodeAndHeaderRequest)
+func _ExampleService_TestCustomHttp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExampleTestCustomHttpRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExampleServiceServer).CustomHttpCodeAndHeader(ctx, in)
+		return srv.(ExampleServiceServer).TestCustomHttp(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/CustomHttpCodeAndHeader",
+		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/TestCustomHttp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServiceServer).CustomHttpCodeAndHeader(ctx, req.(*ExampleCustomHttpCodeAndHeaderRequest))
+		return srv.(ExampleServiceServer).TestCustomHttp(ctx, req.(*ExampleTestCustomHttpRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExampleService_Test_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExampleTestRequest)
+func _ExampleService_TestError_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExampleTestErrorRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExampleServiceServer).Test(ctx, in)
+		return srv.(ExampleServiceServer).TestError(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/Test",
+		FullMethod: "/flamefatex.grpc_gateway_example.api.v1.example.ExampleService/TestError",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServiceServer).Test(ctx, req.(*ExampleTestRequest))
+		return srv.(ExampleServiceServer).TestError(ctx, req.(*ExampleTestErrorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -323,12 +323,12 @@ var ExampleService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ExampleService_Delete_Handler,
 		},
 		{
-			MethodName: "CustomHttpCodeAndHeader",
-			Handler:    _ExampleService_CustomHttpCodeAndHeader_Handler,
+			MethodName: "TestCustomHttp",
+			Handler:    _ExampleService_TestCustomHttp_Handler,
 		},
 		{
-			MethodName: "Test",
-			Handler:    _ExampleService_Test_Handler,
+			MethodName: "TestError",
+			Handler:    _ExampleService_TestError_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
