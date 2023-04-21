@@ -169,7 +169,7 @@ import (
 
 	"github.com/flamefatex/grpc-gateway-example/model"
 	"github.com/flamefatex/grpc-gateway-example/model/query"
-	"github.com/flamefatex/grpc-gateway-example/pkg/lib/statusx"
+	"github.com/flamefatex/grpc-gateway-example/pkg/lib/errprx"
 	util_paging "github.com/flamefatex/grpc-gateway-example/pkg/util/paging"
 	proto_v1_example "github.com/flamefatex/grpc-gateway-example/proto/gen/go/api/v1/example"
 	proto_enum "github.com/flamefatex/grpc-gateway-example/proto/gen/go/enumeration"
@@ -206,7 +206,7 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 		Order(q.Id.Desc()).
 		FindByPage(util_paging.OffsetLimit(req.Paging))
 	if err != nil {
-		err = statusx.Errorf(codes.Internal, "get example list failed, err: %w", err)
+		err = errorx.Errorf(http.StatusInternalServerError, "EXAMPLE_LIST_ERROR", "get example list failed, err: %s", err)
 		return
 	}
 

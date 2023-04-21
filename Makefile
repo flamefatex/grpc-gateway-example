@@ -27,6 +27,7 @@ gorm-gen:
 
 .PHONY: build
 build:
+	@go env -w GOPROXY="https://proxy.golang.com.cn,direct"
 	@echo "building ${BIN_NAME} ${VERSION} ${GIT_COMMIT} ${GIT_DIRTY}"
 	@go build -ldflags "-X main.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X main.VersionPrerelease=DEV" -o bin/${BIN_NAME}
 .PHONY: image
@@ -35,4 +36,4 @@ image:
 	@docker build --build-arg APP_NAME=${BIN_NAME} --build-arg VERSION=${VERSION} --build-arg GIT_COMMIT=${GIT_COMMIT}${GIT_DIRTY} -t ${IMAGE_NAME}:latest .
 .PHONY: local-running
 local-running:
-	@sh hack/local-running.sh
+	@bash hack/local-running.sh
