@@ -15,13 +15,13 @@ var (
 	httpTag = opentracing.Tag{Key: string(ext.Component), Value: "HTTP"}
 )
 
-type opentracingTransport struct {
+type transport struct {
 	nextRoundTripper http.RoundTripper //  链路跟踪header添加完，再调用nextRoundTripper的RoundTripp()
 	o                *options
 }
 
-func OpentracingRoundTripper(nextRoundTripper http.RoundTripper, opts ...Option) http.RoundTripper {
-	return &opentracingTransport{
+func NewRoundTripper(nextRoundTripper http.RoundTripper, opts ...Option) http.RoundTripper {
+	return &transport{
 		nextRoundTripper: nextRoundTripper,
 		o:                evaluateOptions(opts),
 	}
@@ -36,7 +36,7 @@ func ClientAddContextTags(ctx context.Context, tags opentracing.Tags) context.Co
 
 type clientSpanTagKey struct{}
 
-func (c *opentracingTransport) RoundTrip(req *http.Request) (resp *http.Response, err error) {
+func (c *transport) RoundTrip(req *http.Request) (resp *http.Response, err error) {
 	// 获取父层span
 	ctx := req.Context()
 	var parentSpanCtx opentracing.SpanContext

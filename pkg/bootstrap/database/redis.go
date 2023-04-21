@@ -9,6 +9,10 @@ import (
 )
 
 func bootstrapRedis(ctx context.Context) {
+	if !config.Config().GetBool("redis.enabled") {
+		return
+	}
+
 	conf := &lib_redis.Config{}
 	switch config.Config().GetString("redis.mode") {
 	case lib_redis.ModeSentinel:

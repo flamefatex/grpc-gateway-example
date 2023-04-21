@@ -58,7 +58,7 @@ func Init(serviceName string) error {
 	log.Infof("load config from file: %s", v.ConfigFileUsed())
 
 	// 输出配置内容
-	if v.GetBool("config.enableLog") {
+	if v.GetBool("config.logEnabled") {
 		log.Infof("config all settings: %v", v.AllSettings())
 	}
 

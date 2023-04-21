@@ -1,4 +1,4 @@
-package paging
+package pagingx
 
 import proto_paging "github.com/flamefatex/grpc-gateway-example/proto/gen/go/common/paging"
 

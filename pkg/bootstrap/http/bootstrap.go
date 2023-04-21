@@ -10,10 +10,10 @@ import (
 	"github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/http/grpc_gateway"
 	"github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/http/pprof"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/config"
-	lib_http_ctxtags "github.com/flamefatex/grpc-gateway-example/pkg/lib/http/middleware/ctxtags"
-	lib_http_inject_ctx "github.com/flamefatex/grpc-gateway-example/pkg/lib/http/middleware/inject_ctx"
-	lib_http_zap "github.com/flamefatex/grpc-gateway-example/pkg/lib/http/middleware/logging/zap"
-	lib_http_ot "github.com/flamefatex/grpc-gateway-example/pkg/lib/http/middleware/opentracing"
+	httpx_ctxtags "github.com/flamefatex/grpc-gateway-example/pkg/lib/httpx/middleware/ctxtags"
+	httpx_inject_ctx "github.com/flamefatex/grpc-gateway-example/pkg/lib/httpx/middleware/inject_ctx"
+	httpx_zap "github.com/flamefatex/grpc-gateway-example/pkg/lib/httpx/middleware/logging/zap"
+	httpx_ot "github.com/flamefatex/grpc-gateway-example/pkg/lib/httpx/middleware/opentracing"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/log"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/logx"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -34,19 +34,19 @@ func BootstrapHttpServer(ctx context.Context) {
 	httpMux.Handle("/g/", ginRouter)
 	httpMux.Handle("/", ggMux)
 	httpMux.Handle("/metrics", promhttp.Handler()) // Register Prometheus metrics handler.
-	if config.Config().GetBool("pprof.enable") {
+	if config.Config().GetBool("pprof.enabled") {
 		httpMux.Handle("/debug/pprof/", pprof.GetPprofMux(ctx)) // pprof
 	}
 
 	// http中间件 从下往上执行
 	var handler http.Handler = httpMux
 
-	handler = lib_http_inject_ctx.InjectCtxHandler(handler,
-		lib_http_inject_ctx.WithInjectCtxFunc(lib_http_inject_ctx.DefaultInjectFunc),
+	handler = httpx_inject_ctx.NewHandler(handler,
+		httpx_inject_ctx.WithInjectCtxFunc(httpx_inject_ctx.DefaultInjectFunc),
 	) // 注入request_id
-	handler = lib_http_zap.LoggingHandler(handler, definition.OrigZap)
-	handler = lib_http_ot.OpenTracingHandler(handler)  // 链路跟踪
-	handler = lib_http_ctxtags.CtxTagsHandler(handler) // ctx tags
+	handler = httpx_zap.NewHandler(handler, definition.OrigZap)
+	handler = httpx_ot.NewHandler(handler)      // 链路跟踪
+	handler = httpx_ctxtags.NewHandler(handler) // ctx tags
 
 	httpServer := &http.Server{
 		Addr:         definition.HttpAddr,

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/flamefatex/grpc-gateway-example/definition"
-	// bs_database "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/database"
+	bs_database "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/database"
 	bs_grpc "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/grpc"
 	bs_http "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/http"
 	bs_log "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/log"
@@ -33,7 +33,7 @@ func main() {
 		}
 	}()
 	// 引导数据库
-	// bs_database.BootstrapDatabase(ctx)
+	bs_database.BootstrapDatabase(ctx)
 
 	// 启动http
 	bs_http.BootstrapHttpServer(ctx)
