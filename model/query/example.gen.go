@@ -32,8 +32,8 @@ func newExample(db *gorm.DB, opts ...gen.DOOption) example {
 	_example.Name = field.NewString(tableName, "name")
 	_example.Type = field.NewInt32(tableName, "type")
 	_example.Description = field.NewString(tableName, "description")
-	_example.CreatedTime = field.NewTime(tableName, "created_time")
-	_example.UpdatedTime = field.NewTime(tableName, "updated_time")
+	_example.CreatedAt = field.NewTime(tableName, "created_at")
+	_example.UpdatedAt = field.NewTime(tableName, "updated_at")
 
 	_example.fillFieldMap()
 
@@ -48,8 +48,8 @@ type example struct {
 	Name        field.String
 	Type        field.Int32
 	Description field.String
-	CreatedTime field.Time
-	UpdatedTime field.Time
+	CreatedAt   field.Time
+	UpdatedAt   field.Time
 
 	fieldMap map[string]field.Expr
 }
@@ -70,8 +70,8 @@ func (e *example) updateTableName(table string) *example {
 	e.Name = field.NewString(table, "name")
 	e.Type = field.NewInt32(table, "type")
 	e.Description = field.NewString(table, "description")
-	e.CreatedTime = field.NewTime(table, "created_time")
-	e.UpdatedTime = field.NewTime(table, "updated_time")
+	e.CreatedAt = field.NewTime(table, "created_at")
+	e.UpdatedAt = field.NewTime(table, "updated_at")
 
 	e.fillFieldMap()
 
@@ -99,8 +99,8 @@ func (e *example) fillFieldMap() {
 	e.fieldMap["name"] = e.Name
 	e.fieldMap["type"] = e.Type
 	e.fieldMap["description"] = e.Description
-	e.fieldMap["created_time"] = e.CreatedTime
-	e.fieldMap["updated_time"] = e.UpdatedTime
+	e.fieldMap["created_at"] = e.CreatedAt
+	e.fieldMap["updated_at"] = e.UpdatedAt
 }
 
 func (e example) clone(db *gorm.DB) example {

@@ -58,36 +58,31 @@ service ExampleService {
       get: "/api/v1/example/list"
     };
   }
+  
 }
 
 // Example 示例
 message Example {
   // ID
-  int64 id = 1;
-  // 唯一标识
-  string uuid = 2;
+  string id = 1;
   // 名称
-  string name = 3;
+  string name = 2;
   // 类型
-  flamefatex.grpc_gateway_example.enumeration.ExampleType type = 4;
+  flamefatex.grpc_gateway_example.enumeration.ExampleType type = 3;
   // 描述
-  string description = 5;
+  string description = 4;
   // 创建时间
-  int64 create_time = 6;
+  google.protobuf.Timestamp created_at = 5;
   // 更新时间
-  int64 update_time = 7;
-  // 创建时间
-  google.protobuf.Timestamp create_timestamp = 8;
-  // 更新时间
-  google.protobuf.Timestamp update_timestamp = 9;
+  google.protobuf.Timestamp updated_at = 6;
 }
 
 // ExampleListRequest 查询示例列表请求
 message ExampleListRequest {
   // 分页
   flamefatex.grpc_gateway_example.common.paging.Paging paging = 1;
-  // uuid
-  string uuid = 2;
+  // ID
+  string id = 2;
   // 名称
   string name = 3;
 }
@@ -103,7 +98,6 @@ message ExampleListResponse {
   // 示例列表
   repeated Example examples = 4;
 }
-
 ```
 
 执行makefile指令
@@ -124,28 +118,28 @@ import (
 )
 
 type Example struct {
-	Id          int64
-	Uuid        string
+	Id          string
 	Name        string
 	Type        proto_enum.ExampleType
 	Description string
-	CreateTime  time.Time
-	UpdateTime  time.Time
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 // ExampleQueryInterface example自定义查询接口
 type ExampleQueryInterface interface {
 	// SELECT * FROM @@table
 	// WHERE
-	// {{ if uuid != "" }} uuid = @uuid AND {{ end }}
+	// {{ if id != "" }} id = @id AND {{ end }}
 	// {{ if name != "" }} name LIKE %@name% AND {{ end }}
 	// 1=1
-	Query(uuid string, name string) ([]*gen.T, error)
+	Query(id string, name string) ([]*gen.T, error)
 }
 
-func (e *Example) TableName() string {
+func (m *Example) TableName() string {
 	return "example"
 }
+
 
 ```
 
@@ -189,13 +183,13 @@ func NewExampleHandler() *exampleHandler {
 
 func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.ExampleListRequest) (resp *proto_v1_example.ExampleListResponse, err error) {
 	resp = &proto_v1_example.ExampleListResponse{}
-	req.Paging = util_paging.Normalize(req.Paging)
+	req.Paging = pagingx.Normalize(req.Paging)
 
 	q := query.Example
 	// 组装条件
 	conditions := make([]gen.Condition, 0)
-	if req.Uuid != "" {
-		conditions = append(conditions, q.Uuid.Eq(req.Uuid))
+	if req.Id != "" {
+		conditions = append(conditions, q.Id.Eq(req.Id))
 	}
 	if req.Name != "" {
 		conditions = append(conditions, q.Name.Like("%"+req.Name+"%"))
@@ -204,7 +198,7 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 	examples, total, err := q.WithContext(ctx).
 		Where(conditions...).
 		Order(q.Id.Desc()).
-		FindByPage(util_paging.OffsetLimit(req.Paging))
+		FindByPage(pagingx.OffsetLimit(req.Paging))
 	if err != nil {
 		err = errorx.ErrorfInternalServer("EXAMPLE_LIST_ERROR", "get example list failed, err: %s", err)
 		return
@@ -213,21 +207,18 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 	rsExamples := make([]*proto_v1_example.Example, 0)
 	for _, example := range examples {
 		e := &proto_v1_example.Example{
-			Id:              example.Id,
-			Uuid:            example.Uuid,
-			Name:            example.Name,
-			Type:            example.Type,
-			Description:     example.Description,
-			CreateTime:      example.CreateTime.Unix(),
-			UpdateTime:      example.UpdateTime.Unix(),
-			CreateTimestamp: timestamppb.New(example.CreateTime),
-			UpdateTimestamp: timestamppb.New(example.UpdateTime),
+			Id:          example.Id,
+			Name:        example.Name,
+			Type:        example.Type,
+			Description: example.Description,
+			CreatedAt:   timestamppb.New(example.CreatedAt),
+			UpdatedAt:   timestamppb.New(example.UpdatedAt),
 		}
 		rsExamples = append(rsExamples, e)
 	}
 
 	resp.Examples = rsExamples
-	resp.Paging = util_paging.WithTotal(req.Paging, total)
+	resp.Paging = pagingx.WithTotal(req.Paging, total)
 	return
 }
 
