@@ -56,14 +56,12 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 	rsExamples := make([]*proto_v1_example.Example, 0)
 	for _, example := range examples {
 		e := &proto_v1_example.Example{
-			Id:               example.Id,
-			Name:             example.Name,
-			Type:             example.Type,
-			Description:      example.Description,
-			CreatedTime:      example.CreatedTime.Unix(),
-			UpdatedTime:      example.UpdatedTime.Unix(),
-			CreatedTimestamp: timestamppb.New(example.CreatedTime),
-			UpdatedTimestamp: timestamppb.New(example.UpdatedTime),
+			Id:          example.Id,
+			Name:        example.Name,
+			Type:        example.Type,
+			Description: example.Description,
+			CreatedAt:   timestamppb.New(example.CreatedAt),
+			UpdatedAt:   timestamppb.New(example.UpdatedAt),
 		}
 		rsExamples = append(rsExamples, e)
 	}
@@ -86,14 +84,12 @@ func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleG
 	}
 
 	resp.Example = &proto_v1_example.Example{
-		Id:               example.Id,
-		Name:             example.Name,
-		Type:             example.Type,
-		Description:      example.Description,
-		CreatedTime:      example.CreatedTime.Unix(),
-		UpdatedTime:      example.UpdatedTime.Unix(),
-		CreatedTimestamp: timestamppb.New(example.CreatedTime),
-		UpdatedTimestamp: timestamppb.New(example.UpdatedTime),
+		Id:          example.Id,
+		Name:        example.Name,
+		Type:        example.Type,
+		Description: example.Description,
+		CreatedAt:   timestamppb.New(example.CreatedAt),
+		UpdatedAt:   timestamppb.New(example.UpdatedAt),
 	}
 
 	return
@@ -174,14 +170,12 @@ func (h *exampleHandler) TestError(ctx context.Context, req *proto_v1_example.Ex
 	now := time.Now()
 	resp = &proto_v1_example.ExampleTestErrorResponse{
 		Example: &proto_v1_example.Example{
-			Id:               "example-xxx",
-			Name:             "示例1",
-			Type:             proto_enum.ExampleType_EXAMPLE_TYPE_ONE,
-			Description:      "示例1描述",
-			CreatedTime:      now.Unix(),
-			UpdatedTime:      now.Unix(),
-			CreatedTimestamp: timestamppb.New(now),
-			UpdatedTimestamp: timestamppb.New(now),
+			Id:          "example-xxx",
+			Name:        "示例1",
+			Type:        proto_enum.ExampleType_EXAMPLE_TYPE_ONE,
+			Description: "示例1描述",
+			CreatedAt:   timestamppb.New(now),
+			UpdatedAt:   timestamppb.New(now),
 		},
 	}
 

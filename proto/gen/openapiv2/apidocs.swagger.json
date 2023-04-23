@@ -296,22 +296,12 @@
           "type": "string",
           "title": "描述"
         },
-        "createdTime": {
-          "type": "string",
-          "format": "int64",
-          "title": "创建时间"
-        },
-        "updatedTime": {
-          "type": "string",
-          "format": "int64",
-          "title": "更新时间"
-        },
-        "createdTimestamp": {
+        "createdAt": {
           "type": "string",
           "format": "date-time",
           "title": "创建时间"
         },
-        "updatedTimestamp": {
+        "updatedAt": {
           "type": "string",
           "format": "date-time",
           "title": "更新时间"

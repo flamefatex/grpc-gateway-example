@@ -12,8 +12,8 @@ type Example struct {
 	Name        string
 	Type        proto_enum.ExampleType
 	Description string
-	CreatedTime time.Time
-	UpdatedTime time.Time
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 // ExampleQueryInterface example自定义查询接口
@@ -26,6 +26,6 @@ type ExampleQueryInterface interface {
 	Query(id string, name string) ([]*gen.T, error)
 }
 
-func (e *Example) TableName() string {
+func (m *Example) TableName() string {
 	return "example"
 }

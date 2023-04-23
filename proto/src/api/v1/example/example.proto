@@ -76,13 +76,9 @@ message Example {
     // 描述
     string description = 4;
     // 创建时间
-    int64 created_time = 5;
+    google.protobuf.Timestamp created_at = 5;
     // 更新时间
-    int64 updated_time = 6;
-    // 创建时间
-    google.protobuf.Timestamp created_timestamp = 7;
-    // 更新时间
-    google.protobuf.Timestamp updated_timestamp = 8;
+    google.protobuf.Timestamp updated_at = 6;
 }
 
 // ExampleListRequest 查询示例列表请求
