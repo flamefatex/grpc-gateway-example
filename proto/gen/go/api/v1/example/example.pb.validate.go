@@ -68,16 +68,12 @@ func (m *Example) validate(all bool) error {
 
 	// no validation rules for Description
 
-	// no validation rules for CreatedTime
-
-	// no validation rules for UpdatedTime
-
 	if all {
-		switch v := interface{}(m.GetCreatedTimestamp()).(type) {
+		switch v := interface{}(m.GetCreatedAt()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, ExampleValidationError{
-					field:  "CreatedTimestamp",
+					field:  "CreatedAt",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -85,16 +81,16 @@ func (m *Example) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, ExampleValidationError{
-					field:  "CreatedTimestamp",
+					field:  "CreatedAt",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetCreatedTimestamp()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetCreatedAt()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ExampleValidationError{
-				field:  "CreatedTimestamp",
+				field:  "CreatedAt",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -102,11 +98,11 @@ func (m *Example) validate(all bool) error {
 	}
 
 	if all {
-		switch v := interface{}(m.GetUpdatedTimestamp()).(type) {
+		switch v := interface{}(m.GetUpdatedAt()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, ExampleValidationError{
-					field:  "UpdatedTimestamp",
+					field:  "UpdatedAt",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -114,16 +110,16 @@ func (m *Example) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, ExampleValidationError{
-					field:  "UpdatedTimestamp",
+					field:  "UpdatedAt",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetUpdatedTimestamp()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetUpdatedAt()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ExampleValidationError{
-				field:  "UpdatedTimestamp",
+				field:  "UpdatedAt",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
