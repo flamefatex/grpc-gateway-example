@@ -37,17 +37,13 @@ func bootstrapMysql(ctx context.Context) {
 	}
 	db, err := gorm.Open(dialector, gormConfig)
 	if err != nil {
-
-		panic("sssssss")
-		// log.Fatalf("open mysql database failed, err:%s", err)
+		log.Fatalf("open mysql database failed, err:%s", err)
 	}
 
 	// Connection Pool
 	sqlDB, err := db.DB()
 	if err != nil {
 		log.Fatalf("open mysql database connection pool failed, err:%s", err)
-
-		panic(err)
 	}
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)
