@@ -2,10 +2,8 @@ package grpc_gateway
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/protobuf/proto"
@@ -31,12 +29,4 @@ func HttpResponseModifier(ctx context.Context, w http.ResponseWriter, p proto.Me
 	}
 
 	return nil
-}
-
-func OutgoingHeaderMatcher(key string) (string, bool) {
-	if strings.HasPrefix(key, runtime.MetadataPrefix) {
-		return key[len(runtime.MetadataPrefix):], true
-	}
-
-	return fmt.Sprintf("%s%s", runtime.MetadataHeaderPrefix, key), true
 }

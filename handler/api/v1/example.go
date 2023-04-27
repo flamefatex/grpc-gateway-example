@@ -10,6 +10,7 @@ import (
 	"github.com/flamefatex/grpc-gateway-example/model"
 	"github.com/flamefatex/grpc-gateway-example/model/query"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/errorx"
+	"github.com/flamefatex/grpc-gateway-example/pkg/lib/logx"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/pagingx"
 	proto_v1_example "github.com/flamefatex/grpc-gateway-example/proto/gen/go/api/v1/example"
 	proto_enum "github.com/flamefatex/grpc-gateway-example/proto/gen/go/enumeration"
@@ -151,6 +152,13 @@ func (h *exampleHandler) TestCustomHttp(ctx context.Context, req *proto_v1_examp
 	code := "401"
 	if req.Code != "" {
 		code = req.Code
+	}
+
+	appId := ""
+	appIds := metadata.ValueFromIncomingContext(ctx, "x-app-id")
+	if len(appIds) > 0 {
+		appId = appIds[0]
+		logx.Infof(ctx, "app-id:%s", appId)
 	}
 
 	// http code
