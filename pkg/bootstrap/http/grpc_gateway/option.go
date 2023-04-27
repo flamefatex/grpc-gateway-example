@@ -32,6 +32,7 @@ func GetGlobalServeMuxOptions() []runtime.ServeMuxOption {
 
 			return metadata.New(md)
 		}),
+		runtime.WithIncomingHeaderMatcher(IncomingHeaderMatcher),
 		runtime.WithOutgoingHeaderMatcher(OutgoingHeaderMatcher),
 		// 自定义错误处理
 		runtime.WithErrorHandler(CustomHTTPErrorHandler),
