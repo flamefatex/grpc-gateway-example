@@ -14,21 +14,21 @@ import  "enumeration/example.proto";
 // ExampleService 示例服务
 service ExampleService {
     // List 查询示例列表
-    rpc List(ExampleListRequest) returns (ExampleListResponse) {
+    rpc List(ListRequest) returns (ListResponse) {
         option (google.api.http) = {
             get: "/api/v1/example/list"
         };
     }
 
     // Get 查询单个示例
-    rpc Get(ExampleGetRequest) returns (ExampleGetResponse) {
+    rpc Get(GetRequest) returns (GetResponse) {
         option (google.api.http) = {
             get: "/api/v1/example/get"
         };
     }
 
     // Create 创建示例
-    rpc Create(ExampleCreateRequest) returns (ExampleCreateResponse) {
+    rpc Create(CreateRequest) returns (CreateResponse) {
         option (google.api.http) = {
             post: "/api/v1/example/create"
             body: "*"
@@ -36,7 +36,7 @@ service ExampleService {
     }
 
     // Update 更新示例
-    rpc Update(ExampleUpdateRequest) returns (ExampleUpdateResponse) {
+    rpc Update(UpdateRequest) returns (UpdateResponse) {
         option (google.api.http) = {
             put: "/api/v1/example/update"
             body: "*"
@@ -44,29 +44,29 @@ service ExampleService {
     }
 
     // Delete 删除示例
-    rpc Delete (ExampleDeleteRequest) returns (ExampleDeleteResponse) {
+    rpc Delete (DeleteRequest) returns (DeleteResponse) {
         option (google.api.http) = {
             delete: "/api/v1/example/delete"
         };
     }
 
     // TestCustomHttp 测试自定义http
-    rpc TestCustomHttp(ExampleTestCustomHttpRequest) returns (google.protobuf.Empty) {
+    rpc TestCustomHttp(TestCustomHttpRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             get: "/api/v1/example/testCustomHttp"
         };
     }
 
     // TestError 测试错误
-    rpc TestError(ExampleTestErrorRequest) returns (ExampleTestErrorResponse) {
+    rpc TestError(TestErrorRequest) returns (TestErrorResponse) {
         option (google.api.http) = {
             get: "/api/v1/example/testError"
         };
     }
 }
 
-// Example 示例
-message Example {
+//  示例
+message Example{
     // ID
     string id = 1;
     // 名称
@@ -81,8 +81,8 @@ message Example {
     google.protobuf.Timestamp updated_at = 6;
 }
 
-// ExampleListRequest 查询示例列表请求
-message ExampleListRequest {
+// ListRequest 查询示例列表请求
+message ListRequest {
     // 分页
     flamefatex.grpc_gateway_example.common.paging.Paging paging = 1;
     // ID
@@ -91,8 +91,8 @@ message ExampleListRequest {
     string name = 3;
 }
 
-// ExampleListResponse 查询示例列表响应
-message ExampleListResponse {
+// ListResponse 查询示例列表响应
+message ListResponse {
     // 请求ID
     string request_id = 1;
     // 请求状态
@@ -103,14 +103,14 @@ message ExampleListResponse {
     repeated Example examples = 4;
 }
 
-// ExampleGetRequest 查询单个示例请求
-message ExampleGetRequest {
+// GetRequest 查询单个示例请求
+message GetRequest {
     // ID
     string id = 1 [(validate.rules).string.prefix = "example"];
 }
 
-// ExampleGetResponse 查询单个示例响应
-message ExampleGetResponse {
+// GetResponse 查询单个示例响应
+message GetResponse {
     // 请求ID
     string request_id = 1;
     // 请求状态
@@ -119,61 +119,61 @@ message ExampleGetResponse {
     Example example = 3;
 }
 
-// ExampleCreateRequest 创建示例请求
-message ExampleCreateRequest {
+// CreateRequest 创建示例请求
+message CreateRequest {
     // 示例
     Example example = 1 [(validate.rules).message.required = true];
 }
 
-// ExampleCreateResponse 创建示例响应
-message ExampleCreateResponse {
+// CreateResponse 创建示例响应
+message CreateResponse {
     // 请求ID
     string request_id = 1;
     // 请求状态
     flamefatex.grpc_gateway_example.common.status.Status status = 2;
 }
 
-// ExampleUpdateRequest 更新示例请求
-message ExampleUpdateRequest {
+// UpdateRequest 更新示例请求
+message UpdateRequest {
     // 示例
     Example example = 1 [(validate.rules).message.required = true];;
 }
 
-// ExampleUpdateResponse 更新示例响应
-message ExampleUpdateResponse {
+// UpdateResponse 更新示例响应
+message UpdateResponse {
     // 请求ID
     string request_id = 1;
     // 请求状态
     flamefatex.grpc_gateway_example.common.status.Status status = 2;
 }
 
-// ExampleDeleteRequest 删除示例请求
-message ExampleDeleteRequest {
+// DeleteRequest 删除示例请求
+message DeleteRequest {
     // ID
     string id = 1 [(validate.rules).string.prefix = "example"];
 }
 
-// ExampleDeleteResponse 删除示例响应
-message ExampleDeleteResponse {
+// DeleteResponse 删除示例响应
+message DeleteResponse {
     // 请求ID
     string request_id = 1;
     // 请求状态
     flamefatex.grpc_gateway_example.common.status.Status status = 2;
 }
 
-// ExampleTestCustomHttpRequest 测试自定义http
-message ExampleTestCustomHttpRequest{
+// TestCustomHttpRequest 测试自定义http
+message TestCustomHttpRequest{
     // http status code
     string code = 1;
 }
 
-// ExampleTestErrorRequest 测试错误单个示例请求
-message ExampleTestErrorRequest {
+// TestErrorRequest 测试错误单个示例请求
+message TestErrorRequest {
 
 }
 
-// ExampleTestErrorResponse 测试错误单个示例响应
-message ExampleTestErrorResponse {
+// TestErrorResponse 测试错误单个示例响应
+message TestErrorResponse {
     // 请求ID
     string request_id = 1;
     // 请求状态

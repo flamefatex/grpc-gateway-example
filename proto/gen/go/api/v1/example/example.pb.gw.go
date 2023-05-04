@@ -36,7 +36,7 @@ var (
 )
 
 func request_ExampleService_List_0(ctx context.Context, marshaler runtime.Marshaler, client ExampleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleListRequest
+	var protoReq ListRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -52,7 +52,7 @@ func request_ExampleService_List_0(ctx context.Context, marshaler runtime.Marsha
 }
 
 func local_request_ExampleService_List_0(ctx context.Context, marshaler runtime.Marshaler, server ExampleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleListRequest
+	var protoReq ListRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -72,7 +72,7 @@ var (
 )
 
 func request_ExampleService_Get_0(ctx context.Context, marshaler runtime.Marshaler, client ExampleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleGetRequest
+	var protoReq GetRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -88,7 +88,7 @@ func request_ExampleService_Get_0(ctx context.Context, marshaler runtime.Marshal
 }
 
 func local_request_ExampleService_Get_0(ctx context.Context, marshaler runtime.Marshaler, server ExampleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleGetRequest
+	var protoReq GetRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -104,7 +104,7 @@ func local_request_ExampleService_Get_0(ctx context.Context, marshaler runtime.M
 }
 
 func request_ExampleService_Create_0(ctx context.Context, marshaler runtime.Marshaler, client ExampleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleCreateRequest
+	var protoReq CreateRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -121,7 +121,7 @@ func request_ExampleService_Create_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func local_request_ExampleService_Create_0(ctx context.Context, marshaler runtime.Marshaler, server ExampleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleCreateRequest
+	var protoReq CreateRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -138,7 +138,7 @@ func local_request_ExampleService_Create_0(ctx context.Context, marshaler runtim
 }
 
 func request_ExampleService_Update_0(ctx context.Context, marshaler runtime.Marshaler, client ExampleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleUpdateRequest
+	var protoReq UpdateRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -155,7 +155,7 @@ func request_ExampleService_Update_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func local_request_ExampleService_Update_0(ctx context.Context, marshaler runtime.Marshaler, server ExampleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleUpdateRequest
+	var protoReq UpdateRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -176,7 +176,7 @@ var (
 )
 
 func request_ExampleService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client ExampleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleDeleteRequest
+	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -192,7 +192,7 @@ func request_ExampleService_Delete_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func local_request_ExampleService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server ExampleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleDeleteRequest
+	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -212,7 +212,7 @@ var (
 )
 
 func request_ExampleService_TestCustomHttp_0(ctx context.Context, marshaler runtime.Marshaler, client ExampleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleTestCustomHttpRequest
+	var protoReq TestCustomHttpRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -228,7 +228,7 @@ func request_ExampleService_TestCustomHttp_0(ctx context.Context, marshaler runt
 }
 
 func local_request_ExampleService_TestCustomHttp_0(ctx context.Context, marshaler runtime.Marshaler, server ExampleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleTestCustomHttpRequest
+	var protoReq TestCustomHttpRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -244,7 +244,7 @@ func local_request_ExampleService_TestCustomHttp_0(ctx context.Context, marshale
 }
 
 func request_ExampleService_TestError_0(ctx context.Context, marshaler runtime.Marshaler, client ExampleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleTestErrorRequest
+	var protoReq TestErrorRequest
 	var metadata runtime.ServerMetadata
 
 	msg, err := client.TestError(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -253,7 +253,7 @@ func request_ExampleService_TestError_0(ctx context.Context, marshaler runtime.M
 }
 
 func local_request_ExampleService_TestError_0(ctx context.Context, marshaler runtime.Marshaler, server ExampleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ExampleTestErrorRequest
+	var protoReq TestErrorRequest
 	var metadata runtime.ServerMetadata
 
 	msg, err := server.TestError(ctx, &protoReq)
