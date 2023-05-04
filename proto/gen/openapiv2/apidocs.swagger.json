@@ -27,7 +27,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateResponse"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.CreateResponse"
             }
           }
         },
@@ -37,7 +37,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateRequest"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.CreateRequest"
             }
           }
         ],
@@ -54,7 +54,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleDeleteResponse"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.DeleteResponse"
             }
           }
         },
@@ -80,7 +80,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleGetResponse"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.GetResponse"
             }
           }
         },
@@ -106,7 +106,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleListResponse"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ListResponse"
             }
           }
         },
@@ -198,7 +198,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleTestErrorResponse"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.TestErrorResponse"
             }
           }
         },
@@ -215,7 +215,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateResponse"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.UpdateResponse"
             }
           }
         },
@@ -225,7 +225,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateRequest"
+              "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.UpdateRequest"
             }
           }
         ],
@@ -277,6 +277,44 @@
     }
   },
   "definitions": {
+    "flamefatex.grpc_gateway_example.api.v1.example.CreateRequest": {
+      "type": "object",
+      "properties": {
+        "example": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.Example",
+          "title": "示例"
+        }
+      },
+      "title": "CreateRequest 创建示例请求"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.CreateResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "status": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
+          "title": "请求状态"
+        }
+      },
+      "title": "CreateResponse 创建示例响应"
+    },
+    "flamefatex.grpc_gateway_example.api.v1.example.DeleteResponse": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "title": "请求ID"
+        },
+        "status": {
+          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
+          "title": "请求状态"
+        }
+      },
+      "title": "DeleteResponse 删除示例响应"
+    },
     "flamefatex.grpc_gateway_example.api.v1.example.Example": {
       "type": "object",
       "properties": {
@@ -307,47 +345,9 @@
           "title": "更新时间"
         }
       },
-      "title": "Example 示例"
+      "title": "示例"
     },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateRequest": {
-      "type": "object",
-      "properties": {
-        "example": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.api.v1.example.Example",
-          "title": "示例"
-        }
-      },
-      "title": "ExampleCreateRequest 创建示例请求"
-    },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleCreateResponse": {
-      "type": "object",
-      "properties": {
-        "requestId": {
-          "type": "string",
-          "title": "请求ID"
-        },
-        "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
-          "title": "请求状态"
-        }
-      },
-      "title": "ExampleCreateResponse 创建示例响应"
-    },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleDeleteResponse": {
-      "type": "object",
-      "properties": {
-        "requestId": {
-          "type": "string",
-          "title": "请求ID"
-        },
-        "status": {
-          "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
-          "title": "请求状态"
-        }
-      },
-      "title": "ExampleDeleteResponse 删除示例响应"
-    },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleGetResponse": {
+    "flamefatex.grpc_gateway_example.api.v1.example.GetResponse": {
       "type": "object",
       "properties": {
         "requestId": {
@@ -363,9 +363,9 @@
           "title": "示例"
         }
       },
-      "title": "ExampleGetResponse 查询单个示例响应"
+      "title": "GetResponse 查询单个示例响应"
     },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleListResponse": {
+    "flamefatex.grpc_gateway_example.api.v1.example.ListResponse": {
       "type": "object",
       "properties": {
         "requestId": {
@@ -388,9 +388,9 @@
           "title": "示例列表"
         }
       },
-      "title": "ExampleListResponse 查询示例列表响应"
+      "title": "ListResponse 查询示例列表响应"
     },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleTestErrorResponse": {
+    "flamefatex.grpc_gateway_example.api.v1.example.TestErrorResponse": {
       "type": "object",
       "properties": {
         "requestId": {
@@ -406,9 +406,9 @@
           "title": "示例"
         }
       },
-      "title": "ExampleTestErrorResponse 测试错误单个示例响应"
+      "title": "TestErrorResponse 测试错误单个示例响应"
     },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateRequest": {
+    "flamefatex.grpc_gateway_example.api.v1.example.UpdateRequest": {
       "type": "object",
       "properties": {
         "example": {
@@ -416,9 +416,9 @@
           "title": "示例"
         }
       },
-      "title": "ExampleUpdateRequest 更新示例请求"
+      "title": "UpdateRequest 更新示例请求"
     },
-    "flamefatex.grpc_gateway_example.api.v1.example.ExampleUpdateResponse": {
+    "flamefatex.grpc_gateway_example.api.v1.example.UpdateResponse": {
       "type": "object",
       "properties": {
         "requestId": {
@@ -430,7 +430,7 @@
           "title": "请求状态"
         }
       },
-      "title": "ExampleUpdateResponse 更新示例响应"
+      "title": "UpdateResponse 更新示例响应"
     },
     "flamefatex.grpc_gateway_example.common.paging.Paging": {
       "type": "object",

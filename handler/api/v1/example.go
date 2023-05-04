@@ -31,8 +31,8 @@ func NewExampleHandler() *exampleHandler {
 	return &exampleHandler{}
 }
 
-func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.ExampleListRequest) (resp *proto_v1_example.ExampleListResponse, err error) {
-	resp = &proto_v1_example.ExampleListResponse{}
+func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.ListRequest) (resp *proto_v1_example.ListResponse, err error) {
+	resp = &proto_v1_example.ListResponse{}
 	req.Paging = pagingx.Normalize(req.Paging)
 
 	q := query.Example
@@ -72,9 +72,9 @@ func (h *exampleHandler) List(ctx context.Context, req *proto_v1_example.Example
 	return
 }
 
-func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleGetRequest) (resp *proto_v1_example.ExampleGetResponse, err error) {
+func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.GetRequest) (resp *proto_v1_example.GetResponse, err error) {
 
-	resp = &proto_v1_example.ExampleGetResponse{}
+	resp = &proto_v1_example.GetResponse{}
 
 	q := query.Example
 
@@ -96,8 +96,8 @@ func (h *exampleHandler) Get(ctx context.Context, req *proto_v1_example.ExampleG
 	return
 }
 
-func (h *exampleHandler) Create(ctx context.Context, req *proto_v1_example.ExampleCreateRequest) (resp *proto_v1_example.ExampleCreateResponse, err error) {
-	resp = &proto_v1_example.ExampleCreateResponse{}
+func (h *exampleHandler) Create(ctx context.Context, req *proto_v1_example.CreateRequest) (resp *proto_v1_example.CreateResponse, err error) {
+	resp = &proto_v1_example.CreateResponse{}
 
 	q := query.Example
 	example := &model.Example{
@@ -116,8 +116,8 @@ func (h *exampleHandler) Create(ctx context.Context, req *proto_v1_example.Examp
 	return
 }
 
-func (h *exampleHandler) Update(ctx context.Context, req *proto_v1_example.ExampleUpdateRequest) (resp *proto_v1_example.ExampleUpdateResponse, err error) {
-	resp = &proto_v1_example.ExampleUpdateResponse{}
+func (h *exampleHandler) Update(ctx context.Context, req *proto_v1_example.UpdateRequest) (resp *proto_v1_example.UpdateResponse, err error) {
+	resp = &proto_v1_example.UpdateResponse{}
 
 	q := query.Example
 	updateParam := map[string]interface{}{
@@ -133,8 +133,8 @@ func (h *exampleHandler) Update(ctx context.Context, req *proto_v1_example.Examp
 	return
 }
 
-func (h *exampleHandler) Delete(ctx context.Context, req *proto_v1_example.ExampleDeleteRequest) (resp *proto_v1_example.ExampleDeleteResponse, err error) {
-	resp = &proto_v1_example.ExampleDeleteResponse{}
+func (h *exampleHandler) Delete(ctx context.Context, req *proto_v1_example.DeleteRequest) (resp *proto_v1_example.DeleteResponse, err error) {
+	resp = &proto_v1_example.DeleteResponse{}
 
 	q := query.Example
 
@@ -147,7 +147,7 @@ func (h *exampleHandler) Delete(ctx context.Context, req *proto_v1_example.Examp
 	return
 }
 
-func (h *exampleHandler) TestCustomHttp(ctx context.Context, req *proto_v1_example.ExampleTestCustomHttpRequest) (resp *empty.Empty, err error) {
+func (h *exampleHandler) TestCustomHttp(ctx context.Context, req *proto_v1_example.TestCustomHttpRequest) (resp *empty.Empty, err error) {
 
 	code := "401"
 	if req.Code != "" {
@@ -174,9 +174,9 @@ func (h *exampleHandler) TestCustomHttp(ctx context.Context, req *proto_v1_examp
 	return nil, nil
 }
 
-func (h *exampleHandler) TestError(ctx context.Context, req *proto_v1_example.ExampleTestErrorRequest) (resp *proto_v1_example.ExampleTestErrorResponse, err error) {
+func (h *exampleHandler) TestError(ctx context.Context, req *proto_v1_example.TestErrorRequest) (resp *proto_v1_example.TestErrorResponse, err error) {
 	now := time.Now()
-	resp = &proto_v1_example.ExampleTestErrorResponse{
+	resp = &proto_v1_example.TestErrorResponse{
 		Example: &proto_v1_example.Example{
 			Id:          "example-xxx",
 			Name:        "示例1",
