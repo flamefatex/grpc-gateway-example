@@ -65,79 +65,106 @@ service ExampleService {
     }
 }
 
-// Example示例
+//  示例
 message Example{
-    string id = 1; // id
-    string name = 2; // 名称
-    flamefatex.grpc_gateway_example.enumeration.ExampleType type = 3; // 类型
-    string description = 4; // 描述
-    google.protobuf.Timestamp created_at = 5; // 创建时间
-    google.protobuf.Timestamp updated_at = 6; // 更新时间
+    // ID
+    string id = 1;
+    // 名称
+    string name = 2;
+    // 类型
+    flamefatex.grpc_gateway_example.enumeration.ExampleType type = 3;
+    // 描述
+    string description = 4;
+    // 创建时间
+    google.protobuf.Timestamp created_at = 5;
+    // 更新时间
+    google.protobuf.Timestamp updated_at = 6;
 }
 
 // ListRequest 查询示例列表请求
 message ListRequest {
-    flamefatex.grpc_gateway_example.common.paging.Paging paging = 1; // 分页
-    string id = 2;  // id
-    string name = 3; // 名称
+    // 分页
+    flamefatex.grpc_gateway_example.common.paging.Paging paging = 1;
+    // ID
+    string id = 2;
+    // 名称
+    string name = 3;
 }
 
 // ListResponse 查询示例列表响应
 message ListResponse {
-    string request_id = 1; // 请求id
-    flamefatex.grpc_gateway_example.common.status.Status status = 2; // 请求状态
-    flamefatex.grpc_gateway_example.common.paging.Paging paging = 3; // 分页
-    repeated Example examples = 4;  // 示例列表
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
+    // 分页
+    flamefatex.grpc_gateway_example.common.paging.Paging paging = 3;
+    // 示例列表
+    repeated Example examples = 4;
 }
 
 // GetRequest 查询单个示例请求
 message GetRequest {
-    string id = 1 [(validate.rules).string.prefix = "example"]; // id
+    // ID
+    string id = 1 [(validate.rules).string.prefix = "example"];
 }
 
 // GetResponse 查询单个示例响应
 message GetResponse {
-    string request_id = 1;  // 请求id
-    flamefatex.grpc_gateway_example.common.status.Status status = 2;  // 请求状态
-    Example example = 3; // 示例
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
+    // 示例
+    Example example = 3;
 }
 
 // CreateRequest 创建示例请求
 message CreateRequest {
-    Example example = 1 [(validate.rules).message.required = true]; // 示例
+    // 示例
+    Example example = 1 [(validate.rules).message.required = true];
 }
 
 // CreateResponse 创建示例响应
 message CreateResponse {
-    string request_id = 1;  // 请求id
-    flamefatex.grpc_gateway_example.common.status.Status status = 2;  // 请求状态
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
 }
 
 // UpdateRequest 更新示例请求
 message UpdateRequest {
-    Example example = 1 [(validate.rules).message.required = true]; // 示例
+    // 示例
+    Example example = 1 [(validate.rules).message.required = true];;
 }
 
 // UpdateResponse 更新示例响应
 message UpdateResponse {
-    string request_id = 1;  // 请求id
-    flamefatex.grpc_gateway_example.common.status.Status status = 2;  // 请求状态
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
 }
 
 // DeleteRequest 删除示例请求
 message DeleteRequest {
-    string id = 1 [(validate.rules).string.prefix = "example"]; // id
+    // ID
+    string id = 1 [(validate.rules).string.prefix = "example"];
 }
 
 // DeleteResponse 删除示例响应
 message DeleteResponse {
-    string request_id = 1;  // 请求id
-    flamefatex.grpc_gateway_example.common.status.Status status = 2;  // 请求状态
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
 }
 
 // TestCustomHttpRequest 测试自定义http
 message TestCustomHttpRequest{
-    string code = 1;  // http status code
+    // http status code
+    string code = 1;
 }
 
 // TestErrorRequest 测试错误单个示例请求
@@ -147,7 +174,10 @@ message TestErrorRequest {
 
 // TestErrorResponse 测试错误单个示例响应
 message TestErrorResponse {
-    string request_id = 1;   // 请求id
-    flamefatex.grpc_gateway_example.common.status.Status status = 2; // 请求状态
-    Example example = 3;   // 示例
+    // 请求ID
+    string request_id = 1;
+    // 请求状态
+    flamefatex.grpc_gateway_example.common.status.Status status = 2;
+    // 示例
+    Example example = 3;
 }
