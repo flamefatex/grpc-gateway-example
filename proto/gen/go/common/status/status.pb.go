@@ -21,21 +21,17 @@ const (
 )
 
 // Status 请求返回状态,
-// ok对应http状态码200
+// ok对应http状态码200,
 // InternalError对应http状态码500
 type Status struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 状态码,
-	Code int32 `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	// 业务错误码
-	Reason string `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
-	// 具体信息
-	Message string `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
-	// 元数据
-	Metadata map[string]string `protobuf:"bytes,4,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Code     int32             `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`                                                                                                // 状态码
+	Reason   string            `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`                                                                                             // 业务错误码
+	Message  string            `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`                                                                                           // 具体信息
+	Metadata map[string]string `protobuf:"bytes,4,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"` // 元数据
 }
 
 func (x *Status) Reset() {
@@ -105,10 +101,8 @@ type Response struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
-	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	// 响应状态
-	Status *Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	RequestId string  `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"` // 请求ID
+	Status    *Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`                        // 响应状态
 }
 
 func (x *Response) Reset() {
