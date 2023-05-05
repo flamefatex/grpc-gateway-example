@@ -4,8 +4,12 @@ package flamefatex.grpc_gateway_example.common.paging;
 
 // Paging 分页
 message Paging {
-    int32 page = 1;         // 当前页数
-    int32 page_size = 2;    // 每页显示的记录条数
-    int32 total_count = 3;  // 总数
-    int32 total_page = 4;   // 总页数
+    // 当前页数
+    int32 page = 1;
+    // 每页显示的记录条数
+    int32 page_size = 2;
+    // 总数
+    int32 total_count = 3;
+    // 总页数
+    int32 total_page = 4;
 }
