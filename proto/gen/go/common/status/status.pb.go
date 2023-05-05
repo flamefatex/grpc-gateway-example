@@ -105,7 +105,7 @@ type Response struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
+	// 请求id
 	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
 	// 响应状态
 	Status *Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`

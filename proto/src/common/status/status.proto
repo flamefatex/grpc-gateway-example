@@ -20,8 +20,8 @@ message Status {
 // Response 通用的响应内容,
 // 可以作为删除、更新和错误的响应内容
 message Response {
-    // 请求ID
+    // 请求id
     string request_id = 1;
     // 响应状态
-    status.Status status = 2;
+    Status status = 2;
 }

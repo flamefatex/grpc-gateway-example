@@ -27,13 +27,13 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//  示例
+// Example 示例
 type Example struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID
+	// id
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// 名称
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
@@ -129,7 +129,7 @@ type ListRequest struct {
 
 	// 分页
 	Paging *paging.Paging `protobuf:"bytes,1,opt,name=paging,proto3" json:"paging,omitempty"`
-	// ID
+	// id
 	Id string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	// 名称
 	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
@@ -194,7 +194,7 @@ type ListResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
+	// 请求id
 	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
 	// 请求状态
 	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
@@ -319,7 +319,7 @@ type GetResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
+	// 请求id
 	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
 	// 请求状态
 	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
@@ -435,7 +435,7 @@ type CreateResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
+	// 请求id
 	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
 	// 请求状态
 	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
@@ -542,7 +542,7 @@ type UpdateResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
+	// 请求id
 	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
 	// 请求状态
 	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
@@ -649,7 +649,7 @@ type DeleteResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
+	// 请求id
 	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
 	// 请求状态
 	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
@@ -795,7 +795,7 @@ type TestErrorResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
+	// 请求id
 	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
 	// 请求状态
 	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
