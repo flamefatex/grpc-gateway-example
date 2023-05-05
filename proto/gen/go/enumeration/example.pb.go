@@ -24,12 +24,9 @@ const (
 type ExampleType int32
 
 const (
-	// 未指定
-	ExampleType_EXAMPLE_TYPE_UNSPECIFIED ExampleType = 0
-	// 类型1
-	ExampleType_EXAMPLE_TYPE_ONE ExampleType = 1
-	// 类型2
-	ExampleType_EXAMPLE_TYPE_TOW ExampleType = 2
+	ExampleType_EXAMPLE_TYPE_UNSPECIFIED ExampleType = 0 // 未指定
+	ExampleType_EXAMPLE_TYPE_ONE         ExampleType = 1 // 类型1
+	ExampleType_EXAMPLE_TYPE_TOW         ExampleType = 2 // 类型2
 )
 
 // Enum value maps for ExampleType.

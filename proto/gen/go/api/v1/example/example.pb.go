@@ -27,24 +27,18 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//  示例
+// Example示例
 type Example struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// 名称
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	// 类型
-	Type enumeration.ExampleType `protobuf:"varint,3,opt,name=type,proto3,enum=flamefatex.grpc_gateway_example.enumeration.ExampleType" json:"type,omitempty"`
-	// 描述
-	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	// 创建时间
-	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	// 更新时间
-	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Id          string                  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                   // id
+	Name        string                  `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                               // 名称
+	Type        enumeration.ExampleType `protobuf:"varint,3,opt,name=type,proto3,enum=flamefatex.grpc_gateway_example.enumeration.ExampleType" json:"type,omitempty"` // 类型
+	Description string                  `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`                                                 // 描述
+	CreatedAt   *timestamppb.Timestamp  `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`                                    // 创建时间
+	UpdatedAt   *timestamppb.Timestamp  `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`                                    // 更新时间
 }
 
 func (x *Example) Reset() {
@@ -127,12 +121,9 @@ type ListRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 分页
-	Paging *paging.Paging `protobuf:"bytes,1,opt,name=paging,proto3" json:"paging,omitempty"`
-	// ID
-	Id string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	// 名称
-	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Paging *paging.Paging `protobuf:"bytes,1,opt,name=paging,proto3" json:"paging,omitempty"` // 分页
+	Id     string         `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`         // id
+	Name   string         `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`     // 名称
 }
 
 func (x *ListRequest) Reset() {
@@ -194,14 +185,10 @@ type ListResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
-	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	// 请求状态
-	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	// 分页
-	Paging *paging.Paging `protobuf:"bytes,3,opt,name=paging,proto3" json:"paging,omitempty"`
-	// 示例列表
-	Examples []*Example `protobuf:"bytes,4,rep,name=examples,proto3" json:"examples,omitempty"`
+	RequestId string         `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"` // 请求id
+	Status    *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`                        // 请求状态
+	Paging    *paging.Paging `protobuf:"bytes,3,opt,name=paging,proto3" json:"paging,omitempty"`                        // 分页
+	Examples  []*Example     `protobuf:"bytes,4,rep,name=examples,proto3" json:"examples,omitempty"`                    // 示例列表
 }
 
 func (x *ListResponse) Reset() {
@@ -270,8 +257,7 @@ type GetRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // id
 }
 
 func (x *GetRequest) Reset() {
@@ -319,12 +305,9 @@ type GetResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
-	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	// 请求状态
-	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	// 示例
-	Example *Example `protobuf:"bytes,3,opt,name=example,proto3" json:"example,omitempty"`
+	RequestId string         `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"` // 请求id
+	Status    *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`                        // 请求状态
+	Example   *Example       `protobuf:"bytes,3,opt,name=example,proto3" json:"example,omitempty"`                      // 示例
 }
 
 func (x *GetResponse) Reset() {
@@ -386,8 +369,7 @@ type CreateRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 示例
-	Example *Example `protobuf:"bytes,1,opt,name=example,proto3" json:"example,omitempty"`
+	Example *Example `protobuf:"bytes,1,opt,name=example,proto3" json:"example,omitempty"` // 示例
 }
 
 func (x *CreateRequest) Reset() {
@@ -435,10 +417,8 @@ type CreateResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
-	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	// 请求状态
-	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	RequestId string         `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"` // 请求id
+	Status    *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`                        // 请求状态
 }
 
 func (x *CreateResponse) Reset() {
@@ -493,8 +473,7 @@ type UpdateRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 示例
-	Example *Example `protobuf:"bytes,1,opt,name=example,proto3" json:"example,omitempty"`
+	Example *Example `protobuf:"bytes,1,opt,name=example,proto3" json:"example,omitempty"` // 示例
 }
 
 func (x *UpdateRequest) Reset() {
@@ -542,10 +521,8 @@ type UpdateResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
-	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	// 请求状态
-	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	RequestId string         `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"` // 请求id
+	Status    *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`                        // 请求状态
 }
 
 func (x *UpdateResponse) Reset() {
@@ -600,8 +577,7 @@ type DeleteRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // id
 }
 
 func (x *DeleteRequest) Reset() {
@@ -649,10 +625,8 @@ type DeleteResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
-	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	// 请求状态
-	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
+	RequestId string         `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"` // 请求id
+	Status    *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`                        // 请求状态
 }
 
 func (x *DeleteResponse) Reset() {
@@ -707,8 +681,7 @@ type TestCustomHttpRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// http status code
-	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"` // http status code
 }
 
 func (x *TestCustomHttpRequest) Reset() {
@@ -795,12 +768,9 @@ type TestErrorResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// 请求ID
-	RequestId string `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
-	// 请求状态
-	Status *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	// 示例
-	Example *Example `protobuf:"bytes,3,opt,name=example,proto3" json:"example,omitempty"`
+	RequestId string         `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"` // 请求id
+	Status    *status.Status `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`                        // 请求状态
+	Example   *Example       `protobuf:"bytes,3,opt,name=example,proto3" json:"example,omitempty"`                      // 示例
 }
 
 func (x *TestErrorResponse) Reset() {

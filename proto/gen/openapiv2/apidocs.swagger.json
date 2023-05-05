@@ -61,7 +61,7 @@
         "parameters": [
           {
             "name": "id",
-            "description": "ID",
+            "description": "id",
             "in": "query",
             "required": false,
             "type": "string"
@@ -87,7 +87,7 @@
         "parameters": [
           {
             "name": "id",
-            "description": "ID",
+            "description": "id",
             "in": "query",
             "required": false,
             "type": "string"
@@ -145,7 +145,7 @@
           },
           {
             "name": "id",
-            "description": "ID",
+            "description": "id",
             "in": "query",
             "required": false,
             "type": "string"
@@ -292,7 +292,7 @@
       "properties": {
         "requestId": {
           "type": "string",
-          "title": "请求ID"
+          "title": "请求id"
         },
         "status": {
           "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
@@ -306,7 +306,7 @@
       "properties": {
         "requestId": {
           "type": "string",
-          "title": "请求ID"
+          "title": "请求id"
         },
         "status": {
           "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
@@ -320,7 +320,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "title": "ID"
+          "title": "id"
         },
         "name": {
           "type": "string",
@@ -345,14 +345,14 @@
           "title": "更新时间"
         }
       },
-      "title": "示例"
+      "title": "Example示例"
     },
     "flamefatex.grpc_gateway_example.api.v1.example.GetResponse": {
       "type": "object",
       "properties": {
         "requestId": {
           "type": "string",
-          "title": "请求ID"
+          "title": "请求id"
         },
         "status": {
           "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
@@ -370,7 +370,7 @@
       "properties": {
         "requestId": {
           "type": "string",
-          "title": "请求ID"
+          "title": "请求id"
         },
         "status": {
           "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
@@ -395,7 +395,7 @@
       "properties": {
         "requestId": {
           "type": "string",
-          "title": "请求ID"
+          "title": "请求id"
         },
         "status": {
           "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
@@ -423,7 +423,7 @@
       "properties": {
         "requestId": {
           "type": "string",
-          "title": "请求ID"
+          "title": "请求id"
         },
         "status": {
           "$ref": "#/definitions/flamefatex.grpc_gateway_example.common.status.Status",
@@ -464,7 +464,7 @@
         "code": {
           "type": "integer",
           "format": "int32",
-          "title": "状态码,"
+          "title": "状态码"
         },
         "reason": {
           "type": "string",
@@ -482,7 +482,7 @@
           "title": "元数据"
         }
       },
-      "title": "Status 请求返回状态,\nok对应http状态码200\nInternalError对应http状态码500"
+      "title": "Status 请求返回状态,\nok对应http状态码200,\nInternalError对应http状态码500"
     },
     "flamefatex.grpc_gateway_example.enumeration.ExampleType": {
       "type": "string",
