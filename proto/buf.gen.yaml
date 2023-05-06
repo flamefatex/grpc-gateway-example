@@ -26,7 +26,7 @@ plugins:
   - remote: buf.build/grpc-ecosystem/plugins/openapiv2:v2.15.0-1
     out: ./gen/openapiv2
     opt:
-      - json_names_for_fields=true
+      - json_names_for_fields=false
       - openapi_naming_strategy=fqn
       - allow_merge=true
       - disable_default_errors=true
