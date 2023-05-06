@@ -120,7 +120,7 @@
             "format": "int32"
           },
           {
-            "name": "paging.pageSize",
+            "name": "paging.page_size",
             "description": "每页显示的记录条数",
             "in": "query",
             "required": false,
@@ -128,7 +128,7 @@
             "format": "int32"
           },
           {
-            "name": "paging.totalCount",
+            "name": "paging.total_count",
             "description": "总数",
             "in": "query",
             "required": false,
@@ -136,7 +136,7 @@
             "format": "int32"
           },
           {
-            "name": "paging.totalPage",
+            "name": "paging.total_page",
             "description": "总页数",
             "in": "query",
             "required": false,
@@ -290,7 +290,7 @@
     "flamefatex.grpc_gateway_example.api.v1.example.CreateResponse": {
       "type": "object",
       "properties": {
-        "requestId": {
+        "request_id": {
           "type": "string",
           "title": "请求id"
         },
@@ -304,7 +304,7 @@
     "flamefatex.grpc_gateway_example.api.v1.example.DeleteResponse": {
       "type": "object",
       "properties": {
-        "requestId": {
+        "request_id": {
           "type": "string",
           "title": "请求id"
         },
@@ -334,12 +334,12 @@
           "type": "string",
           "title": "描述"
         },
-        "createdAt": {
+        "created_at": {
           "type": "string",
           "format": "date-time",
           "title": "创建时间"
         },
-        "updatedAt": {
+        "updated_at": {
           "type": "string",
           "format": "date-time",
           "title": "更新时间"
@@ -350,7 +350,7 @@
     "flamefatex.grpc_gateway_example.api.v1.example.GetResponse": {
       "type": "object",
       "properties": {
-        "requestId": {
+        "request_id": {
           "type": "string",
           "title": "请求id"
         },
@@ -368,7 +368,7 @@
     "flamefatex.grpc_gateway_example.api.v1.example.ListResponse": {
       "type": "object",
       "properties": {
-        "requestId": {
+        "request_id": {
           "type": "string",
           "title": "请求id"
         },
@@ -393,7 +393,7 @@
     "flamefatex.grpc_gateway_example.api.v1.example.TestErrorResponse": {
       "type": "object",
       "properties": {
-        "requestId": {
+        "request_id": {
           "type": "string",
           "title": "请求id"
         },
@@ -421,7 +421,7 @@
     "flamefatex.grpc_gateway_example.api.v1.example.UpdateResponse": {
       "type": "object",
       "properties": {
-        "requestId": {
+        "request_id": {
           "type": "string",
           "title": "请求id"
         },
@@ -440,17 +440,17 @@
           "format": "int32",
           "title": "当前页数"
         },
-        "pageSize": {
+        "page_size": {
           "type": "integer",
           "format": "int32",
           "title": "每页显示的记录条数"
         },
-        "totalCount": {
+        "total_count": {
           "type": "integer",
           "format": "int32",
           "title": "总数"
         },
-        "totalPage": {
+        "total_page": {
           "type": "integer",
           "format": "int32",
           "title": "总页数"
@@ -498,7 +498,7 @@
     "google.api.HttpBody": {
       "type": "object",
       "properties": {
-        "contentType": {
+        "content_type": {
           "type": "string",
           "description": "The HTTP Content-Type header value specifying the content type of the body."
         },

@@ -45,7 +45,7 @@ func GetGlobalServeMuxOptions() []runtime.ServeMuxOption {
 			runtime.MIMEWildcard,
 			&runtime.JSONPb{
 				MarshalOptions: protojson.MarshalOptions{
-					UseProtoNames:   false,
+					UseProtoNames:   true,
 					EmitUnpopulated: true,
 				},
 				UnmarshalOptions: protojson.UnmarshalOptions{
