@@ -13,13 +13,11 @@ import (
 func BootstrapCronJob(ctx context.Context) {
 	regs := cronjob.ExecRegisterCronJob(ctx)
 	for _, reg := range regs {
-		go func(cj cronjob.CronJob) {
-			// 注入logger
-			ctx = ctxzap.ToContext(ctx, definition.OrigZap)
-			err := cj.Run(ctx)
-			if err != nil {
-				log.Errorf("cronjob: %s, run err: %s", cj.Name(), err)
-			}
-		}(reg)
+		// 注入logger
+		ctx = ctxzap.ToContext(ctx, definition.OrigZap)
+		err := reg.Run(ctx)
+		if err != nil {
+			log.Errorf("cronjob: %s, run err: %s", reg.Name(), err)
+		}
 	}
 }
