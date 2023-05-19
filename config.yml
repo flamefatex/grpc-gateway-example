@@ -2,20 +2,11 @@
 config:
   logEnabled: true # 允许输出配置日志
 
-# log 日志
-log:
-  level: debug
-  development: true    # 开发模式
-  grpcLogEnabled: false # 允许输出grpc log
-
-# opentracing 链路跟踪
-opentracing:
-  sampler:
-    type: const
-    param: 1
-  reporter:
-    logSpans: true
-    localAgentHostPort: 127.0.0.1:6831
+app:
+  cronjob:
+    cron1:
+      enabled: true  # 是否开启
+      interval: 1m   # 间隔
 
 # mysql 
 mysql:
@@ -41,6 +32,21 @@ redis:
     readTimeout: 3s
     writeTimeout: 3s
   mutexExpiry: 5s # 互斥锁过期时间
+
+# log 日志
+log:
+  level: debug
+  development: true    # 开发模式
+  grpcLogEnabled: false # 允许输出grpc log
+
+# opentracing 链路跟踪
+opentracing:
+  sampler:
+    type: const
+    param: 1
+  reporter:
+    logSpans: true
+    localAgentHostPort: 127.0.0.1:6831
 
 # pprof 性能分析
 pprof:
