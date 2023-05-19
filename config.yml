@@ -19,7 +19,7 @@ opentracing:
 
 # mysql 
 mysql:
-  enabled: true
+  enabled: false
   dsn: user:password@tcp(127.0.0.1:3306)/example?timeout=5s&readTimeout=5s&writeTimeout=5s&parseTime=true&loc=Local&charset=utf8,utf8mb4&clientFoundRows=true
   logEnabled: true
   opentracingEnabled: true

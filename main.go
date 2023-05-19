@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/flamefatex/grpc-gateway-example/definition"
+	bs_cronjob "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/cronjob"
 	bs_database "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/database"
 	bs_grpc "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/grpc"
 	bs_http "github.com/flamefatex/grpc-gateway-example/pkg/bootstrap/http"
@@ -34,6 +35,8 @@ func main() {
 	}()
 	// 引导数据库
 	bs_database.BootstrapDatabase(ctx)
+	// 引导定时任务
+	bs_cronjob.BootstrapCronJob(ctx)
 
 	// 启动http
 	bs_http.BootstrapHttpServer(ctx)
