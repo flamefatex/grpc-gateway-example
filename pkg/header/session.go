@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-const SessionKey = "ffx_session"
+const SessionKey = "_session"
 const SessionDuration = 2 * time.Hour
 
 // SetSessionId 设置sessionId
