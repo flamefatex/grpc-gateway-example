@@ -4,21 +4,20 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
 
 	"github.com/flamefatex/grpc-gateway-example/model"
 	"github.com/flamefatex/grpc-gateway-example/model/query"
+	"github.com/flamefatex/grpc-gateway-example/pkg/header"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/errorx"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/logx"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/pagingx"
 	proto_v1_example "github.com/flamefatex/grpc-gateway-example/proto/gen/go/api/v1/example"
 	proto_enum "github.com/flamefatex/grpc-gateway-example/proto/gen/go/enumeration"
 	"github.com/golang/protobuf/ptypes/empty"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rs/xid"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"gorm.io/gen"
 )
@@ -154,22 +153,26 @@ func (h *exampleHandler) TestCustomHttp(ctx context.Context, req *proto_v1_examp
 		code = req.Code
 	}
 
-	appId := ""
-	appIds := metadata.ValueFromIncomingContext(ctx, "x-app-id")
-	if len(appIds) > 0 {
-		appId = appIds[0]
-		logx.Infof(ctx, "app-id:%s", appId)
-	}
+	appId := header.GetAppId(ctx)
+	logx.Infof(ctx, "app-id:%s", appId)
 
 	// http code
-	_ = grpc.SetHeader(ctx, metadata.Pairs("x-http-code", code))
+	header.SetHttpCode(ctx, code)
+
+	// http cookie
+	domain := header.GetDomain(ctx)
+	cookie := &http.Cookie{
+		Name:     "_ffx_cookie_key",
+		Value:    "_ffx_cookie_value",
+		Path:     "/",
+		Domain:   domain,
+		Expires:  time.Now().Add(2 * time.Hour), // 2小时后过期
+		HttpOnly: true,                          // 禁止js访问此cookie
+	}
+	header.SetCookie(ctx, []*http.Cookie{cookie})
 
 	// http header
-	// Set-Cookie: <cookie-name>=<cookie-value>; Max-Age=<non-zero-digit>
-	_ = grpc.SetHeader(ctx, metadata.Pairs(runtime.MetadataPrefix+"Set-Cookie", "mySessionId:xxxx;Max-Age=180"))
-
-	//
-	_ = grpc.SetHeader(ctx, metadata.Pairs("x-ffx-token", "xxx.yyy.zzz"))
+	header.SetHttpHeader(ctx, "x-ffx-token", "xxx.yyy.zzz")
 
 	return nil, nil
 }
