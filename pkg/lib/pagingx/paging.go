@@ -9,7 +9,7 @@ func Normalize(p *proto_paging.Paging) *proto_paging.Paging {
 	if p == nil {
 		p = &proto_paging.Paging{
 			Page:     1,
-			PageSize: 10,
+			PageSize: DefaultLimit,
 		}
 	}
 	return p
@@ -17,8 +17,8 @@ func Normalize(p *proto_paging.Paging) *proto_paging.Paging {
 
 // OffsetLimit 获取sql的offset limit
 func OffsetLimit(p *proto_paging.Paging) (offset, limit int) {
-	// 初始化默认返回数量
-	limit = DefaultLimit
+	// 标准化
+	p = Normalize(p)
 
 	if p != nil {
 		offset = int((p.Page - 1) * p.PageSize)
