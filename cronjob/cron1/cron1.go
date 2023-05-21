@@ -7,6 +7,7 @@ import (
 
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/config"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/log"
+	"github.com/flamefatex/grpc-gateway-example/pkg/lib/logx"
 )
 
 var (
@@ -39,11 +40,13 @@ func (cj *Cron1) Run(ctx context.Context) (err error) {
 	t := time.NewTicker(config.Config().GetDuration("app.cronjob.cron1.interval"))
 	go func() {
 		for {
+			startTime := time.Now()
 			log.Infof("cronjob: %s start", cj.Name())
 
 			// do your job
 
-			log.Infof("cronjob: %s end", cj.Name())
+			duration := time.Now().Sub(startTime)
+			logx.Infof(ctx, "cronjob: %s end, duration: %s", cj.Name(), duration.String())
 			// wait
 			<-t.C
 		}
