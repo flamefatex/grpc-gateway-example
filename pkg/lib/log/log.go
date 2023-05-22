@@ -19,6 +19,11 @@ func SetLogger(logger types.Logger) {
 	globalLogger = logger
 }
 
+// GetLogger 获取全局logger
+func GetLogger() types.Logger {
+	return globalLogger
+}
+
 func Debug(args ...interface{}) {
 	globalLogger.Debug(args...)
 }
