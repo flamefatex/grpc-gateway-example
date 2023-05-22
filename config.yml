@@ -2,6 +2,10 @@
 config:
   logEnabled: true # 允许输出配置日志
 
+http:
+  debug: true
+  timeout: 10s
+
 app:
   cronjob:
     cron1:
