@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/config"
-	"github.com/flamefatex/grpc-gateway-example/pkg/lib/log"
 	"github.com/flamefatex/grpc-gateway-example/pkg/lib/logx"
 )
 
@@ -25,10 +24,12 @@ func GetInstance() *Cron1 {
 	return instance
 }
 
+// Name 获取名称
 func (cj *Cron1) Name() string {
 	return name
 }
 
+// Run 运行
 func (cj *Cron1) Run(ctx context.Context) (err error) {
 
 	// 判断是否开启定时任务
@@ -41,16 +42,27 @@ func (cj *Cron1) Run(ctx context.Context) (err error) {
 	go func() {
 		for {
 			startTime := time.Now()
-			log.Infof("cronjob: %s start", cj.Name())
+			logx.Infof(ctx, "cronjob: %s start", cj.Name())
 
 			// do your job
+			err1 := cj.do(ctx)
 
 			duration := time.Now().Sub(startTime)
-			logx.Infof(ctx, "cronjob: %s end, duration: %s", cj.Name(), duration.String())
+			if err1 != nil {
+				logx.Errorf(ctx, "cronjob: %s failed, duration: %s, err: %s", duration.String(), err1)
+			} else {
+				logx.Infof(ctx, "cronjob: %s success, duration: %s", cj.Name(), duration.String())
+			}
+
 			// wait
 			<-t.C
 		}
 	}()
 
 	return nil
+}
+
+// do
+func (cj *Cron1) do(ctx context.Context) (err error) {
+	return
 }
