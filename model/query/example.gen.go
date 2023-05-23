@@ -34,6 +34,7 @@ func newExample(db *gorm.DB, opts ...gen.DOOption) example {
 	_example.Description = field.NewString(tableName, "description")
 	_example.CreatedAt = field.NewTime(tableName, "created_at")
 	_example.UpdatedAt = field.NewTime(tableName, "updated_at")
+	_example.DeletedAt = field.NewField(tableName, "deleted_at")
 
 	_example.fillFieldMap()
 
@@ -50,6 +51,7 @@ type example struct {
 	Description field.String
 	CreatedAt   field.Time
 	UpdatedAt   field.Time
+	DeletedAt   field.Field
 
 	fieldMap map[string]field.Expr
 }
@@ -72,6 +74,7 @@ func (e *example) updateTableName(table string) *example {
 	e.Description = field.NewString(table, "description")
 	e.CreatedAt = field.NewTime(table, "created_at")
 	e.UpdatedAt = field.NewTime(table, "updated_at")
+	e.DeletedAt = field.NewField(table, "deleted_at")
 
 	e.fillFieldMap()
 
@@ -94,13 +97,14 @@ func (e *example) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (e *example) fillFieldMap() {
-	e.fieldMap = make(map[string]field.Expr, 6)
+	e.fieldMap = make(map[string]field.Expr, 7)
 	e.fieldMap["id"] = e.Id
 	e.fieldMap["name"] = e.Name
 	e.fieldMap["type"] = e.Type
 	e.fieldMap["description"] = e.Description
 	e.fieldMap["created_at"] = e.CreatedAt
 	e.fieldMap["updated_at"] = e.UpdatedAt
+	e.fieldMap["deleted_at"] = e.DeletedAt
 }
 
 func (e example) clone(db *gorm.DB) example {

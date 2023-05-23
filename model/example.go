@@ -5,6 +5,7 @@ import (
 
 	proto_enum "github.com/flamefatex/grpc-gateway-example/proto/gen/go/enumeration"
 	"gorm.io/gen"
+	"gorm.io/gorm"
 )
 
 type Example struct {
@@ -14,6 +15,7 @@ type Example struct {
 	Description string
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
+	DeletedAt   gorm.DeletedAt
 }
 
 // ExampleQueryInterface example自定义查询接口
